@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @Data
 @Entity
 @Table(name = "movie")
-public class Movie {
+public class Movie extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

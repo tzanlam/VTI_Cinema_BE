@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Payment")
-public class Payment {
+public class Payment extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -20,8 +20,8 @@ public class Payment {
     @Column(name = "address_tranfer", nullable = false)
     private int addressTransfer;
 
-    @Column(name = "owner", nullable = false)
-    private String owner;
+    @Column(name = "qr_code", nullable = false)
+    private String qrCode;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)

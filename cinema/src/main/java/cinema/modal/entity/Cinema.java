@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "cinema")
-public class Cinema {
+public class Cinema extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table(name = "voucher")
-public class Voucher {
+public class Voucher extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
