@@ -1,6 +1,5 @@
 package cinema.controller;
 
-import cinema.modal.entity.Cinema;
 import cinema.modal.request.CinemaRequest;
 import cinema.service.Cinema.CinemaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +39,7 @@ public class CinemaController {
     @PostMapping("/createCinema")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createCinema(@RequestBody CinemaRequest request) {
-        try {
             return new ResponseEntity<>(cinemaService.createCinema(request), HttpStatus.CREATED);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
-        }
     }
 
     @GetMapping("/changeStatus/{id}")

@@ -17,7 +17,7 @@ public class AccountController {
 
     @Autowired
     private GlobalService globalService;
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request){
         try{
             return new ResponseEntity<>(globalService.login(request), HttpStatus.OK);

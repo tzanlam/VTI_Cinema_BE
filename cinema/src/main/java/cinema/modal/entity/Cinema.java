@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "cinema")
-public class Cinema extends Base{
+public class Cinema extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,10 +17,9 @@ public class Cinema extends Base{
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    // tao table phu de luu tru anh
     @ElementCollection
-    @CollectionTable(name = "image_list", joinColumns = @JoinColumn(name = "imgMain_id"))
-    @Column(name = "image")
+    @CollectionTable(name = "cinema_images", joinColumns = @JoinColumn(name = "cinema_id"))
+    @Column(name = "image_url")
     private List<String> image;
 
     @Column(name = "location", nullable = false)
