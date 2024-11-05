@@ -10,5 +10,5 @@ public interface CinemaService {
     Cinema findById(int id);
     Cinema createCinema(CinemaRequest request);
     Cinema updateCinema(CinemaRequest request, int id);
-    Cinema changeStatus(int id);
+    Cinema changeStatus(int id, String status) throws Exception;
 }

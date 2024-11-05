@@ -7,6 +7,7 @@ import cinema.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,9 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Override
     public Cinema createCinema(CinemaRequest request) {
-        return cinemaRepository.save(request.asCinema());
+        Cinema cinema = request.asCinema();
+        cinemaRepository.save(cinema);
+        return cinema;
     }
 
     @Override
@@ -42,12 +45,20 @@ public class CinemaServiceImpl implements CinemaService {
     }
 
     @Override
-    public Cinema changeStatus(int id) {
-        Optional<Cinema> cinema = cinemaRepository.findById(id);
-        if (cinema.isPresent()) {
-            Cinema c = cinema.get();
-            c.setStatus(StatusCinema.CLOSED);
+    public Cinema changeStatus(int id, String status) throws Exception {
+        Cinema cinema = cinemaRepository.findById(id).orElse(null);
+        if (cinema != null) {
+            List<StatusCinema> statusCurrent = Arrays.asList(StatusCinema.OPEN,StatusCinema.CLOSED, StatusCinema.BUILDING);
+            if (statusCurrent.contains(status)){
+                cinema.setStatus(StatusCinema.valueOf(status));
+                cinemaRepository.save(cinema);
+                return cinema;
+            }else {
+                throw new Exception("Cinema status not exist");
+            }
         }
-        return null;
+        else {
+            throw new Exception("Cinema not found");
+        }
     }
 }
