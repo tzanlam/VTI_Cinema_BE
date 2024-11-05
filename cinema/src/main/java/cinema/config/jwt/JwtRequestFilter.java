@@ -23,7 +23,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    public JwtRequestFilter(UserDetailsService userDetailsService,@Lazy JwtTokenUtil jwtTokenUtil) {
+    public JwtRequestFilter(UserDetailsService userDetailsService,JwtTokenUtil jwtTokenUtil) {
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
     }
