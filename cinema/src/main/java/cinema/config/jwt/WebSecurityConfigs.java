@@ -54,7 +54,8 @@ public class WebSecurityConfigs {
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(i->i.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(a->a
-                        .requestMatchers("/cinema/findCinemas").permitAll()
+                        .requestMatchers("/cinema/findCinemas",
+                                "/account/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
