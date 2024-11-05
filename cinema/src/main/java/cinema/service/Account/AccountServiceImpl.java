@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
                 accountRepository.save(account);
                 return account;
             } else {
-                throw new IllegalArgumentException("Trạng thái không hợp lệ: " + newStatus);
+                throw new IllegalArgumentException("Trạng thái không hợp lệ");
             }
         } else {
             System.out.println("Không tìm thấy tài khoản với ID: " + id);
