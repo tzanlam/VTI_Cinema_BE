@@ -13,6 +13,7 @@ import lombok.Data;
 import java.time.LocalTime;
 
 import static cinema.util.ConvertDateTime.convertToLocalDate;
+import static cinema.util.ConvertDateTime.convertToLocalTime;
 
 @Data
 
@@ -21,7 +22,7 @@ public class MovieRequest {
     private String actor;
     private String director;
     private Genre genre;
-    private LocalTime duration;
+    private String duration;
     private String description;
     private Language language;
     private String trailer;
@@ -35,6 +36,7 @@ public class MovieRequest {
         movie.setActor(actor);
         movie.setDirector(director);
         movie.setGenre(genre);
+        movie.setDuration(convertToLocalTime(duration));
         movie.setDescription(description);
         movie.setLanguage(language);
         movie.setTrailer(trailer);
@@ -47,6 +49,7 @@ public class MovieRequest {
         movie.setName(name);
         movie.setActor(actor);
         movie.setDirector(director);
+
         movie.setGenre(genre);
         movie.setDescription(description);
         movie.setLanguage(language);
