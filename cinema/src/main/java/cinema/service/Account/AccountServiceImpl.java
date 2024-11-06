@@ -52,12 +52,17 @@ public class AccountServiceImpl implements AccountService {
         if (account != null) {
             List<StatusAccount> validStatuses = Arrays.asList(StatusAccount.ACTIVE, StatusAccount.INACTIVE, StatusAccount.BLOCK);
 
-            if (validStatuses.contains(newStatus)) {
-                account.setStatus(StatusAccount.valueOf(newStatus));
-                accountRepository.save(account);
-                return account;
-            } else {
-                throw new IllegalArgumentException("Trạng thái không hợp lệ");
+            try {
+                StatusAccount status = StatusAccount.valueOf(newStatus);
+                if (validStatuses.contains(status)) {
+                    account.setStatus(status);
+                    accountRepository.save(account);
+                    return account;
+                } else {
+                    throw new IllegalArgumentException("Trạng thái không hợp lệ");
+                }
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Trạng thái không hợp lệ", e);
             }
         } else {
             System.out.println("Không tìm thấy tài khoản với ID: " + id);
