@@ -57,4 +57,13 @@ public class MovieController {
             return ResponseEntity.noContent().build();
         }
     }
+
+    @GetMapping("findById/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        try{
+            return ResponseEntity.ok(movieService.findById(id));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

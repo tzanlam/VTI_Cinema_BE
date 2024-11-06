@@ -1,6 +1,5 @@
 package cinema.service.Movie;
 
-import cinema.modal.entity.Cinema;
 import cinema.modal.entity.Movie;
 import cinema.modal.entity.constant.StatusMovie;
 import cinema.modal.request.MovieRequest;
@@ -19,10 +18,6 @@ public class MovieServiceimpl implements MovieService{
     public List<Movie> findMovies() {
         return List.of((Movie) movieRepository.findAll());
     }
-
-//    public List<Cinema> findCinemas() {
-//        return List.of((Cinema) cinemaRepository.findAll());
-//    }
 
     @Override
     public Movie findById(int id) {
@@ -65,6 +60,5 @@ public class MovieServiceimpl implements MovieService{
         }
         return null;
     }
-    //COMING_SOON, SHOWING, CLOSED
 
 }
