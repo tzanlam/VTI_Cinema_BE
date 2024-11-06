@@ -56,6 +56,7 @@ public class WebSecurityConfigs {
                 .authorizeHttpRequests(a->a
                         .requestMatchers(
                                 "/cinema/findCinemas",
+                                "cinema/findById/",
                                 "/account/login",
                                 "/account/createAccount"
                         ).permitAll()
