@@ -18,6 +18,7 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping("/findRooms")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findRooms() {
         try{
             return ResponseEntity.ok(roomService.findRooms());
@@ -40,7 +41,7 @@ public class RoomController {
 
     @PostMapping("/createRoom")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> createRoom(@RequestBody RoomRequest request) {
+    public ResponseEntity<?> createRoom(@RequestBody RoomRequest request) throws Exception {
         return new ResponseEntity<>(roomService.createRoom(request), HttpStatus.CREATED);
     }
 

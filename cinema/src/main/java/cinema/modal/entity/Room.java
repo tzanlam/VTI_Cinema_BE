@@ -2,7 +2,6 @@ package cinema.modal.entity;
 
 import cinema.modal.entity.constant.ScreenType;
 import cinema.modal.entity.constant.StatusRoom;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
