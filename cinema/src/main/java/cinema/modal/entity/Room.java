@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Entity
 @Table(name = "room")
@@ -22,6 +24,8 @@ public class Room extends Base{
     @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false, unique = true)
     private Cinema cinema;
 
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<SeatRoom> seatRooms;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
