@@ -5,6 +5,7 @@ import cinema.modal.entity.constant.StatusRoom;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,8 +24,11 @@ public class Room extends Base{
     @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false, unique = true)
     private Cinema cinema;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<SeatRoom> seatRooms;
+
+    @ElementCollection
+    @CollectionTable(name = "seatinroom", joinColumns = @JoinColumn(name = "seat_room_id"))
+    @Column (name = "seat_room_id", nullable = false)
+    private List<SeatRoom> seatRooms;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

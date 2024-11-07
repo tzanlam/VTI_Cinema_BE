@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/seat_room")
+@RequestMapping("/seatRoom")
 public class SeatRoomController {
     @Autowired
     private SeatRoomService seatRoomService;
@@ -37,7 +37,7 @@ public class SeatRoomController {
             return ResponseEntity.noContent().build();
         }
     }
-
+// up lên git đi tui fix lại request
     @PostMapping("/createSeatRoom")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createMovie(@RequestBody SeatRoomRequest request) {

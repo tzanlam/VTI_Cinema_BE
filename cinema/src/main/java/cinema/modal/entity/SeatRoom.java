@@ -13,12 +13,12 @@ public class SeatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany
-    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false, unique = true)
+    @ManyToOne
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
 
-    @OneToMany
-    @JoinColumn(name = "seat_id", referencedColumnName = "id", nullable = false, unique = true)
+    @ManyToOne
+    @JoinColumn(name = "seat_id", referencedColumnName = "id")
     private Seat seat;
 
     @Column(name = "status_seat_room")
