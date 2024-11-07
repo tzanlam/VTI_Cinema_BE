@@ -25,6 +25,8 @@ public class Cinema extends Base {
     @Column(name = "location", nullable = false)
     private String location;
 
+    
+
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusCinema status;
