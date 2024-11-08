@@ -8,6 +8,8 @@ import cinema.modal.request.RoomRequest;
 import cinema.repository.CinemaRepository;
 import cinema.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -20,8 +22,8 @@ public class RoomServiceimpl implements RoomService{
     @Autowired
     private CinemaRepository cinemaRepository;
     @Override
-    public List<Room> findRooms() {
-        return List.of((Room) roomRepository.findAll());
+    public Page<Room> findRooms(int page) {
+        return roomRepository.findAll(PageRequest.of(page, 10));
     }
 
     @Override

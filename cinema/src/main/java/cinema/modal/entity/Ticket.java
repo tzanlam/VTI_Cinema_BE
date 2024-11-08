@@ -19,9 +19,6 @@ public class Ticket extends Base{
     @JoinColumn(name = "show_time_id", referencedColumnName = "id", nullable = false)
     private ShowTime showTime;
 
-    @Column(name = "seat_quantity", nullable = false)
-    private int seatQuantity;
-
     @Column(name = "total_price")
     private double totalPrice;
 }

@@ -22,6 +22,10 @@ public class ShowTime extends Base{
     @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
     private Room room;
 
+    @ManyToOne
+    @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false)
+    private Cinema cinema;
+
     @Column(name = "show_date", nullable = false)
     private LocalDate showDate;
 

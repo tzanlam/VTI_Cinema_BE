@@ -1,8 +1,6 @@
 package cinema.controller;
 
-import cinema.modal.request.MovieRequest;
 import cinema.modal.request.RoomRequest;
-import cinema.service.Movie.MovieService;
 import cinema.service.Room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +15,12 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
-    @GetMapping("/findRooms")
+    @GetMapping("/findRooms/{page}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    public ResponseEntity<?> findRooms() {
+    public ResponseEntity<?> findRooms(@PathVariable int page) {
         try{
-            return ResponseEntity.ok(roomService.findRooms());
+            return ResponseEntity.ok(roomService.findRooms(page));
         }catch (Exception e){
-            e.printStackTrace();
             return ResponseEntity.noContent().build();
         }
     }
@@ -34,7 +31,6 @@ public class RoomController {
         try{
             return new ResponseEntity<>(roomService.updateRoom(id, request), HttpStatus.CREATED);
         }catch (Exception e){
-            e.printStackTrace();
             return ResponseEntity.noContent().build();
         }
     }
@@ -51,7 +47,6 @@ public class RoomController {
         try {
             return new ResponseEntity<>(roomService.changeStatus(id, status), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
             return ResponseEntity.noContent().build();
         }
     }
