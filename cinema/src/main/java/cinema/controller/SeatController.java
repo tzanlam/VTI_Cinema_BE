@@ -38,10 +38,14 @@ public class SeatController {
         }
     }
 
-    @PostMapping("/createRoom")
+    @PostMapping("/creatSeat")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createRoom(@RequestBody SeatRequest request) {
-        return new ResponseEntity<>(seatService.createSeat(request), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(seatService.createSeat(request), HttpStatus.CREATED);
+        }catch (Exception e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
     @GetMapping("/changeStatus/{id}")

@@ -16,9 +16,6 @@ public class Seat {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "seat_number", nullable = false, unique = true)
-    private String seat_number;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "seat_type")
     private SeatType SeatType;
