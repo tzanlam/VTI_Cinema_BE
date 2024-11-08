@@ -4,7 +4,6 @@ import cinema.modal.entity.constant.SeatType;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Set;
 
 @Data
 @Entity
@@ -23,9 +22,6 @@ public class Seat {
     @Enumerated(EnumType.STRING)
     @Column(name = "seat_type")
     private SeatType SeatType;
-
-    @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<SeatRoom> seatRooms;
 
     @Column(name = "price", nullable = false)
     private double price;

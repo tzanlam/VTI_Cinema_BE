@@ -9,5 +9,5 @@ public interface BookingService {
     Booking findById(int id);
     Booking createBooking(BookingRequest request);
     Booking updateBooking(int id, BookingRequest request);
-    Booking changeStatus(int id);
+    Booking changeStatus(int id, String newStatus);
 }

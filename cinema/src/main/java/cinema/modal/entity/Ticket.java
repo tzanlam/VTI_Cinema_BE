@@ -11,9 +11,9 @@ public class Ticket extends Base{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "seat_room_id", referencedColumnName = "id", nullable = false)
-//    private Seat seat;
+    @ManyToOne
+    @JoinColumn(name = "seat_room_id", referencedColumnName = "id", nullable = false)
+    private SeatRoom seat;
 
     @ManyToOne
     @JoinColumn(name = "show_time_id", referencedColumnName = "id", nullable = false)
@@ -21,4 +21,7 @@ public class Ticket extends Base{
 
     @Column(name = "seat_quantity", nullable = false)
     private int seatQuantity;
+
+    @Column(name = "total_price")
+    private double totalPrice;
 }

@@ -1,6 +1,5 @@
 package cinema.modal.entity;
 
-import cinema.modal.entity.constant.ScreenType;
 import cinema.modal.entity.constant.StatusSeatroom;
 import jakarta.persistence.*;
 import lombok.Data;

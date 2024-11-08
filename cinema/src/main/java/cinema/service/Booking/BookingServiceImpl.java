@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 public class BookingServiceImpl implements BookingService {
     @Autowired
@@ -36,30 +39,54 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking createBooking(BookingRequest request) {
+        Booking booking = new Booking();
         Account account = accountRepository.findById(request.getAccount()).get();
         Voucher voucher = voucherRepository.findById(request.getVoucher()).get();
         Ticket ticket = ticketRepository.findById(request.getTicket()).get();
         MoreService moreService = moreServiceRepository.findById(request.getMoreService()).get();
         Payment payment = paymentRepository.findById(request.getPayment()).get();
-        Booking booking = new Booking();
         booking.setAccount(account);
         booking.setVoucher(voucher);
         booking.setTicket(ticket);
         booking.setMoreService(moreService);
         booking.setPayment(payment);
-        //booking.setTotalPrice(ticket.get);
+        booking.setTotalPrice(ticket.getTotalPrice()+moreService.getPrice()-voucher.getDiscount());
         booking.setStatus(StatusBooking.WAITING);
         bookingRepository.save(booking);
-        return null;
+        return booking;
     }
 
     @Override
     public Booking updateBooking(int id, BookingRequest request) {
+        Booking booking = bookingRepository.findById(id).orElse(null);
+        if (booking != null) {
+            Account account = accountRepository.findById(request.getAccount()).get();
+            Voucher voucher = voucherRepository.findById(request.getVoucher()).get();
+            Ticket ticket = ticketRepository.findById(request.getTicket()).get();
+            MoreService moreService = moreServiceRepository.findById(request.getMoreService()).get();
+            Payment payment = paymentRepository.findById(request.getPayment()).get();
+            booking.setAccount(account);
+            booking.setVoucher(voucher);
+            booking.setTicket(ticket);
+            booking.setMoreService(moreService);
+            booking.setPayment(payment);
+            booking.setTotalPrice(ticket.getTotalPrice()+moreService.getPrice()-voucher.getDiscount());
+            booking.setStatus(StatusBooking.WAITING);
+            bookingRepository.save(booking);
+            return booking;
+        }
         return null;
     }
 
     @Override
-    public Booking changeStatus(int id) {
+    public Booking changeStatus(int id, String Newstatus) {
+        Booking booking = bookingRepository.findById(id).orElse(null);
+        List<StatusBooking> statusBookings = Arrays.asList(StatusBooking.values());
+        if (statusBookings.contains(StatusBooking.valueOf(Newstatus))) {
+            booking.setStatus(StatusBooking.valueOf(Newstatus));
+            bookingRepository.save(booking);
+            return booking;
+        }
         return null;
     }
 }

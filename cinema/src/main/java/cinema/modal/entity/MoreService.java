@@ -1,5 +1,6 @@
 package cinema.modal.entity;
 
+import cinema.modal.entity.constant.StatusService;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,4 +20,8 @@ public class MoreService extends Base{
 
     @Column(name = "price", nullable = false)
     private double price;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private StatusService status;
 }
