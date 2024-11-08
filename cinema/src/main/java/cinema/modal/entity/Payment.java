@@ -18,7 +18,7 @@ public class Payment extends Base{
     private MethodPayment method;
 
     @Column(name = "address_tranfer", nullable = false)
-    private int addressTransfer;
+    private String addressTransfer;
 
     @Column(name = "qr_code", nullable = false)
     private String qrCode;

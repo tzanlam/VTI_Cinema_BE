@@ -58,7 +58,10 @@ public class WebSecurityConfigs {
                                 "/cinema/findCinemas",
                                 "cinema/findById/",
                                 "/account/login",
-                                "/account/createAccount"
+                                "/account/createAccount",
+                                "/moreService/serviceActive",
+                                "/payment/findPayment",
+                                "/payment/findById/"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
