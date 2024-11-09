@@ -18,15 +18,17 @@ public class PaymentRequest {
         Payment payment = new Payment();
 
         List<MethodPayment> methodPayments = List.of(MethodPayment.values());
+        MethodPayment methodPayment = MethodPayment.valueOf(this.methodPayment);
         if (methodPayments.contains(methodPayment)) {
-            payment.setMethod(MethodPayment.valueOf(String.valueOf(methodPayment)));
+            payment.setMethod(MethodPayment.valueOf(this.methodPayment));
         }
 
         payment.setAddressTransfer(addressTranfer);
         payment.setQrCode(qrCode);
 
         List<StatusPayment> statusPayments = List.of(StatusPayment.values());
-        if (statusPayments.contains(status)){
+        StatusPayment statusPayment = StatusPayment.valueOf(this.status);
+        if (statusPayments.contains(statusPayment)) {
             payment.setStatus(StatusPayment.valueOf(String.valueOf(status)));
         }
         return payment;

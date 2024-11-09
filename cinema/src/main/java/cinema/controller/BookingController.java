@@ -55,7 +55,7 @@ public class BookingController {
         }
     }
 
-    @GetMapping("changeStatus/{id}")
+    @PostMapping("changeStatus/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try{

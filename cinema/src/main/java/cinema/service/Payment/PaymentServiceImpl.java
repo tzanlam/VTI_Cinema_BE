@@ -15,7 +15,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> findPayments() {
-        return List.of((Payment) paymentRepository.findAll());
+        List<Payment> payments = paymentRepository.findAll();
+        return payments;
     }
 
     @Override

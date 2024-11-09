@@ -38,6 +38,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setSeat(seatRoom);
         ticket.setShowTime(showTime);
         ticket.setTotalPrice(seatRoom.getSeat().getPrice());
+        ticketRepository.save(ticket);
         return ticket;
     }
 
@@ -49,6 +50,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setSeat(seatRoom);
         ticket.setShowTime(showTime);
         ticket.setTotalPrice(seatRoom.getSeat().getPrice());
+        ticketRepository.save(ticket);
         return ticket;
     }
 }
