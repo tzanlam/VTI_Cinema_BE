@@ -5,6 +5,7 @@ import cinema.service.ShowTime.ShowTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,6 +34,7 @@ public class ShowTimeController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> create(@RequestBody ShowTimeRequest showTimeRequest){
         try{
             return new ResponseEntity<>(showTimeService.createShowTime(showTimeRequest), HttpStatus.CREATED);
@@ -42,6 +44,7 @@ public class ShowTimeController {
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody ShowTimeRequest request){
         try{
             return ResponseEntity.ok(showTimeService.updateShowTime(id, request));

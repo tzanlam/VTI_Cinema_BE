@@ -42,6 +42,7 @@ public class ShowTimeServiceImpl implements ShowTimeService{
         showTime.setMovie(movieRepository.findById(request.getMovie()).get());
         showTime.setShowDate(convertToLocalDate(request.getShowDate()));
         showTime.setStartTime(convertToLocalTime(request.getStartTime()));
+        showTimeRepository.save(showTime);
         return showTime;
     }
 
@@ -54,6 +55,7 @@ public class ShowTimeServiceImpl implements ShowTimeService{
             showTime.setMovie(movieRepository.findById(request.getMovie()).get());
             showTime.setShowDate(convertToLocalDate(request.getShowDate()));
             showTime.setStartTime(convertToLocalTime(request.getStartTime()));
+            showTimeRepository.save(showTime);
             return showTime;
         }
         return null;

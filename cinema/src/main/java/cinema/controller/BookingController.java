@@ -15,8 +15,8 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping("/findBookings/{page}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @GetMapping("/find/{page}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findAll(@PathVariable int page) {
         try{
             return new ResponseEntity<>(bookingService.findBookings(page), HttpStatus.OK);
@@ -25,7 +25,7 @@ public class BookingController {
         }
     }
 
-    @GetMapping("findById/{id}")
+    @GetMapping("findId/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try {
@@ -35,7 +35,7 @@ public class BookingController {
         }
     }
 
-    @PostMapping("createBooking")
+    @PostMapping("create")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> createBooking(@RequestBody BookingRequest request) {
         try{
@@ -45,7 +45,7 @@ public class BookingController {
         }
     }
 
-    @PutMapping("updateBooking/{id}")
+    @PutMapping("update/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> updateBooking(@PathVariable int id, @RequestBody BookingRequest request) {
         try{
@@ -56,7 +56,7 @@ public class BookingController {
     }
 
     @GetMapping("changeStatus/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER','MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try{
             return new ResponseEntity<>(bookingService.changeStatus(id, status), HttpStatus.OK);

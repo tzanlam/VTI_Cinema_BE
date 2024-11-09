@@ -1,8 +1,6 @@
 package cinema.controller;
 
-import cinema.modal.request.RoomRequest;
 import cinema.modal.request.SeatRequest;
-import cinema.service.Room.RoomService;
 import cinema.service.Seat.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,7 @@ public class SeatController {
     @Autowired
     private SeatService seatService;
 
-    @GetMapping("/findSeats")
+    @GetMapping("/find")
     public ResponseEntity<?> findSeats() {
         try{
             return ResponseEntity.ok(seatService.findSeats());
@@ -27,7 +25,7 @@ public class SeatController {
         }
     }
 
-    @PutMapping("/updateSeat/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> updateSeat(@PathVariable int id, @RequestBody SeatRequest request) {
         try{
@@ -38,7 +36,7 @@ public class SeatController {
         }
     }
 
-    @PostMapping("/creatSeat")
+    @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createRoom(@RequestBody SeatRequest request) {
         try {
@@ -48,11 +46,11 @@ public class SeatController {
         }
     }
 
-    @GetMapping("/changeStatus/{id}")
+    @PostMapping("/changeType/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestBody String status) {
+    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String type) {
         try {
-            return new ResponseEntity<>(seatService.changeStatus(id, status), HttpStatus.OK);
+            return new ResponseEntity<>(seatService.changeType(id, type), HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.noContent().build();

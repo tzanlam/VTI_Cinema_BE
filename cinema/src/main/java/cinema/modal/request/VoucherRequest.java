@@ -4,7 +4,6 @@ import cinema.modal.entity.Voucher;
 import cinema.modal.entity.constant.StatusVoucher;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static cinema.util.ConvertDateTime.convertToLocalDate;
@@ -20,12 +19,18 @@ public class VoucherRequest {
     public Voucher asVoucher() {
         Voucher voucher = new Voucher();
         populate(voucher);
+        voucher.setStatus(StatusVoucher.EFFECTIVE);
         return voucher;
     }
 
     public Voucher updateVoucher(Voucher voucher) {
         Voucher v = populate(voucher);
         v.setId(voucher.getId());
+        List<StatusVoucher> statusVouchers = List.of(StatusVoucher.values());
+        StatusVoucher statusVoucher = StatusVoucher.valueOf(status);
+        if (statusVouchers.contains(statusVoucher)) {
+            voucher.setStatus(StatusVoucher.valueOf(status));
+        }
         return v;
     }
 
@@ -34,10 +39,6 @@ public class VoucherRequest {
         voucher.setDescription(description);
         voucher.setDiscount(Double.parseDouble(discount));
         voucher.setExpiry(convertToLocalDate(expiry));
-        List<StatusVoucher> statusVouchers = List.of(StatusVoucher.values());
-        if (statusVouchers.contains(status.toUpperCase())) {
-            voucher.setStatus(StatusVoucher.valueOf(status));
-        }
         return voucher;
     }
 }

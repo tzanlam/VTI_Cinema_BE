@@ -55,13 +55,21 @@ public class WebSecurityConfigs {
                 .sessionManagement(i->i.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(a->a
                         .requestMatchers(
-                                "/cinema/findCinemas",
-                                "cinema/findById/",
                                 "/account/login",
-                                "/account/createAccount",
-                                "/moreService/serviceActive",
-                                "/payment/findPayment",
-                                "/payment/findById/"
+                                "/account/create",
+                                "/cinema/find",
+                                "/cinema/findId/{id}",
+                                "/moreService/findActive",
+                                "/moreService/findId/{id}",
+                                "/movie/findId/{id}",
+                                "/movie/findComingSoon",
+                                "/payment/find",
+                                "/payment/findId/{id}",
+                                "/seat/find",
+                                "/seatRoom/find",
+                                "/seatRoom/findId/{id}",
+                                "/showTime/find/{id}",
+                                "/showTime/findId/{id}"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

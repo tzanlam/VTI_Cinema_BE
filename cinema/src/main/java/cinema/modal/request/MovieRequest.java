@@ -21,7 +21,7 @@ public class MovieRequest {
     private String language;
     private String trailer;
     private String viewingAge;
-    private float rating;
+    private String rating;
     private String status;
 
     public Movie asMovie() {
@@ -42,7 +42,7 @@ public class MovieRequest {
         movie.setDuration(convertToLocalTime(duration));
         movie.setDescription(description);
         movie.setTrailer(trailer);
-        movie.setRating(rating);
+        movie.setRating(Float.parseFloat(rating));
 
         movie.setGenre(convertEnum(Genre.class, genre));
         movie.setLanguage(convertEnum(Language.class, language));

@@ -50,22 +50,14 @@ public class AccountServiceImpl implements AccountService {
     public Account changeStatus(int id, String newStatus) {
         Account account = accountRepository.findById(id).orElse(null);
         if (account != null) {
-            List<StatusAccount> validStatuses = Arrays.asList(StatusAccount.ACTIVE, StatusAccount.INACTIVE, StatusAccount.BLOCK);
-
             try {
-                StatusAccount status = StatusAccount.valueOf(newStatus);
-                if (validStatuses.contains(status)) {
-                    account.setStatus(status);
-                    accountRepository.save(account);
-                    return account;
-                } else {
-                    throw new IllegalArgumentException("Trạng thái không hợp lệ");
-                }
+                StatusAccount statusEnum = StatusAccount.valueOf(newStatus);
+                account.setStatus(statusEnum);
+                accountRepository.save(account);
+                return account;
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Trạng thái không hợp lệ", e);
+                System.out.println("Giá trị newStatus không hợp lệ: " + newStatus);
             }
-        } else {
-            System.out.println("Không tìm thấy tài khoản với ID: " + id);
         }
         return null;
     }

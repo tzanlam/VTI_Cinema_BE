@@ -17,7 +17,8 @@ public class SeatServiceimpl implements SeatService {
     private SeatRepository seatRepository;
     @Override
     public List<Seat> findSeats() {
-        return List.of((Seat) seatRepository.findAll());
+        List<Seat> seats = seatRepository.findAll();
+        return seats;
     }
 
     @Override
@@ -44,21 +45,26 @@ public class SeatServiceimpl implements SeatService {
     }
 
     @Override
-    public Seat changeStatus(int id, String newStatus) {
+    public Seat changeType(int id, String type) {
         Seat seat = seatRepository.findById(id).orElse(null);
         if (seat != null) {
-            List<SeatType> validStatuses = Arrays.asList(SeatType.STANDARD, SeatType.VIP, SeatType.DOUBLE);
-
-            if (validStatuses.contains(newStatus)) {
-                seat.setSeatType(SeatType.valueOf(newStatus));
-                seatRepository.save(seat);
-                return seat;
-            } else {
-                throw new IllegalArgumentException("Trạng thái không hợp lệ");
+            try {
+                SeatType seatTypeEnum = SeatType.valueOf(type);
+                List<SeatType> validStatuses = Arrays.asList(SeatType.STANDARD, SeatType.VIP, SeatType.DOUBLE);
+                if (validStatuses.contains(seatTypeEnum)) {
+                    seat.setSeatType(seatTypeEnum);
+                    seatRepository.save(seat);
+                    return seat;
+                } else {
+                    throw new IllegalArgumentException("SeatType không hợp lệ");
+                }
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("SeatType không hợp lệ: " + type, e);
             }
         } else {
-            System.out.println("không tìm thấy ghế với ID: " + id);
+            System.out.println("Không tìm thấy ghế với ID: " + id);
         }
         return null;
     }
+
 }

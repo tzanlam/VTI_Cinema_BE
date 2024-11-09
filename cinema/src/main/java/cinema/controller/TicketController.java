@@ -1,6 +1,5 @@
 package cinema.controller;
 
-import cinema.modal.entity.Ticket;
 import cinema.modal.request.TicketRequest;
 import cinema.service.Ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
-    @GetMapping("/findTickets/{page}")
+    @GetMapping("/find/{page}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findTicket(@PathVariable int page) {
         try{
@@ -25,7 +24,7 @@ public class TicketController {
         }
     }
 
-    @GetMapping("/findById/{id}")
+    @GetMapping("/findId/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try {
@@ -36,6 +35,7 @@ public class TicketController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','MANAGER')")
     public ResponseEntity<?> create(@RequestBody TicketRequest request) {
         try{
             return ResponseEntity.ok(ticketService.createTicket(request));
@@ -45,6 +45,7 @@ public class TicketController {
     }
 
     @PutMapping("update/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','MANAGER')")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody TicketRequest request) {
         try{
             return ResponseEntity.ok(ticketService.updateTicket(id, request));

@@ -9,8 +9,6 @@ import cinema.modal.request.SeatRoomRequest;
 import cinema.repository.RoomRepository;
 import cinema.repository.SeatRepository;
 import cinema.repository.SeatRoomRepository;
-import cinema.service.Room.RoomService;
-import cinema.service.Seat.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +25,8 @@ public class SeatRoomServiceimpl implements SeatRoomService {
     private RoomRepository roomRepository;
     @Override
     public List<SeatRoom> findSeatRooms() {
-        return List.of((SeatRoom) seatRoomRepository.findAll());
+        List<SeatRoom> seatRooms = seatRoomRepository.findAll();
+        return seatRooms;
     }
 
     @Override
@@ -60,7 +59,8 @@ public class SeatRoomServiceimpl implements SeatRoomService {
         SeatRoom seatRoom = seatRoomRepository.findById(id).orElse(null);
         if (seatRoom != null) {
             List<StatusSeatroom> validStatuses = Arrays.asList(StatusSeatroom.AVAILABLE, StatusSeatroom.BOOKED);
-            if (validStatuses.contains(newStatus)) {
+            StatusSeatroom statusSeatroom = StatusSeatroom.valueOf(newStatus);
+            if (validStatuses.contains(statusSeatroom)) {
                 seatRoom.setStatusSeatroom(StatusSeatroom.valueOf(newStatus));
                 seatRoomRepository.save(seatRoom);
                 return seatRoom;

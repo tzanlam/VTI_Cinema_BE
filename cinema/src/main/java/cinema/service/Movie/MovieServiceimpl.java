@@ -16,7 +16,8 @@ public class MovieServiceimpl implements MovieService{
     private MovieRepository movieRepository;
     @Override
     public List<Movie> findMovies() {
-        return List.of((Movie) movieRepository.findAll());
+        List<Movie> movies = movieRepository.findAll();
+        return movies;
     }
 
     @Override
@@ -47,8 +48,8 @@ public class MovieServiceimpl implements MovieService{
         Movie movie = movieRepository.findById(id).orElse(null);
         if (movie != null) {
             List<StatusMovie> validStatuses = Arrays.asList(StatusMovie.COMING_SOON, StatusMovie.SHOWING, StatusMovie.CLOSED);
-
-            if (validStatuses.contains(newStatus)) {
+            StatusMovie statusMovie = StatusMovie.valueOf(newStatus);
+            if (validStatuses.contains(statusMovie)) {
                 movie.setStatus(StatusMovie.valueOf(newStatus));
                 movieRepository.save(movie);
                 return movie;
@@ -59,6 +60,11 @@ public class MovieServiceimpl implements MovieService{
             System.out.println("Không tìm thấy bộ phim đang chiếu với ID: " + id);
         }
         return null;
+    }
+
+    @Override
+    public List<Movie> findMovieComingSoon() {
+        return movieRepository.findByStatus(StatusMovie.COMING_SOON);
     }
 
 }

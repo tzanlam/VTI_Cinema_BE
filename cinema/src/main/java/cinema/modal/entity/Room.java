@@ -16,19 +16,19 @@ public class Room extends Base{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     private String name;
 
 
     @ManyToOne
-    @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false, unique = true)
+    @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false)
     private Cinema cinema;
 
 
-    @ElementCollection
-    @CollectionTable(name = "seatinroom", joinColumns = @JoinColumn(name = "seat_room_id"))
-    @Column (name = "seat_room_id", nullable = false)
-    private List<SeatRoom> seatRooms;
+//    @ElementCollection
+//    @CollectionTable(name = "seatinroom", joinColumns = @JoinColumn(name = "seat_room_id"))
+//    @Column (name = "seat_room_id", nullable = false)
+//    private List<SeatRoom> seatRooms;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

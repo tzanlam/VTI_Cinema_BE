@@ -15,7 +15,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @GetMapping("/findPayment")
+    @GetMapping("/find")
     public ResponseEntity<?> findAll(){
         try{
             return new ResponseEntity<>(paymentService.findPayments(), HttpStatus.OK);
@@ -24,7 +24,7 @@ public class PaymentController {
         }
     }
 
-    @GetMapping("findById/{id}")
+    @GetMapping("findId/{id}")
     public ResponseEntity<?> findById(@PathVariable int id){
         try{
             return new ResponseEntity<>(paymentService.findPaymentById(id), HttpStatus.OK);
@@ -33,7 +33,7 @@ public class PaymentController {
         }
     }
 
-    @PostMapping("/createPayment")
+    @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createPayment(@RequestBody PaymentRequest request){
         try{
@@ -43,7 +43,7 @@ public class PaymentController {
         }
     }
 
-    @PutMapping("updatePayment/{id}")
+    @PutMapping("update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updatePayment(@RequestBody PaymentRequest request, @PathVariable int id){
         try {

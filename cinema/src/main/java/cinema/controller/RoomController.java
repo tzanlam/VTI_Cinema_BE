@@ -15,7 +15,7 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
-    @GetMapping("/findRooms/{page}")
+    @GetMapping("/find/{page}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findRooms(@PathVariable int page) {
         try{
@@ -25,25 +25,26 @@ public class RoomController {
         }
     }
 
-    @PutMapping("/updateRoom/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> updateRoom(@PathVariable int id, @RequestBody RoomRequest request) {
         try{
             return new ResponseEntity<>(roomService.updateRoom(id, request), HttpStatus.CREATED);
         }catch (Exception e){
-            return ResponseEntity.noContent().build();
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
         }
     }
 
-    @PostMapping("/createRoom")
+    @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createRoom(@RequestBody RoomRequest request) throws Exception {
         return new ResponseEntity<>(roomService.createRoom(request), HttpStatus.CREATED);
     }
 
-    @GetMapping("/changeStatus/{id}")
+    @PostMapping("/changeStatus/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestBody String status) {
+    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try {
             return new ResponseEntity<>(roomService.changeStatus(id, status), HttpStatus.OK);
         }catch (Exception e){

@@ -6,5 +6,4 @@ import lombok.Data;
 public class SeatRoomRequest {
     private int room;
     private int seat;
-    private String statusSeatroom;
 }

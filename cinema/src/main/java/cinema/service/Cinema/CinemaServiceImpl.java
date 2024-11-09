@@ -47,19 +47,16 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Override
     public Cinema changeStatus(int id, String status) throws Exception {
-        Cinema cinema = cinemaRepository.findById(id).orElse(null);
-        if (cinema != null) {
-            List<StatusCinema> statusCurrent = Arrays.asList(StatusCinema.OPEN,StatusCinema.CLOSED, StatusCinema.BUILDING);
-            if (statusCurrent.contains(status)){
-                cinema.setStatus(StatusCinema.valueOf(status));
-                cinemaRepository.save(cinema);
-                return cinema;
-            }else {
-                throw new Exception("Cinema status not exist");
-            }
-        }
-        else {
-            throw new Exception("Cinema not found");
+        Cinema cinema = cinemaRepository.findById(id)
+                .orElseThrow(() -> new Exception("Cinema not found"));
+
+        try {
+            StatusCinema newStatus = StatusCinema.valueOf(status);
+            cinema.setStatus(newStatus);
+            cinemaRepository.save(cinema);
+            return cinema;
+        } catch (IllegalArgumentException e) {
+            throw new Exception("Cinema status not exist");
         }
     }
 }

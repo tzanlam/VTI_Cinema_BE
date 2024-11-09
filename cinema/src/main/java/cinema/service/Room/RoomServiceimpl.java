@@ -54,48 +54,52 @@ public class RoomServiceimpl implements RoomService{
 
     @Override
     public Room updateRoom(int id, RoomRequest request) throws Exception {
-        Room room = roomRepository.findById(id).get();
-        if (room != null) {
-            room.setName(request.getName());
-            Cinema cinema = cinemaRepository.findById(request.getCinema()).get();
-            room.setCinema(cinema);
-            List<StatusRoom> valueStatus = Arrays.asList(StatusRoom.ACTIVE, StatusRoom.INACTIVE);
-            if (valueStatus.contains(request.getStatus())) {
-                room.setStatus(StatusRoom.valueOf(request.getStatus()));
-            }
-            else {
-                throw new Exception("Error with Status Room");
-            }
-            List<ScreenType> valueScreen = Arrays.asList(ScreenType.FULL_SCREEN, ScreenType.FULL_SCREEN);
-            if (valueScreen.contains(request.getScreenType())) {
-                room.setScreenType(ScreenType.valueOf(request.getScreenType()));
-            }
-            else {
-                throw new Exception("Error with Screen Type");
-            }
-            roomRepository.save(room);
-            return room;
+        Room room = roomRepository.findById(id).orElseThrow(() -> new Exception("Error with Id"));
+
+        room.setName(request.getName());
+
+        Cinema cinema = cinemaRepository.findById(request.getCinema())
+                .orElseThrow(() -> new Exception("Error with Cinema Id"));
+        room.setCinema(cinema);
+
+        try {
+            room.setStatus(StatusRoom.valueOf(request.getStatus()));
+        } catch (IllegalArgumentException e) {
+            throw new Exception("Error with Status Room");
         }
-        else {
-            throw new Exception("Error with Id");
+
+        try {
+            room.setScreenType(ScreenType.valueOf(request.getScreenType()));
+        } catch (IllegalArgumentException e) {
+            throw new Exception("Error with Screen Type");
         }
+
+        roomRepository.save(room);
+        return room;
     }
+
 
     @Override
     public Room changeStatus(int id, String newStatus) {
         Room room = roomRepository.findById(id).orElse(null);
         if (room != null) {
-            List<StatusRoom> validStatuses = Arrays.asList(StatusRoom.ACTIVE, StatusRoom.INACTIVE);
-            if (validStatuses.contains(newStatus)) {
-                room.setStatus(StatusRoom.valueOf(newStatus));
-                roomRepository.save(room);
-                return room;
-            } else {
-                throw new IllegalArgumentException("Trạng thái không hợp lệ");
+            try {
+                StatusRoom statusEnum = StatusRoom.valueOf(newStatus);
+                List<StatusRoom> validStatuses = Arrays.asList(StatusRoom.ACTIVE, StatusRoom.INACTIVE);
+                if (validStatuses.contains(statusEnum)) {
+                    room.setStatus(statusEnum);
+                    roomRepository.save(room);
+                    return room;
+                } else {
+                    throw new IllegalArgumentException("Trạng thái không hợp lệ");
+                }
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Trạng thái không hợp lệ: " + newStatus, e);
             }
         } else {
             System.out.println("Không tìm thấy phòng chiếu với ID: " + id);
         }
         return null;
     }
+
 }

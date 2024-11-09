@@ -4,6 +4,7 @@ import cinema.modal.request.VoucherRequest;
 import cinema.service.Voucher.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +15,7 @@ public class VoucherController {
     private VoucherService voucherService;
 
     @GetMapping("/find/{page}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> find(@PathVariable int page) {
         try{
             return ResponseEntity.ok(voucherService.findVoucher(page));
@@ -23,6 +25,7 @@ public class VoucherController {
     }
 
     @GetMapping("/findId/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
             return ResponseEntity.ok(voucherService.findVoucherById(id));
@@ -32,6 +35,7 @@ public class VoucherController {
     }
 
     @GetMapping("/findEffective")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findEffective() {
         try{
             return ResponseEntity.ok(voucherService.findVoucherEffective());
@@ -41,6 +45,7 @@ public class VoucherController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> create(@RequestBody VoucherRequest request) {
         try{
             return ResponseEntity.ok(voucherService.createVoucher(request));
@@ -50,6 +55,7 @@ public class VoucherController {
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody VoucherRequest request) {
         try {
             return ResponseEntity.ok(voucherService.updateVoucher(id, request));

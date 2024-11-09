@@ -1,10 +1,10 @@
 package cinema.controller;
 
-import cinema.modal.entity.Receipt;
 import cinema.modal.request.ReceiptRequest;
 import cinema.service.Receipt.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +15,7 @@ public class ReceiptController {
     private ReceiptService receiptService;
 
     @GetMapping("/find/{page}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findAll(@PathVariable int page){
         try{
             return ResponseEntity.ok(receiptService.findReceipts(page));
@@ -24,6 +25,7 @@ public class ReceiptController {
     }
 
     @GetMapping("/findId")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findById(@PathVariable int id){
         try {
             return ResponseEntity.ok(receiptService.findReceiptById(id));
@@ -33,6 +35,7 @@ public class ReceiptController {
     }
 
     @GetMapping("/findIncome/{page}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findIncome(@PathVariable int page){
         try{
             return ResponseEntity.ok(receiptService.findIncome(page));
@@ -42,6 +45,7 @@ public class ReceiptController {
     }
 
     @GetMapping("/findSpending/{page}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findSpending(@PathVariable int page){
         try{
             return ResponseEntity.ok(receiptService.findSpending(page));
@@ -51,6 +55,7 @@ public class ReceiptController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> create(@RequestBody ReceiptRequest request){
         try{
             return ResponseEntity.ok(receiptService.ceateReceipt(request));
@@ -60,6 +65,7 @@ public class ReceiptController {
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody ReceiptRequest request){
         try{
             return ResponseEntity.ok(receiptService.updateReceipt(id, request));
@@ -69,6 +75,7 @@ public class ReceiptController {
     }
 
     @GetMapping("/changeStatus/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestBody String status){
         try{
             return ResponseEntity.ok(receiptService.changeStatus(id, status));

@@ -18,8 +18,7 @@ public class CinemaController {
     @Autowired
     private CinemaService cinemaService;
 
-    @GetMapping("/findCinemas")
-    // http://localhost:8081/cinema/findCinemas
+    @GetMapping("/find")
     public ResponseEntity<?> findCinemas() {
         try{
             List<Cinema> cinemas = cinemaService.findCinemas();
@@ -29,9 +28,8 @@ public class CinemaController {
         }
     }
 
-    @PutMapping("/updateCinema/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
-    // http://localhost:8081/cinema/updateCinema/{id}
     public ResponseEntity<?> updateCinema(@PathVariable int id, @RequestBody CinemaRequest request) {
         try{
             return new ResponseEntity<>(cinemaService.updateCinema(request, id), HttpStatus.CREATED);
@@ -41,17 +39,15 @@ public class CinemaController {
         }
     }
 
-    @PostMapping("/createCinema")
+    @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
-    // http://localhost:8081/cinema/createCinema
     public ResponseEntity<?> createCinema(@RequestBody CinemaRequest request) {
             return new ResponseEntity<>(cinemaService.createCinema(request), HttpStatus.CREATED);
     }
 
-    @GetMapping("/changeStatus/{id}")
+    @PostMapping("/changeStatus/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    // http://localhost:8081/cinema/changeStatus/{id}
-    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestBody String status) {
+    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try {
             return new ResponseEntity<>(cinemaService.changeStatus(id, status), HttpStatus.OK);
         }catch (Exception e){
@@ -60,8 +56,7 @@ public class CinemaController {
         }
     }
 
-    @GetMapping("/findById/{id}")
-    // http://localhost:8081/cinema/findById/{id}
+    @GetMapping("/findId/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
             return new ResponseEntity<>(cinemaService.findById(id), HttpStatus.OK);
