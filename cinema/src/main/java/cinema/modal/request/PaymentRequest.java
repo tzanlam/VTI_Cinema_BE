@@ -9,8 +9,8 @@ import java.util.List;
 
 @Data
 public class PaymentRequest {
-    private String methodPayment;
-    private String addressTranfer;
+    private String method;
+    private String addressTransfer;
     private String qrCode;
     private String status;
 
@@ -18,12 +18,12 @@ public class PaymentRequest {
         Payment payment = new Payment();
 
         List<MethodPayment> methodPayments = List.of(MethodPayment.values());
-        MethodPayment methodPayment = MethodPayment.valueOf(this.methodPayment);
+        MethodPayment methodPayment = MethodPayment.valueOf(this.method);
         if (methodPayments.contains(methodPayment)) {
-            payment.setMethod(MethodPayment.valueOf(this.methodPayment));
+            payment.setMethod(MethodPayment.valueOf(this.method));
         }
 
-        payment.setAddressTransfer(addressTranfer);
+        payment.setAddressTransfer(addressTransfer);
         payment.setQrCode(qrCode);
 
         List<StatusPayment> statusPayments = List.of(StatusPayment.values());
@@ -36,11 +36,11 @@ public class PaymentRequest {
 
     public Payment updatePayment(Payment payment) {
         List<MethodPayment> methodPayments = List.of(MethodPayment.values());
-        if (methodPayments.contains(methodPayment)) {
-            payment.setMethod(MethodPayment.valueOf(String.valueOf(methodPayment)));
+        if (methodPayments.contains(method)) {
+            payment.setMethod(MethodPayment.valueOf(String.valueOf(method)));
         }
 
-        payment.setAddressTransfer(addressTranfer);
+        payment.setAddressTransfer(addressTransfer);
         payment.setQrCode(qrCode);
 
         List<StatusPayment> statusPayments = List.of(StatusPayment.values());

@@ -47,7 +47,7 @@ public class ReceiptServiceImpl implements ReceiptService{
         receipt.setReason(request.getReason());
         receipt.setAmount(Double.parseDouble(request.getAmount()));
         receipt.setStatus(StatusReceipt.UNPROCESSED);
-        return null;
+        return receipt;
     }
 
     @Override

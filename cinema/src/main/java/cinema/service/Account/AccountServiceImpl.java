@@ -51,10 +51,15 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRepository.findById(id).orElse(null);
         if (account != null) {
             try {
+                List<StatusAccount> accounts = List.of(StatusAccount.values());
                 StatusAccount statusEnum = StatusAccount.valueOf(newStatus);
-                account.setStatus(statusEnum);
-                accountRepository.save(account);
-                return account;
+                if (accounts.contains(statusEnum)){
+                    account.setStatus(statusEnum);
+                    accountRepository.save(account);
+                    return account;
+
+                }
+
             } catch (IllegalArgumentException e) {
                 System.out.println("Giá trị newStatus không hợp lệ: " + newStatus);
             }
