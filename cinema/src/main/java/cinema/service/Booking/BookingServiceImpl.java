@@ -7,10 +7,13 @@ import cinema.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -50,10 +53,23 @@ public class BookingServiceImpl implements BookingService {
         booking.setTicket(ticket);
         booking.setMoreService(moreService);
         booking.setPayment(payment);
+        booking.setConfirmed(false);
         booking.setTotalPrice(ticket.getTotalPrice()+moreService.getPrice()-voucher.getDiscount());
         booking.setStatus(StatusBooking.WAITING);
         bookingRepository.save(booking);
         return booking;
+    }
+
+    @Scheduled(fixedRate = 60000)
+    public Booking removeExpiredBookings(BookingRequest request){
+        LocalDateTime tenMinutesAgo = LocalDateTime.now().minusMinutes(10);
+        List<Booking> expiredBookings = bookingRepository.findByConfirmedFalseAndCreatedAtBefore(tenMinutesAgo);
+        bookingRepository.deleteAll(expiredBookings);
+        return null;
+    }
+
+    public Booking confirmBooking(int id) {
+       Booking
     }
 
     @Override

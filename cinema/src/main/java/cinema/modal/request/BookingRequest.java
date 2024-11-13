@@ -10,4 +10,5 @@ public class BookingRequest {
     private int moreService;
     private int voucher;
     private int payment;
+    private boolean confirmed;
 }

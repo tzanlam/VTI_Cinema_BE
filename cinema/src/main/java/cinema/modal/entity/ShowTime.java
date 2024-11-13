@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -31,4 +32,7 @@ public class ShowTime extends Base{
 
     @Column(name = "start_time", nullable = false)
     private LocalTime startTime;
+
+    @Column(name = "available_seats")
+    private int availableSeats;
 }

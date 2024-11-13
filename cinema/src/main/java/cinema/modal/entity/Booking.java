@@ -28,7 +28,7 @@ public class Booking extends Base{
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")
     private Voucher voucher;
 
-    @Column(name = "totla_price", nullable = false)
+    @Column(name = "total_price", nullable = false)
     private double totalPrice;
 
     @ManyToOne
@@ -38,4 +38,7 @@ public class Booking extends Base{
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusBooking status;
+
+    @JoinColumn(name = "confirmed", nullable = false)
+    private boolean confirmed;
 }
