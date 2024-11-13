@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class ShowTimeDTO {
-    private String movieName;
-    private String cinemaName;
-    private String showDate;
-    private String startTime;
+    private String movie_name;
+    private String cinema_name;
+    private String show_date;
+    private String start_time;
 }
