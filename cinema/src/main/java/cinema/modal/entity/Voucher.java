@@ -26,6 +26,7 @@ public class Voucher extends Base{
     @Column(name = "expiry", nullable = false)
     private LocalDate expiry;
 
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusVoucher status;

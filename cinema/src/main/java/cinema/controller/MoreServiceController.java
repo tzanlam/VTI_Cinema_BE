@@ -4,11 +4,15 @@ import cinema.modal.entity.MoreService;
 import cinema.modal.request.MoreServiceRequest;
 import cinema.modal.response.DTO.MoreServiceDTO;
 import cinema.service.MoreService.MoreServiceService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
@@ -17,11 +21,18 @@ public class MoreServiceController {
     @Autowired
     private MoreServiceService moreServiceService;
 
+    @Autowired
+    private ModelMapper modelMapper;
     @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findServices() {
         try{
-            return ResponseEntity.ok(moreServiceService.findServices());
+            List<MoreService> moreServices = moreServiceService.findServices();
+            List<MoreServiceDTO> moreServiceDTOS = moreServices.stream()
+                    .map(moreService -> modelMapper.map(moreService, MoreServiceDTO.class))
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(moreServiceDTOS);
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -6,6 +6,7 @@ import lombok.Data;
 public class MoreServiceDTO {
     private String name;
     private String image;
+    private String decription;
     private String price;
     private String status;
 }

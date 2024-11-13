@@ -6,6 +6,7 @@ import lombok.Data;
 public class MoreServiceRequest {
     private String name;
     private String image;
+    private String decription;
     private double price;
     private String status;
 }
