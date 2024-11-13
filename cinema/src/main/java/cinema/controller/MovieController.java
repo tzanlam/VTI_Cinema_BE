@@ -1,17 +1,19 @@
 package cinema.controller;
 
-import cinema.modal.request.CinemaRequest;
-import cinema.modal.request.LoginRequest;
+import cinema.modal.entity.Movie;
 import cinema.modal.request.MovieRequest;
-import cinema.service.Account.AccountService;
-import cinema.service.Cinema.CinemaService;
-import cinema.service.Global.GlobalService;
+import cinema.modal.response.DTO.MovieDTO;
 import cinema.service.Movie.MovieService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import java.util.stream.Collectors;
+
+
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -20,14 +22,16 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> findMovies() {
         try{
             return ResponseEntity.ok(movieService.findMovies());
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return new ResponseEntity<>("Error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -35,34 +39,40 @@ public class MovieController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> updateMovie(@PathVariable int id, @RequestBody MovieRequest request) {
         try{
-            return new ResponseEntity<>(movieService.updateMovie(id, request), HttpStatus.CREATED);
+            Movie movie = movieService.updateMovie(id, request);
+            return new ResponseEntity<>(movie, HttpStatus.CREATED);
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return new ResponseEntity<>("Error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createMovie(@RequestBody MovieRequest request) {
-        return new ResponseEntity<>(movieService.createMovie(request), HttpStatus.CREATED);
+        try {
+            Movie movie = movieService.createMovie(request);
+            return new ResponseEntity<>(movie, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>("Error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/changeStatus/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try {
-            return new ResponseEntity<>(movieService.changeStatus(id, status), HttpStatus.OK);
+            return new ResponseEntity<>(movieService.changeStatus(id, status), HttpStatus.CREATED);
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return new ResponseEntity<>("Error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("findId/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
-            return ResponseEntity.ok(movieService.findById(id));
+            Movie movie = movieService.findById(id);
+            MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
+            return ResponseEntity.ok(movieDTO);
         }catch (Exception e){
             return ResponseEntity.internalServerError().build();
         }
@@ -70,7 +80,34 @@ public class MovieController {
     @GetMapping("/findComingSoon")
     public ResponseEntity<?> findComingSoon() {
         try {
-            return ResponseEntity.ok(movieService.findMovieComingSoon());
+            List<MovieDTO> movieDTOS = movieService.findMovieComingSoon().stream()
+                    .map(movie -> modelMapper.map(movie, MovieDTO.class))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(movieDTOS);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/findSpecial")
+    public ResponseEntity<?> findSpecial() {
+        try{
+            List<MovieDTO> movieDTOS = movieService.findMovieSpecial().stream()
+                    .map(movie -> modelMapper.map(movie, MovieDTO.class))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(movieDTOS);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/findShowing")
+    public ResponseEntity<?> findShowing() {
+        try{
+            List<MovieDTO> movieDTOS = movieService.findMovieShowing().stream()
+                    .map(movie -> modelMapper.map(movie, MovieDTO.class))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(movieDTOS);
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }

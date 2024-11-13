@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,9 +30,14 @@ public class ShowTime extends Base{
     @Column(name = "show_date", nullable = false)
     private LocalDate showDate;
 
+    @ElementCollection
+    @CollectionTable(name = "list_start_time", joinColumns = @JoinColumn(name = "showtime_id"))
     @Column(name = "start_time", nullable = false)
-    private LocalTime startTime;
+    private List<LocalTime> startTime;
 
     @Column(name = "available_seats")
     private int availableSeats;
 }
+
+//dau ra
+// id: 1, movie [id: 1,....], room[], cinema[], showDate: showdate, startTime: List

@@ -20,7 +20,7 @@ public class CinemaRequest {
         cinema.setName(name);
         cinema.setImage(image);
         cinema.setLocation(location);
-        cinema.setStatus(StatusCinema.BUILDING);
+        cinema.setStatus(StatusCinema.OPEN);
         return cinema;
     }
 
@@ -28,7 +28,6 @@ public class CinemaRequest {
         cinema.setName(name);
         cinema.setImage(image);
         cinema.setLocation(location);
-        cinema.setStatus(StatusCinema.BUILDING);
         return cinema;
     }
 }

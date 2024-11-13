@@ -8,7 +8,7 @@ public interface BookingService {
     Page<Booking> findBookings(int page);
     Booking findById(int id);
     Booking createBooking(BookingRequest request);
-    Booking confirmedBooking(int id);
+//    Booking confirmedBooking(int id);
     Booking updateBooking(int id, BookingRequest request);
     Booking changeStatus(int id, String newStatus);
 }

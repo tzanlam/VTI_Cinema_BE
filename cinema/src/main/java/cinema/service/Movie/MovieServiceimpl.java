@@ -47,7 +47,7 @@ public class MovieServiceimpl implements MovieService{
     public Movie changeStatus(int id, String newStatus) {
         Movie movie = movieRepository.findById(id).orElse(null);
         if (movie != null) {
-            List<StatusMovie> validStatuses = Arrays.asList(StatusMovie.COMING_SOON, StatusMovie.SHOWING, StatusMovie.CLOSED);
+            List<StatusMovie> validStatuses = Arrays.asList(StatusMovie.values());
             StatusMovie statusMovie = StatusMovie.valueOf(newStatus);
             if (validStatuses.contains(statusMovie)) {
                 movie.setStatus(StatusMovie.valueOf(newStatus));
@@ -65,6 +65,16 @@ public class MovieServiceimpl implements MovieService{
     @Override
     public List<Movie> findMovieComingSoon() {
         return movieRepository.findByStatus(StatusMovie.COMING_SOON);
+    }
+
+    @Override
+    public List<Movie> findMovieShowing() {
+        return movieRepository.findByStatus(StatusMovie.SHOWING);
+    }
+
+    @Override
+    public List<Movie> findMovieSpecial() {
+        return movieRepository.findByStatus(StatusMovie.SPECIAL);
     }
 
 }

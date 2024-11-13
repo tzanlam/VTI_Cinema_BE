@@ -7,11 +7,13 @@ import cinema.modal.entity.constant.StatusMovie;
 import cinema.modal.entity.constant.ViewingAge;
 import lombok.Data;
 
+import static cinema.util.ConvertDateTime.convertToLocalDate;
 import static cinema.util.ConvertDateTime.convertToLocalTime;
 
 @Data
 
 public class MovieRequest {
+    private String image;
     private String name;
     private String actor;
     private String director;
@@ -20,9 +22,9 @@ public class MovieRequest {
     private String description;
     private String language;
     private String trailer;
+    private String startDate;
     private String viewingAge;
     private String rating;
-    private String status;
 
     public Movie asMovie() {
         Movie movie = new Movie();
@@ -36,6 +38,7 @@ public class MovieRequest {
     }
 
     private void populateMovieFields(Movie movie) {
+        movie.setImage(image);
         movie.setName(name);
         movie.setActor(actor);
         movie.setDirector(director);
@@ -43,11 +46,11 @@ public class MovieRequest {
         movie.setDescription(description);
         movie.setTrailer(trailer);
         movie.setRating(Float.parseFloat(rating));
-
+        movie.setStartDate(convertToLocalDate(startDate));
         movie.setGenre(convertEnum(Genre.class, genre));
         movie.setLanguage(convertEnum(Language.class, language));
         movie.setViewingAge(convertEnum(ViewingAge.class, viewingAge));
-        movie.setStatus(convertEnum(StatusMovie.class, status));
+        movie.setStatus(StatusMovie.CLOSE);
     }
     private <E extends Enum<E>> E convertEnum(Class<E> enumClass, String value) {
         try {

@@ -60,17 +60,17 @@ public class BookingServiceImpl implements BookingService {
         return booking;
     }
 
-    @Scheduled(fixedRate = 60000)
-    public Booking removeExpiredBookings(BookingRequest request){
-        LocalDateTime tenMinutesAgo = LocalDateTime.now().minusMinutes(10);
-        List<Booking> expiredBookings = bookingRepository.findByConfirmedFalseAndCreatedAtBefore(tenMinutesAgo);
-        bookingRepository.deleteAll(expiredBookings);
-        return null;
-    }
+//    @Scheduled(fixedRate = 60000)
+//    public Booking removeExpiredBookings(BookingRequest request){
+//        LocalDateTime tenMinutesAgo = LocalDateTime.now().minusMinutes(10);
+//        List<Booking> expiredBookings = bookingRepository.findByConfirmedFalseAndCreatedAtBefore(tenMinutesAgo);
+//        bookingRepository.deleteAll(expiredBookings);
+//        return null;
+//    }
 
-    public Booking confirmBooking(int id) {
-       Booking
-    }
+//    public Booking confirmBooking(int id) {
+//       Booking
+//    }
 
     @Override
     public Booking updateBooking(int id, BookingRequest request) {

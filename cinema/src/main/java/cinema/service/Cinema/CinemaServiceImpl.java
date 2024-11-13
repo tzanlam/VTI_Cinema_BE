@@ -15,9 +15,10 @@ import java.util.Optional;
 public class CinemaServiceImpl implements CinemaService {
     @Autowired
     private CinemaRepository cinemaRepository;
+
     @Override
     public List<Cinema> findCinemas() {
-        List<Cinema> cinemas  = cinemaRepository.findAll();
+        List<Cinema> cinemas = cinemaRepository.findAll();
         return cinemas;
     }
 
@@ -39,6 +40,7 @@ public class CinemaServiceImpl implements CinemaService {
         if (cinema.isPresent()) {
             Cinema c = cinema.get();
             request.updateCinema(c);
+            c.setId(id);
             cinemaRepository.save(c);
             return c;
         }
@@ -49,14 +51,13 @@ public class CinemaServiceImpl implements CinemaService {
     public Cinema changeStatus(int id, String status) throws Exception {
         Cinema cinema = cinemaRepository.findById(id)
                 .orElseThrow(() -> new Exception("Cinema not found"));
-
-        try {
-            StatusCinema newStatus = StatusCinema.valueOf(status);
+        StatusCinema newStatus = StatusCinema.valueOf(status);
+        List<StatusCinema> statusCinemas = List.of(StatusCinema.values());
+        if (statusCinemas.contains(newStatus)) {
             cinema.setStatus(newStatus);
             cinemaRepository.save(cinema);
             return cinema;
-        } catch (IllegalArgumentException e) {
-            throw new Exception("Cinema status not exist");
         }
+        return null;
     }
 }

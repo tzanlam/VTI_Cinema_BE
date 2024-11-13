@@ -7,6 +7,7 @@ import cinema.modal.entity.constant.ViewingAge;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
@@ -16,6 +17,9 @@ public class Movie extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "image_movie", nullable = false)
+    private String image;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -42,6 +46,9 @@ public class Movie extends Base{
 
     @Column(name = "trailer", nullable = false)
     private String trailer;
+
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
 
     @Column(name = "viewing_age", nullable = false)
     @Enumerated(EnumType.STRING)

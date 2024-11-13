@@ -45,15 +45,15 @@ public class BookingController {
         }
     }
 
-    @PostMapping("confirm/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
-    public ResponseEntity<?> createBooking(@PathVariable int id) {
-        try{
-            return new ResponseEntity<>(bookingService.confirmedBooking(id), HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @PostMapping("confirm/{id}")
+//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
+//    public ResponseEntity<?> createBooking(@PathVariable int id) {
+//        try{
+//            return new ResponseEntity<>(bookingService.confirmedBooking(id), HttpStatus.CREATED);
+//        }catch (Exception e){
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 
 
