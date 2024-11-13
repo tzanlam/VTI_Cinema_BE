@@ -54,8 +54,7 @@ public class ShowTimeServiceImpl implements ShowTimeService{
     @Override
     public List<LocalTime> findByMovie(int id) {
         ShowTime showTimes = showTimeRepository.findByMovieId(id);
-        List<LocalTime> localTimeList = showTimes.getStartTime();
-        return localTimeList;
+        return showTimes.getStartTime();
     }
 
     private ShowTime populate(ShowTimeRequest request, ShowTime showTime) {
