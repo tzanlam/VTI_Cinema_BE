@@ -41,7 +41,7 @@ public class ShowTimeController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> create(@RequestBody ShowTimeRequest showTimeRequest){
         try{
-            return new ResponseEntity<>(modelMapper.map(showTimeService.createShowTime(showTimeRequest),ShowTimeDTO.class), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ShowTimeDTO(showTimeService.createShowTime(showTimeRequest)), HttpStatus.CREATED);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

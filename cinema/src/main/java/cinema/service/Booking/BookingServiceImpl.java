@@ -32,8 +32,8 @@ public class BookingServiceImpl implements BookingService {
     private MoreServiceRepository moreServiceRepository;
 
     @Override
-    public Page<Booking> findBookings(int page) {
-        return bookingRepository.findAll(PageRequest.of(page, 10));
+    public List<Booking> findBookings() {
+        return bookingRepository.findAll();
     }
 
     @Override
