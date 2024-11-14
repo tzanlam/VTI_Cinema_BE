@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @Service
 public class BookingServiceImpl implements BookingService {
+
     @Autowired
     private BookingRepository bookingRepository;
     @Autowired
@@ -43,68 +44,85 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking createBooking(BookingRequest request) {
         Booking booking = new Booking();
-        Account account = accountRepository.findById(request.getAccount()).get();
-        Voucher voucher = voucherRepository.findById(request.getVoucher()).get();
-        Ticket ticket = ticketRepository.findById(request.getTicket()).get();
-        MoreService moreService = moreServiceRepository.findById(request.getMoreService()).get();
-        Payment payment = paymentRepository.findById(request.getPayment()).get();
-        booking.setAccount(account);
-        booking.setVoucher(voucher);
-        booking.setTicket(ticket);
-        booking.setMoreService(moreService);
-        booking.setPayment(payment);
-        booking.setConfirmed(false);
-        booking.setTotalPrice(ticket.getTotalPrice()+moreService.getPrice()-voucher.getDiscount());
-        booking.setStatus(StatusBooking.WAITING);
-        bookingRepository.save(booking);
-        return booking;
+        if (populate(booking, request)) {
+            booking.setConfirmed(false);
+            booking.setStatus(StatusBooking.WAITING);
+            bookingRepository.save(booking);
+            return booking;
+        } else {
+            throw new IllegalArgumentException("Invalid booking request details");
+        }
     }
 
-//    @Scheduled(fixedRate = 60000)
-//    public Booking removeExpiredBookings(BookingRequest request){
-//        LocalDateTime tenMinutesAgo = LocalDateTime.now().minusMinutes(10);
-//        List<Booking> expiredBookings = bookingRepository.findByConfirmedFalseAndCreatedAtBefore(tenMinutesAgo);
-//        bookingRepository.deleteAll(expiredBookings);
-//        return null;
-//    }
+    @Scheduled(fixedRate = 60000)
+    public void removeExpiredBookings() {
+        LocalDateTime tenMinutesAgo = LocalDateTime.now().minusMinutes(10);
+            List<Booking> expiredBookings = bookingRepository.findByConfirmedFalseAndCreatedDateBefore(tenMinutesAgo);
+        bookingRepository.deleteAll(expiredBookings);
+    }
 
-//    public Booking confirmBooking(int id) {
-//       Booking
-//    }
+    public Booking confirmBooking(int id) {
+        Booking booking = bookingRepository.findById(id).orElse(null);
+        if (booking != null && !booking.isConfirmed()) {
+            booking.setConfirmed(true);
+            booking.setStatus(StatusBooking.SUCCESS);
+            bookingRepository.save(booking);
+            return booking;
+        } else {
+            throw new IllegalArgumentException("Booking not found or already confirmed");
+        }
+    }
 
     @Override
     public Booking updateBooking(int id, BookingRequest request) {
         Booking booking = bookingRepository.findById(id).orElse(null);
         if (booking != null) {
-            Account account = accountRepository.findById(request.getAccount()).get();
-            Voucher voucher = voucherRepository.findById(request.getVoucher()).get();
-            Ticket ticket = ticketRepository.findById(request.getTicket()).get();
-            MoreService moreService = moreServiceRepository.findById(request.getMoreService()).get();
-            Payment payment = paymentRepository.findById(request.getPayment()).get();
-            booking.setAccount(account);
-            booking.setVoucher(voucher);
-            booking.setTicket(ticket);
-            booking.setMoreService(moreService);
-            booking.setPayment(payment);
-            booking.setTotalPrice(ticket.getTotalPrice()+moreService.getPrice()-voucher.getDiscount());
-            booking.setStatus(StatusBooking.WAITING);
-            bookingRepository.save(booking);
-            return booking;
+            if (populate(booking, request)) {
+                booking.setId(id);
+                booking.setStatus(StatusBooking.WAITING);
+                booking.setConfirmed(false);
+                bookingRepository.save(booking);
+                return booking;
+            } else {
+                throw new IllegalArgumentException("Invalid booking request details");
+            }
         }
-        return null;
+        throw new IllegalArgumentException("Booking not found");
     }
 
     @Override
-    public Booking changeStatus(int id, String Newstatus) {
+    public Booking changeStatus(int id, String newStatus) {
         Booking booking = bookingRepository.findById(id).orElse(null);
-        List<StatusBooking> statusBookings = Arrays.asList(StatusBooking.values());
-        if (statusBookings.contains(StatusBooking.valueOf(Newstatus))) {
-            booking.setStatus(StatusBooking.valueOf(Newstatus));
-            bookingRepository.save(booking);
-            return booking;
+        if (booking != null) {
+            try {
+                StatusBooking status = StatusBooking.valueOf(newStatus);
+                booking.setStatus(status);
+                bookingRepository.save(booking);
+                return booking;
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid status value");
+            }
+        } else {
+            throw new IllegalArgumentException("Booking not found");
         }
-        return null;
     }
 
+    private boolean populate(Booking booking, BookingRequest request) {
+        Optional<Account> account = accountRepository.findById(request.getAccount());
+        Optional<Ticket> ticket = ticketRepository.findById(request.getTicket());
+        Optional<MoreService> moreService = moreServiceRepository.findById(request.getMoreService());
+        Optional<Payment> payment = paymentRepository.findById(request.getPayment());
+        Optional<Voucher> voucher = voucherRepository.findById(request.getVoucher());
 
+        if (account.isPresent() && ticket.isPresent() && moreService.isPresent() && payment.isPresent() && voucher.isPresent()) {
+            booking.setAccount(account.get());
+            booking.setTicket(ticket.get());
+            booking.setMoreService(moreService.get());
+            booking.setPayment(payment.get());
+            booking.setVoucher(voucher.get());
+            booking.setTotalPrice(ticket.get().getTotalPrice() + moreService.get().getPrice() - voucher.get().getDiscount());
+            return true;
+        }
+        return false;
+    }
 }

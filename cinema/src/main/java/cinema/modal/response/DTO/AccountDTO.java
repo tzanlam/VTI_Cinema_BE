@@ -16,5 +16,12 @@ public class AccountDTO {
 
     public AccountDTO(Account account) {
         this.account_id = String.valueOf(account.getId());
+        this.username = account.getUsername();
+        this.full_name = account.getFullname();
+        this.birth_date = String.valueOf(account.getBirthDate());
+        this.email = account.getEmail();
+        this.phone_number = account.getPhoneNumber();
+        this.role = String.valueOf(account.getRole());
+        this.account_status = String.valueOf(account.getStatus());
     }
 }
