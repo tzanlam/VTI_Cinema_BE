@@ -35,8 +35,8 @@ public class ShowTime extends Base{
     @Column(name = "start_time", nullable = false)
     private List<LocalTime> startTime;
 
-    @Column(name = "available_seats")
-    private int availableSeats;
+//    @Column(name = "available_seats")
+//    private int availableSeats;
 }
 
 //dau ra

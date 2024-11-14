@@ -1,12 +1,16 @@
 package cinema.controller;
 
+import cinema.modal.entity.Seat;
 import cinema.modal.request.SeatRequest;
+import cinema.modal.response.DTO.SeatDTO;
 import cinema.service.Seat.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -18,6 +22,10 @@ public class SeatController {
     @GetMapping("/find")
     public ResponseEntity<?> findSeats() {
         try{
+            List<Seat> seats = seatService.findSeats();
+            List<SeatDTO> seatDTOS = seats.stream()
+                    .map(seat -> modelMapper)
+
             return ResponseEntity.ok(seatService.findSeats());
         }catch (Exception e){
             e.printStackTrace();

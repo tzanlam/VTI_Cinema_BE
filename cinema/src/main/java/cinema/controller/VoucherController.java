@@ -1,11 +1,15 @@
 package cinema.controller;
 
+import cinema.modal.entity.Voucher;
 import cinema.modal.request.VoucherRequest;
+import cinema.modal.response.DTO.VoucherDTO;
 import cinema.service.Voucher.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -18,6 +22,7 @@ public class VoucherController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> find(@PathVariable int page) {
         try{
+            List<Voucher> vouchers = voucherService.findVoucher();
             return ResponseEntity.ok(voucherService.findVoucher(page));
         }catch(Exception e){
             return ResponseEntity.notFound().build();
@@ -28,7 +33,8 @@ public class VoucherController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
-            return ResponseEntity.ok(voucherService.findVoucherById(id));
+            VoucherDTO voucherDTO = new VoucherDTO(voucherService.findVoucherById(id));
+            return ResponseEntity.ok(voucherDTO);
         }catch(Exception e){
             return ResponseEntity.notFound().build();
         }

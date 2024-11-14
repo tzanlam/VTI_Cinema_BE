@@ -1,5 +1,6 @@
 package cinema.controller;
 
+import cinema.modal.entity.Account;
 import cinema.modal.request.AccountRequest;
 import cinema.modal.request.LoginRequest;
 import cinema.service.Account.AccountService;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -41,6 +44,7 @@ public class AccountController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> findAccounts(@PathVariable  int page){
         try{
+
             return new ResponseEntity<>(accountService.findAccounts(page),HttpStatus.OK);
         }catch (Exception e){
             return ResponseEntity.badRequest().build();

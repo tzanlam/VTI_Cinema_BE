@@ -4,6 +4,7 @@ import cinema.modal.entity.Account;
 import cinema.modal.entity.constant.StatusAccount;
 import cinema.modal.request.AccountRequest;
 import cinema.repository.AccountRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

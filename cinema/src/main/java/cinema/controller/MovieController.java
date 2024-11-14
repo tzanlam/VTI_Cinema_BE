@@ -29,6 +29,10 @@ public class MovieController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> findMovies() {
         try{
+            List<Movie> movies = movieService.findMovies();
+            List<MovieDTO> movieDTOS = movies.stream()
+                    .map(movie -> modelMapper.map(movie, MovieDTO.class))
+                    .collect(Collectors.toList());
             return ResponseEntity.ok(movieService.findMovies());
         }catch (Exception e){
             return new ResponseEntity<>("Error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
