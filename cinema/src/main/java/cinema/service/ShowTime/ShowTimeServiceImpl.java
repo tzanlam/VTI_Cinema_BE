@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static cinema.util.ConvertDateTime.convertToLocalDate;
 import static cinema.util.ConvertDateTime.convertToLocalTime;
 
 @Service
-public class ShowTimeServiceImpl implements ShowTimeService{
+public class ShowTimeServiceImpl implements ShowTimeService {
+
     @Autowired
     private ShowTimeRepository showTimeRepository;
     @Autowired
@@ -28,56 +30,63 @@ public class ShowTimeServiceImpl implements ShowTimeService{
 
     @Override
     public ShowTime findByID(int id) {
-        return showTimeRepository.findById(id).get();
+        return showTimeRepository.findById(id).orElse(null);
     }
 
     @Override
     public ShowTime createShowTime(ShowTimeRequest request) {
-        ShowTime showTime =  new ShowTime();
-        ShowTime s = populate(request, showTime);
-        showTimeRepository.save(s);
-        return s;
+        ShowTime showTime = new ShowTime();
+        ShowTime populatedShowTime = populate(request, showTime);
+        if (populatedShowTime != null) {
+            showTimeRepository.save(populatedShowTime);
+            return populatedShowTime;
+        }
+        return null;
     }
 
     @Override
     public ShowTime updateShowTime(int id, ShowTimeRequest request) {
-        ShowTime showTime = showTimeRepository.findById(id).orElse(null);
-        if (showTime != null) {
-            ShowTime s = populate(request, showTime);
-            s.setId(id);
-            showTimeRepository.save(s);
-            return s;
+        Optional<ShowTime> optionalShowTime = showTimeRepository.findById(id);
+        if (optionalShowTime.isPresent()) {
+            ShowTime populatedShowTime = populate(request, optionalShowTime.get());
+            if (populatedShowTime != null) {
+                showTimeRepository.save(populatedShowTime);
+                return populatedShowTime;
+            }
         }
         return null;
     }
 
     @Override
     public List<LocalTime> findByMovie(int id) {
-        ShowTime showTimes = showTimeRepository.findByMovieId(id);
-        List<LocalTime> localTimeList = showTimes.getStartTime();
-        return localTimeList;
+        ShowTime showTime = showTimeRepository.findByMovieId(id);
+        return showTime != null ? showTime.getStartTime() : new ArrayList<>();
     }
 
     private ShowTime populate(ShowTimeRequest request, ShowTime showTime) {
-        Movie movie = movieRepository.findById(request.getMovie()).orElse(null);
-        if (movie != null) {
-            showTime.setMovie(movie);
+        Optional<Movie> optionalMovie = movieRepository.findById(request.getMovie());
+        if (optionalMovie.isPresent()) {
+            showTime.setMovie(optionalMovie.get());
 
-            Room room = roomRepository.findById(request.getRoom()).orElse(null);
-            if (room != null) {
+            Optional<Room> optionalRoom = roomRepository.findById(request.getRoom());
+            if (optionalRoom.isPresent()) {
+                Room room = optionalRoom.get();
                 showTime.setRoom(room);
                 showTime.setCinema(room.getCinema());
                 showTime.setShowDate(convertToLocalDate(request.getShowDate()));
-                int count = request.getStartTime().size();
-                List<LocalTime> startTime = new ArrayList<>();
-                for (int i = 0; i < count; i++) {
-                    startTime.add(convertToLocalTime(request.getStartTime().get(i)));
+
+                List<LocalTime> startTimeList = new ArrayList<>();
+                for (String time : request.getStartTime()) {
+                    LocalTime convertedTime = convertToLocalTime(time);
+                    if (convertedTime != null) {
+                        startTimeList.add(convertedTime);
+                    }
                 }
-                showTime.setStartTime(startTime);
+                showTime.setStartTime(startTimeList);
+
                 return showTime;
             }
         }
         return null;
     }
-
 }

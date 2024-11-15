@@ -2,10 +2,11 @@ package cinema.service.Account;
 
 import cinema.modal.entity.Account;
 import cinema.modal.request.AccountRequest;
-import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface AccountService {
-    Page<Account> findAccounts(int page);
+    List<Account> findAccounts();
     Account findById(int id);
     Account createAccount(AccountRequest request);
     Account updateAccount(int id, AccountRequest request);

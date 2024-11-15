@@ -4,8 +4,10 @@ import cinema.modal.entity.Booking;
 import cinema.modal.request.BookingRequest;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface BookingService {
-    Page<Booking> findBookings(int page);
+    List<Booking> findBookings();
     Booking findById(int id);
     Booking createBooking(BookingRequest request);
 //    Booking confirmedBooking(int id);

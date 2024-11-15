@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class MoreServiceDTO {
+    private String service_id;
     private String service_name;
     private String service_image;
     private String description;

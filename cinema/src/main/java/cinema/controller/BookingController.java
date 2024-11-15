@@ -1,12 +1,18 @@
 package cinema.controller;
 
+import cinema.modal.entity.Booking;
 import cinema.modal.request.BookingRequest;
+import cinema.modal.response.DTO.BookingDTO;
 import cinema.service.Booking.BookingService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
@@ -15,11 +21,18 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping("/find/{page}")
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    public ResponseEntity<?> findAll(@PathVariable int page) {
+    public ResponseEntity<?> findAll() {
         try{
-            return new ResponseEntity<>(bookingService.findBookings(page), HttpStatus.OK);
+            List<Booking> bookings = bookingService.findBookings();
+            List<BookingDTO> dtos = bookings.stream()
+                    .map(booking -> modelMapper.map(booking, BookingDTO.class))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(dtos, HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -28,9 +28,9 @@ public class CinemaController {
         try {
             List<Cinema> cinemas = cinemaService.findCinemas();
             List<CinemaDTO> cinemaDTOS = cinemas.stream()
-                    .map(cinema -> modelMapper.map(cinema, CinemaDTO.class)) // Chuyển đổi từng phần tử
+                    .map(cinema -> modelMapper.map(cinema, CinemaDTO.class))
                     .collect(Collectors.toList());
-            return ResponseEntity.ok(cinemaDTOS); // Trả về cinemaDTOS thay vì cinemas
+            return ResponseEntity.ok(cinemaDTOS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -40,27 +40,29 @@ public class CinemaController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> updateCinema(@PathVariable int id, @RequestBody CinemaRequest request) {
         try{
-            return new ResponseEntity<>(cinemaService.updateCinema(request, id), HttpStatus.CREATED);
+            return new ResponseEntity<>(modelMapper.map(cinemaService.updateCinema(request, id),CinemaDTO.class), HttpStatus.CREATED);
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createCinema(@RequestBody CinemaRequest request) {
-            return new ResponseEntity<>(cinemaService.createCinema(request), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(modelMapper.map(cinemaService.createCinema(request), CinemaDTO.class), HttpStatus.CREATED);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/changeStatus/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try {
-            return new ResponseEntity<>(cinemaService.changeStatus(id, status), HttpStatus.OK);
+            return new ResponseEntity<>(modelMapper.map(cinemaService.changeStatus(id, status),CinemaDTO.class), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -70,7 +72,7 @@ public class CinemaController {
             CinemaDTO cinemaDTO = modelMapper.map(cinemaService.findById(id), CinemaDTO.class);
             return ResponseEntity.ok(cinemaDTO);
         }catch (Exception e){
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 }

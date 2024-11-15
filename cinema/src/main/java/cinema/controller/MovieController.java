@@ -30,6 +30,7 @@ public class MovieController {
     public ResponseEntity<?> findMovies() {
         try{
             List<Movie> movies = movieService.findMovies();
+
             List<MovieDTO> movieDTOS = movies.stream()
                     .map(movie -> modelMapper.map(movie, MovieDTO.class))
                     .collect(Collectors.toList());
@@ -44,7 +45,8 @@ public class MovieController {
     public ResponseEntity<?> updateMovie(@PathVariable int id, @RequestBody MovieRequest request) {
         try{
             Movie movie = movieService.updateMovie(id, request);
-            return new ResponseEntity<>(movie, HttpStatus.CREATED);
+            MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
+            return new ResponseEntity<>(movieDTO, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>("Error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -55,7 +57,8 @@ public class MovieController {
     public ResponseEntity<?> createMovie(@RequestBody MovieRequest request) {
         try {
             Movie movie = movieService.createMovie(request);
-            return new ResponseEntity<>(movie, HttpStatus.CREATED);
+            MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
+            return new ResponseEntity<>(movieDTO, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>("Error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -65,7 +68,9 @@ public class MovieController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try {
-            return new ResponseEntity<>(movieService.changeStatus(id, status), HttpStatus.CREATED);
+            Movie movie = movieService.changeStatus(id, status);
+            MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
+            return new ResponseEntity<>(movieDTO, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>("Error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

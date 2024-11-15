@@ -2,7 +2,6 @@ package cinema.modal.response.DTO;
 
 import cinema.modal.entity.Voucher;
 
-import java.util.List;
 
 public class VoucherDTO {
     private String voucher_name;

@@ -18,20 +18,20 @@ import java.util.List;
 public class SeatController {
     @Autowired
     private SeatService seatService;
-
-    @GetMapping("/find")
-    public ResponseEntity<?> findSeats() {
-        try{
-            List<Seat> seats = seatService.findSeats();
-            List<SeatDTO> seatDTOS = seats.stream()
-                    .map(seat -> modelMapper)
-
-            return ResponseEntity.ok(seatService.findSeats());
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
-        }
-    }
+//
+//    @GetMapping("/find")
+//    public ResponseEntity<?> findSeats() {
+//        try{
+//            List<Seat> seats = seatService.findSeats();
+//            List<SeatDTO> seatDTOS = seats.stream()
+//                    .map(seat -> modelMapper)
+//
+//            return ResponseEntity.ok(seatService.findSeats());
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return ResponseEntity.noContent().build();
+//        }
+//    }
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")

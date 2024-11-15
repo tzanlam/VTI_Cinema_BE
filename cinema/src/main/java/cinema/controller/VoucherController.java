@@ -22,7 +22,7 @@ public class VoucherController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> find(@PathVariable int page) {
         try{
-            List<Voucher> vouchers = voucherService.findVoucher();
+            List<Voucher> vouchers = (List<Voucher>) voucherService.findVoucher(page);
             return ResponseEntity.ok(voucherService.findVoucher(page));
         }catch(Exception e){
             return ResponseEntity.notFound().build();

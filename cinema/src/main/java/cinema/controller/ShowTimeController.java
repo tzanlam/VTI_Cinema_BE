@@ -41,7 +41,7 @@ public class ShowTimeController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> create(@RequestBody ShowTimeRequest showTimeRequest){
         try{
-            return new ResponseEntity<>(showTimeService.createShowTime(showTimeRequest), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ShowTimeDTO(showTimeService.createShowTime(showTimeRequest)), HttpStatus.CREATED);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -51,7 +51,7 @@ public class ShowTimeController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody ShowTimeRequest request){
         try{
-            return ResponseEntity.ok(showTimeService.updateShowTime(id, request));
+            return ResponseEntity.ok(modelMapper.map(showTimeService.updateShowTime(id, request),ShowTimeDTO.class));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
