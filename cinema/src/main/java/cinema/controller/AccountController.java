@@ -31,6 +31,9 @@ public class AccountController {
 
     @Autowired
     private GlobalService globalService;
+
+
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request){
         try{
@@ -39,6 +42,7 @@ public class AccountController {
             return ResponseEntity.badRequest().build();
         }
     }
+
 
     @PostMapping("/create")
     public ResponseEntity<?> createAccount(@RequestBody AccountRequest request){
