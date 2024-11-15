@@ -1,7 +1,6 @@
 package cinema.service.SeatRoom;
 
 
-import cinema.modal.entity.Room;
 import cinema.modal.entity.Seat;
 import cinema.modal.entity.SeatRoom;
 import cinema.modal.entity.constant.StatusSeatroom;
@@ -12,6 +11,7 @@ import cinema.repository.SeatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -73,17 +73,14 @@ public class SeatRoomServiceimpl implements SeatRoomService {
         return null;
     }
 
-    private SeatRoom populate(SeatRoomRequest request) {
-        SeatRoom seatRoom = new SeatRoom();
-        Room room = roomRepository.findById(request.getRoom()).orElse(null);
-        if (room != null) {
-            Seat seat = seatRepository.findById(request.getSeat()).orElse(null);
-            if (seat != null) {
-                seatRoom.setRoom(room);
-                seatRoom.setSeat(seat);
-                return seatRoom;
+    private SeatRoom populate(SeatRoomRequest request, SeatRoom seatRoom) {
+        List<Seat> seats = seatRepository.findAll();
+        List<String> rowName = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+        List<String> nameSeat = new ArrayList<>();
+        int biendem;
+            for (biendem =0; biendem < request.getRowDouble(); biendem++ ) {
+                nameSeat.add(rowName.get(biendem)+seats.get(biendem+1).getName());
             }
-        }
-        return null;
+        return seatRoom;
     }
 }

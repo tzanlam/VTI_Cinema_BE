@@ -1,7 +1,7 @@
 package cinema.modal.request;
 
 import cinema.modal.entity.Seat;
-import cinema.modal.entity.constant.SeatType;
+import cinema.modal.entity.constant.TypeSeat;
 import lombok.Data;
 
 @Data
@@ -27,7 +27,7 @@ public class SeatRequest {
             throw new IllegalArgumentException("seatType không được để trống.");
         }
         try {
-            SeatType type = SeatType.valueOf(seatType.toUpperCase());
+            TypeSeat type = TypeSeat.valueOf(seatType.toUpperCase());
             seat.setSeatType(type);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Giá trị seatType không hợp lệ: " + seatType);

@@ -2,7 +2,7 @@ package cinema.service.Seat;
 
 
 import cinema.modal.entity.Seat;
-import cinema.modal.entity.constant.SeatType;
+import cinema.modal.entity.constant.TypeSeat;
 import cinema.modal.request.SeatRequest;
 import cinema.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +49,8 @@ public class SeatServiceimpl implements SeatService {
         Seat seat = seatRepository.findById(id).orElse(null);
         if (seat != null) {
             try {
-                SeatType seatTypeEnum = SeatType.valueOf(type);
-                List<SeatType> validStatuses = Arrays.asList(SeatType.STANDARD, SeatType.VIP, SeatType.DOUBLE);
+                TypeSeat seatTypeEnum = TypeSeat.valueOf(type);
+                List<TypeSeat> validStatuses = Arrays.asList(TypeSeat.STANDARD, TypeSeat.VIP, TypeSeat.DOUBLE);
                 if (validStatuses.contains(seatTypeEnum)) {
                     seat.setSeatType(seatTypeEnum);
                     seatRepository.save(seat);

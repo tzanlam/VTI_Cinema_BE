@@ -1,6 +1,6 @@
 package cinema.modal.entity;
 
-import cinema.modal.entity.constant.SeatType;
+import cinema.modal.entity.constant.TypeSeat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,12 +13,12 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "seat_type")
-    private SeatType SeatType;
+    private TypeSeat SeatType;
 
     @Column(name = "price", nullable = false)
     private double price;
