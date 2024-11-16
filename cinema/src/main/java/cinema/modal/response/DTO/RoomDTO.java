@@ -1,7 +1,9 @@
 package cinema.modal.response.DTO;
 
 import cinema.modal.entity.Room;
+import lombok.Data;
 
+@Data
 public class RoomDTO {
     private String room_id;
     private String room_name;

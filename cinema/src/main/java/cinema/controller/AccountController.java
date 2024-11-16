@@ -47,6 +47,7 @@ public class AccountController {
     public ResponseEntity<?> register(@RequestBody AccountRequest request){
         try{
             return new ResponseEntity<>(new AccountDTO(globalService.register(request)), HttpStatus.OK);
+
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }

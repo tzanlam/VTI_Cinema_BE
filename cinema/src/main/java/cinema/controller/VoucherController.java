@@ -4,12 +4,14 @@ import cinema.modal.entity.Voucher;
 import cinema.modal.request.VoucherRequest;
 import cinema.modal.response.DTO.VoucherDTO;
 import cinema.service.Voucher.VoucherService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
@@ -18,12 +20,18 @@ public class VoucherController {
     @Autowired
     private VoucherService voucherService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping("/find/{page}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> find(@PathVariable int page) {
         try{
             List<Voucher> vouchers = (List<Voucher>) voucherService.findVoucher(page);
-            return ResponseEntity.ok(voucherService.findVoucher(page));
+            List<VoucherDTO> voucherDTOS = vouchers.stream()
+                    .map(voucher -> modelMapper.map(voucher,VoucherDTO.class))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(voucherDTOS);
         }catch(Exception e){
             return ResponseEntity.notFound().build();
         }
@@ -33,7 +41,8 @@ public class VoucherController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
-            VoucherDTO voucherDTO = new VoucherDTO(voucherService.findVoucherById(id));
+            Voucher voucher = voucherService.findVoucherById(id);
+            VoucherDTO voucherDTO = modelMapper.map(voucher,VoucherDTO.class);
             return ResponseEntity.ok(voucherDTO);
         }catch(Exception e){
             return ResponseEntity.notFound().build();
@@ -54,7 +63,9 @@ public class VoucherController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> create(@RequestBody VoucherRequest request) {
         try{
-            return ResponseEntity.ok(voucherService.createVoucher(request));
+            Voucher voucher = voucherService.createVoucher(request);
+            VoucherDTO voucherDTO = modelMapper.map(voucher,VoucherDTO.class);
+            return ResponseEntity.ok(voucherDTO);
         }catch(Exception e){
             return ResponseEntity.badRequest().build();
         }
@@ -64,7 +75,9 @@ public class VoucherController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody VoucherRequest request) {
         try {
-            return ResponseEntity.ok(voucherService.updateVoucher(id, request));
+            Voucher voucher = voucherService.updateVoucher(id,request);
+            VoucherDTO voucherDTO = modelMapper.map(voucher,VoucherDTO.class);
+            return ResponseEntity.ok(voucherDTO);
         }catch(Exception e){
             return ResponseEntity.badRequest().build();
         }

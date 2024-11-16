@@ -1,10 +1,12 @@
 package cinema.modal.request;
 
-import jakarta.validation.constraints.NotNull;
+import com.google.firebase.database.annotations.NotNull;
+
 import lombok.Data;
 
 @Data
 public class SeatRoomRequest {
+
     @NotNull
     private int rowQuantity;
     private int seatQuantity;

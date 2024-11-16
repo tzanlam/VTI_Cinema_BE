@@ -1,12 +1,19 @@
 package cinema.controller;
 
+import cinema.modal.entity.SeatRoom;
 import cinema.modal.request.SeatRoomRequest;
+import cinema.modal.response.DTO.SeatDTO;
+import cinema.modal.response.DTO.SeatRoomDTO;
 import cinema.service.SeatRoom.SeatRoomService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -15,10 +22,16 @@ public class SeatRoomController {
     @Autowired
     private SeatRoomService seatRoomService;
 
+    @Autowired
+    private ModelMapper modelMapper;
     @GetMapping("/find")
     public ResponseEntity<?> findSeatRooms() {
         try{
-            return ResponseEntity.ok(seatRoomService.findSeatRooms());
+            List<SeatRoom> seatRooms = seatRoomService.findSeatRooms();
+            List<SeatDTO> seatDTOS = seatRooms.stream()
+                    .map(seatRoom -> modelMapper.map(seatRoom, SeatDTO.class))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(seatDTOS);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.noContent().build();
@@ -29,7 +42,9 @@ public class SeatRoomController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> updateSeatRoom(@PathVariable int id, @RequestBody SeatRoomRequest request) {
         try{
-            return new ResponseEntity<>(seatRoomService.updateSeatRoom(id, request), HttpStatus.CREATED);
+            SeatRoom seatRoom = seatRoomService.updateSeatRoom(id, request);
+            SeatRoomDTO seatRoomDTO = modelMapper.map(seatRoom, SeatRoomDTO.class);
+            return new ResponseEntity<>(seatRoomDTO, HttpStatus.CREATED);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.noContent().build();
@@ -39,7 +54,9 @@ public class SeatRoomController {
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createMovie(@RequestBody SeatRoomRequest request) {
-        return new ResponseEntity<>(seatRoomService.createSeatRoom(request), HttpStatus.CREATED);
+        SeatRoom seatRoom = seatRoomService.createSeatRoom(request);
+        SeatRoomDTO seatRoomDTO = modelMapper.map(seatRoom, SeatRoomDTO.class);
+        return new ResponseEntity<>(seatRoomDTO, HttpStatus.CREATED);
     }
 
 //    @PostMapping("/changeStatus/{id}")
@@ -56,7 +73,9 @@ public class SeatRoomController {
     @GetMapping("findId/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
-            return ResponseEntity.ok(seatRoomService.findById(id));
+            SeatRoom seatRoom = seatRoomService.findById(id);
+            SeatRoomDTO seatRoomDTO = modelMapper.map(seatRoom, SeatRoomDTO.class);
+            return ResponseEntity.ok(seatRoomDTO);
         }catch (Exception e){
             return ResponseEntity.internalServerError().build();
         }
