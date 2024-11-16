@@ -61,8 +61,8 @@ public class SeatRoomServiceimpl implements SeatRoomService {
         List<Seat> seats = seatRepository.findBySeatType(TypeSeat.valueOf(request.getTypeSeat()));
         List<String> rowName = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
         List<String> seatNames = new ArrayList<>();
+        int i , j;
         for (Seat seat : seats) {
-            int i , j;
             for (i = 0; i < request.getRowQuantity(); i++) {
                 for (j = 0; j < request.getSeatQuantity(); j++) {
                     seatNames.add(rowName.get(i) + seat.getName());
@@ -70,7 +70,6 @@ public class SeatRoomServiceimpl implements SeatRoomService {
             }
         }
         seatRoom.setRoom(room);
-        seatRoom.setTypeSeat(TypeSeat.valueOf(request.getTypeSeat()));  // Cập nhật loại ghế
         seatRoom.setRowNames(seatNames);
         seatRoom.setTypeSeat(TypeSeat.valueOf(request.getTypeSeat()));
         seatRoom.setStatus(StatusSeatRoom.AVAILABLE);

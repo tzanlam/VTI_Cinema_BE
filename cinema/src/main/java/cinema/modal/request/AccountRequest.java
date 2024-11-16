@@ -40,4 +40,13 @@ public class AccountRequest {
         account.setPhoneNumber(phoneNumber);
         return account;
     }
+
+    public Account ResgisterAccount(Account account) {
+        account.setUsername(username);
+        account.setPassword(passwordEncoder.encode(password));
+        account.setEmail(email);
+        account.setStatus(StatusAccount.PENDING);
+        account.setRole(Role.USER);
+        return account;
+    }
 }

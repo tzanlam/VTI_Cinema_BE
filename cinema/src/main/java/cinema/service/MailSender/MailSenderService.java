@@ -1,5 +1,6 @@
 package cinema.service.MailSender;
 
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -16,7 +17,7 @@ public class MailSenderService implements IMailSenderService {
     private JavaMailSender emailSender;
 
     @Override
-    public void sendMessageWithAttachment(String to, String subject, String text) {
+    public void sendMessageWithAttachment(String to, String subject, String text) throws Exception {
         try{
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -29,8 +30,8 @@ public class MailSenderService implements IMailSenderService {
 //            helper.addAttachment("Invoice", file);// File có thể là hình ảnh hoặc pdf,...
             emailSender.send(message);
 
-        }catch (Exception e){
-//            throw new CustomException(500, e.getMessage());
+        }catch (MessagingException e){
+            throw new Exception(e.getMessage());
         }
 
     }

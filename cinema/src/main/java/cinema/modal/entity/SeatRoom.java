@@ -18,6 +18,7 @@ public class SeatRoom {
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
+    // doule :100 // vip 100 []
 
 //    @ManyToMany
 //    @JoinTable(
@@ -31,6 +32,7 @@ public class SeatRoom {
     @CollectionTable(name = "row_seat", joinColumns = @JoinColumn(name = "seat_room_id"))
     @Column(name = "row_name")
     private List<String> rowNames;
+    // A1 A2
 
     @Column(name = "type_seat")
     private TypeSeat typeSeat;
