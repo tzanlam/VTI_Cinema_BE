@@ -7,6 +7,7 @@ import lombok.Data;
 public class SeatRoomRequest {
     @NotNull
     private int rowQuantity;
+    private int seatQuantity;
     @NotNull
     private int room;
     private String typeSeat;

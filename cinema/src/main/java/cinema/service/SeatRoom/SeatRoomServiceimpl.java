@@ -1,9 +1,10 @@
 package cinema.service.SeatRoom;
 
 
+import cinema.modal.entity.Room;
 import cinema.modal.entity.Seat;
 import cinema.modal.entity.SeatRoom;
-import cinema.modal.entity.constant.StatusSeat;
+import cinema.modal.entity.constant.StatusSeatRoom;
 import cinema.modal.entity.constant.TypeSeat;
 import cinema.modal.request.SeatRoomRequest;
 import cinema.repository.RoomRepository;
@@ -56,14 +57,23 @@ public class SeatRoomServiceimpl implements SeatRoomService {
     }
 
     private SeatRoom populate(SeatRoomRequest request, SeatRoom seatRoom) {
+        Room room = roomRepository.findById(request.getRoom()).orElse(null);
         List<Seat> seats = seatRepository.findBySeatType(TypeSeat.valueOf(request.getTypeSeat()));
         List<String> rowName = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
-        List<String> name = new ArrayList<>();
-        
-        int i = 0;
-            for (biendem =0; biendem < request.getRowQuantity(); biendem++ ) {
-                nameSeat.add(rowName.get(biendem)+seats.get(biendem+1).getName());
+        List<String> seatNames = new ArrayList<>();
+        for (Seat seat : seats) {
+            int i , j;
+            for (i = 0; i < request.getRowQuantity(); i++) {
+                for (j = 0; j < request.getSeatQuantity(); j++) {
+                    seatNames.add(rowName.get(i) + seat.getName());
+                }
             }
+        }
+        seatRoom.setRoom(room);
+        seatRoom.setTypeSeat(TypeSeat.valueOf(request.getTypeSeat()));  // Cập nhật loại ghế
+        seatRoom.setRowNames(seatNames);
+        seatRoom.setTypeSeat(TypeSeat.valueOf(request.getTypeSeat()));
+        seatRoom.setStatus(StatusSeatRoom.AVAILABLE);
         return seatRoom;
     }
 }
