@@ -46,6 +46,7 @@ public class AccountRequest {
         account.setPassword(passwordEncoder.encode(password));
         account.setEmail(email);
         account.setStatus(StatusAccount.PENDING);
+        account.setPhoneNumber(phoneNumber);
         account.setRole(Role.USER);
         return account;
     }

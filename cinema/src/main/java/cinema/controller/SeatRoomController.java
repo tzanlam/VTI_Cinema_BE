@@ -42,16 +42,16 @@ public class SeatRoomController {
         return new ResponseEntity<>(seatRoomService.createSeatRoom(request), HttpStatus.CREATED);
     }
 
-    @PostMapping("/changeStatus/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
-        try {
-            return new ResponseEntity<>(seatRoomService.changeStatus(id, status), HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
-        }
-    }
+//    @PostMapping("/changeStatus/{id}")
+//    @PreAuthorize("hasAuthority('ADMIN')")
+//    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
+//        try {
+//            return new ResponseEntity<>(seatRoomService.changeStatus(id, status), HttpStatus.OK);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return ResponseEntity.noContent().build();
+//        }
+//    }
 
     @GetMapping("findId/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {

@@ -43,6 +43,15 @@ public class AccountController {
         }
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody AccountRequest request){
+        try{
+            return new ResponseEntity<>(new AccountDTO(globalService.register(request)), HttpStatus.OK);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 
     @PostMapping("/create")
     public ResponseEntity<?> createAccount(@RequestBody AccountRequest request){

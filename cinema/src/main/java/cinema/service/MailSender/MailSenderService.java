@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.io.File;
+import java.util.Random;
 
 @Service
 public class MailSenderService implements IMailSenderService {
@@ -33,6 +34,13 @@ public class MailSenderService implements IMailSenderService {
         }catch (MessagingException e){
             throw new Exception(e.getMessage());
         }
+    }
 
+    public String createCode(String email){
+        String code;
+        Random rand = new Random();
+        int randomNum = rand.nextInt(2000);
+        code = String.valueOf(randomNum);
+        return code;
     }
 }
