@@ -1,5 +1,6 @@
 package cinema.modal.entity;
 
+import cinema.modal.entity.constant.StatusSeat;
 import cinema.modal.entity.constant.TypeSeat;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,4 +23,8 @@ public class Seat {
 
     @Column(name = "price", nullable = false)
     private double price;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private StatusSeat Status;
 }

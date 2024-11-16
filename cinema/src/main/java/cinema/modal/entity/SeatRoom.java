@@ -1,6 +1,6 @@
 package cinema.modal.entity;
 
-import cinema.modal.entity.constant.StatusSeatroom;
+import cinema.modal.entity.constant.StatusRoom;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,12 +14,12 @@ public class SeatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name" , nullable = false)
-    private String name;
+    @Column(name = "row", nullable = false)
+    private int rowQuantity;
 
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
-    private Room room; // Liên kết với Room
+    private Room room;
 
     @ManyToMany
     @JoinTable(
@@ -28,8 +28,4 @@ public class SeatRoom {
             inverseJoinColumns = @JoinColumn(name = "seat_id")
     )
     private List<Seat> seats;
-    
-    @Column(name = "status_seat_room")
-    @Enumerated(EnumType.STRING)
-    private StatusSeatroom statusSeatroom;
 }

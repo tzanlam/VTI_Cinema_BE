@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -19,16 +18,12 @@ public class Room extends Base{
     @Column(name = "name", nullable = false)
     private String name;
 
-
     @ManyToOne
     @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false)
     private Cinema cinema;
 
-
-//    @ElementCollection
-//    @CollectionTable(name = "seatinroom", joinColumns = @JoinColumn(name = "seat_room_id"))
-//    @Column (name = "seat_room_id", nullable = false)
-//    private List<SeatRoom> seatRooms;
+    @OneToMany(mappedBy = "room")
+    private List<SeatRoom> seatRoom;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
