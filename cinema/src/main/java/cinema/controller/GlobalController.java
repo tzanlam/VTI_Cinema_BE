@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("")
 @CrossOrigin
@@ -18,7 +20,7 @@ public class GlobalController {
         try {
             return ResponseEntity.ok(globalService.loginByEmail(request));
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
+            return ResponseEntity.status(401).body(Map.of("message", "Invalid email or password"));
         }
     }
 }

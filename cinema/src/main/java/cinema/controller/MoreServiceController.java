@@ -29,7 +29,7 @@ public class MoreServiceController {
         try{
             List<MoreService> moreServices = moreServiceService.findServices();
             List<MoreServiceDTO> moreServiceDTOS = moreServices.stream()
-                    .map(moreService -> modelMapper.map(moreService, MoreServiceDTO.class))
+                    .map(MoreServiceDTO::new)
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(moreServiceDTOS);
@@ -41,7 +41,7 @@ public class MoreServiceController {
     @GetMapping("/findId/{id}")
     public ResponseEntity<?> findServiceById(@PathVariable int id) {
         try{
-            return ResponseEntity.ok(modelMapper.map(moreServiceService.findById(id), MoreServiceDTO.class));
+            return ResponseEntity.ok(new MoreServiceDTO(moreServiceService.findById(id)));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -50,7 +50,7 @@ public class MoreServiceController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> createService(@RequestBody MoreServiceRequest request) {
         try{
-            return new ResponseEntity<>(modelMapper.map(moreServiceService.createService(request),MoreServiceDTO.class), HttpStatus.CREATED);
+            return new ResponseEntity<>(new MoreServiceDTO(moreServiceService.createService(request)), HttpStatus.CREATED);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -60,7 +60,7 @@ public class MoreServiceController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> updateService(@PathVariable int id ,@RequestBody MoreServiceRequest request) {
         try{
-            return new ResponseEntity<>(modelMapper.map(moreServiceService.updateService(id, request),MoreServiceDTO.class), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new MoreServiceDTO(moreServiceService.updateService(id, request)), HttpStatus.ACCEPTED);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -70,7 +70,7 @@ public class MoreServiceController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try{
-            return new ResponseEntity<>(modelMapper.map(moreServiceService.changeStatus(id, status),MoreServiceDTO.class), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new MoreServiceDTO(moreServiceService.changeStatus(id, status)), HttpStatus.ACCEPTED);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -79,7 +79,10 @@ public class MoreServiceController {
     @GetMapping("/findActive")
     public ResponseEntity<?> serviceActive() {
         try{
-            return new ResponseEntity<>(modelMapper.map(moreServiceService.findStatusActive(),MoreServiceDTO.class), HttpStatus.ACCEPTED);
+            List<MoreServiceDTO> serviceDTOS = moreServiceService.findStatusActive().stream()
+                    .map(MoreServiceDTO::new)
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(serviceDTOS, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error : " + e.getMessage());
         }

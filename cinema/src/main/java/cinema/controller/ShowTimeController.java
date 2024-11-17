@@ -30,7 +30,7 @@ public class ShowTimeController {
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
             ShowTime showTime = showTimeService.findByID(id);
-            ShowTimeDTO dto = modelMapper.map(showTime, ShowTimeDTO.class);
+            ShowTimeDTO dto = new ShowTimeDTO(showTime);
             return ResponseEntity.ok(dto);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -51,13 +51,13 @@ public class ShowTimeController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody ShowTimeRequest request){
         try{
-            return ResponseEntity.ok(modelMapper.map(showTimeService.updateShowTime(id, request),ShowTimeDTO.class));
+            return ResponseEntity.ok(new ShowTimeDTO(showTimeService.updateShowTime(id, request)));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @GetMapping("/findMovie/{id}")
+    @GetMapping("/findByMovie/{id}")
     public ResponseEntity<?> findMovie(@PathVariable int id){
         try {
             List<LocalTime> localTimes = showTimeService.findByMovie(id);

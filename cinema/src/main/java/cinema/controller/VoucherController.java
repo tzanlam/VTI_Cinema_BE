@@ -23,37 +23,39 @@ public class VoucherController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("/find/{page}")
+    @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    public ResponseEntity<?> find(@PathVariable int page) {
+    public ResponseEntity<?> find() {
         try{
-            List<Voucher> vouchers = (List<Voucher>) voucherService.findVoucher(page);
+            List<Voucher> vouchers = voucherService.findVoucher();
             List<VoucherDTO> voucherDTOS = vouchers.stream()
-                    .map(voucher -> modelMapper.map(voucher,VoucherDTO.class))
+                    .map(VoucherDTO::new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(voucherDTOS);
         }catch(Exception e){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @GetMapping("/findId/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
             Voucher voucher = voucherService.findVoucherById(id);
-            VoucherDTO voucherDTO = modelMapper.map(voucher,VoucherDTO.class);
+            VoucherDTO voucherDTO = new VoucherDTO(voucher);
             return ResponseEntity.ok(voucherDTO);
         }catch(Exception e){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @GetMapping("/findEffective")
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findEffective() {
         try{
-            return ResponseEntity.ok(voucherService.findVoucherEffective());
+            List<Voucher> vouchers = voucherService.findEffectiveVouchers();
+            List<VoucherDTO> voucherDTOS = vouchers.stream()
+                    .map(VoucherDTO::new)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(voucherDTOS);
         }catch(Exception e){
             return ResponseEntity.notFound().build();
         }
@@ -64,7 +66,7 @@ public class VoucherController {
     public ResponseEntity<?> create(@RequestBody VoucherRequest request) {
         try{
             Voucher voucher = voucherService.createVoucher(request);
-            VoucherDTO voucherDTO = modelMapper.map(voucher,VoucherDTO.class);
+            VoucherDTO voucherDTO = new VoucherDTO(voucher);
             return ResponseEntity.ok(voucherDTO);
         }catch(Exception e){
             return ResponseEntity.badRequest().build();
@@ -76,7 +78,7 @@ public class VoucherController {
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody VoucherRequest request) {
         try {
             Voucher voucher = voucherService.updateVoucher(id,request);
-            VoucherDTO voucherDTO = modelMapper.map(voucher,VoucherDTO.class);
+            VoucherDTO voucherDTO = new VoucherDTO(voucher);
             return ResponseEntity.ok(voucherDTO);
         }catch(Exception e){
             return ResponseEntity.badRequest().build();

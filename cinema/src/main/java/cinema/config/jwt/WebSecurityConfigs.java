@@ -63,7 +63,7 @@ public class WebSecurityConfigs {
                                 // cinema ok
                                 "/cinema/find",
                                 "/cinema/findId/{id}",
-                                //
+                                // service ok
                                 "/moreService/findActive",
                                 "/moreService/findId/{id}",
                                 // movie ok
@@ -81,7 +81,10 @@ public class WebSecurityConfigs {
                                 "/seatRoom/findId/{id}",
                                 // showtime ok
                                 "/showTime/findMovie/{id}",
-                                "/showTime/findId/{id}"
+                                "/showTime/findId/{id}",
+                                // voucher ok
+                                "voucher/findId/{id}",
+                                "voucher/findEffective"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

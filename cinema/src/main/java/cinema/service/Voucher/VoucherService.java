@@ -8,9 +8,9 @@ import java.util.List;
 
 
 public interface VoucherService {
-    Page<Voucher> findVoucher(int page);
+    List<Voucher> findVoucher();
     Voucher findVoucherById(int id);
     Voucher createVoucher(VoucherRequest request);
     Voucher updateVoucher(int id, VoucherRequest request);
-    List<Voucher> findVoucherEffective();
+    List<Voucher> findEffectiveVouchers();
 }

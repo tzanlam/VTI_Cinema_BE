@@ -40,7 +40,7 @@ public class CinemaController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> updateCinema(@PathVariable int id, @RequestBody CinemaRequest request) {
         try{
-            return new ResponseEntity<>(modelMapper.map(cinemaService.updateCinema(request, id),CinemaDTO.class), HttpStatus.CREATED);
+            return new ResponseEntity<>(new CinemaDTO(cinemaService.updateCinema(request, id)), HttpStatus.CREATED);
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
@@ -50,7 +50,7 @@ public class CinemaController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createCinema(@RequestBody CinemaRequest request) {
         try {
-            return new ResponseEntity<>(modelMapper.map(cinemaService.createCinema(request), CinemaDTO.class), HttpStatus.CREATED);
+            return new ResponseEntity<>(new CinemaDTO(cinemaService.createCinema(request)), HttpStatus.CREATED);
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
@@ -60,7 +60,7 @@ public class CinemaController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try {
-            return new ResponseEntity<>(modelMapper.map(cinemaService.changeStatus(id, status),CinemaDTO.class), HttpStatus.OK);
+            return new ResponseEntity<>(new CinemaDTO(cinemaService.changeStatus(id, status)), HttpStatus.OK);
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
@@ -69,7 +69,7 @@ public class CinemaController {
     @GetMapping("/findId/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
-            CinemaDTO cinemaDTO = modelMapper.map(cinemaService.findById(id), CinemaDTO.class);
+            CinemaDTO cinemaDTO = new CinemaDTO(cinemaService.findById(id));
             return ResponseEntity.ok(cinemaDTO);
         }catch (Exception e){
             return ResponseEntity.badRequest().build();

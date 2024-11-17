@@ -3,10 +3,6 @@ package cinema.modal.response.DTO;
 import cinema.modal.entity.ShowTime;
 import lombok.Data;
 
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Data
 public class ShowTimeDTO {
     private String movie_name;

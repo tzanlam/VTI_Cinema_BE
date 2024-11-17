@@ -13,6 +13,7 @@ public class MoreServiceDTO {
     private String service_status;
 
     public MoreServiceDTO(MoreService moreService) {
+        this.service_id = String.valueOf(moreService.getId());
         this.service_name = String.valueOf(moreService.getId());
         this.service_image = moreService.getImage();
         this.description = moreService.getDecription();

@@ -3,6 +3,7 @@ package cinema.modal.entity;
 import cinema.modal.entity.constant.StatusVoucher;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
