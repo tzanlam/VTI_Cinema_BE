@@ -17,11 +17,11 @@ public class CustomUserDetailService implements UserDetailsService {
     private AccountRepository accountRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Account account = accountRepository.findByEmail(email);
         if (account == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(email);
         }
-        return new User(account.getUsername(), account.getPassword(), AuthorityUtils.createAuthorityList(account.getRole().name()));
+        return new User(account.getEmail(), account.getPassword(), AuthorityUtils.createAuthorityList(account.getRole().name()));
     }
 }

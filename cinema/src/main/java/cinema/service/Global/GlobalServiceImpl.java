@@ -42,6 +42,17 @@ public class GlobalServiceImpl implements GlobalService{
     }
 
     @Override
+    public AuthResponse loginByEmail(LoginRequest request) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String token = jwtTokenUtil.generateToken(userDetails);
+        return new AuthResponse(token, request.getEmail(), userDetails.getAuthorities());
+    }
+
+    @Override
     public Account register(AccountRequest request) {
         Account account = new Account();
         request.ResgisterAccount(account);
