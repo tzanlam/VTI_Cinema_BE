@@ -32,7 +32,6 @@ public class SeatRequest {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Giá trị seatType không hợp lệ: " + seatType);
         }
-
         seat.setPrice(price);
         return seat;
     }

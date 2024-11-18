@@ -14,11 +14,11 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
-    @GetMapping("/find/{page}")
+    @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    public ResponseEntity<?> findTicket(@PathVariable int page) {
+    public ResponseEntity<?> findTicket() {
         try{
-            return ResponseEntity.ok(ticketService.findTickets(page));
+            return ResponseEntity.ok(ticketService.findTickets());
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Error"+e.getMessage());
         }

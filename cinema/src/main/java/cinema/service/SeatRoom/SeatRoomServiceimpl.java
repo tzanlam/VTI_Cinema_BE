@@ -27,13 +27,12 @@ public class SeatRoomServiceimpl implements SeatRoomService {
     private RoomRepository roomRepository;
     @Override
     public List<SeatRoom> findSeatRooms() {
-        List<SeatRoom> seatRooms = seatRoomRepository.findAll();
-        return seatRooms;
+        return seatRoomRepository.findAll();
     }
 
     @Override
     public SeatRoom findById(int id) {
-        return seatRoomRepository.findById(id).get();
+        return seatRoomRepository.findById(id).orElse(null);
     }
 
     @Override

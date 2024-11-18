@@ -1,8 +1,11 @@
 package cinema.controller;
 
+import cinema.modal.request.AccountRequest;
 import cinema.modal.request.LoginRequest;
+import cinema.modal.response.DTO.AccountDTO;
 import cinema.service.Global.GlobalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,4 +26,14 @@ public class GlobalController {
             return ResponseEntity.status(401).body(Map.of("message", "Invalid email or password"));
         }
     }
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody AccountRequest request){
+        try{
+            return new ResponseEntity<>(new AccountDTO(globalService.register(request)), HttpStatus.OK);
+
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(Map.of("message", "Error when register"));
+        }
+    }
+
 }

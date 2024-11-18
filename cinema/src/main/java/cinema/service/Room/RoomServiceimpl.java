@@ -22,13 +22,13 @@ public class RoomServiceimpl implements RoomService{
     @Autowired
     private CinemaRepository cinemaRepository;
     @Override
-    public Page<Room> findRooms(int page) {
-        return roomRepository.findAll(PageRequest.of(page, 10));
+    public List<Room> findRooms() {
+        return roomRepository.findAll();
     }
 
     @Override
     public Room findById(int id) {
-        return roomRepository.findById(id).get();
+        return roomRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class RoomServiceimpl implements RoomService{
         try {
             room.setScreenType(ScreenType.valueOf(request.getScreenType().toUpperCase()));
         } catch (IllegalArgumentException e) {
-            throw new Exception("error with type");
+            throw new Exception("error with type_screen");
         }
         roomRepository.save(room);
         return room;
@@ -85,7 +85,7 @@ public class RoomServiceimpl implements RoomService{
         if (room != null) {
             try {
                 StatusRoom statusEnum = StatusRoom.valueOf(newStatus);
-                List<StatusRoom> validStatuses = Arrays.asList(StatusRoom.ACTIVE, StatusRoom.INACTIVE);
+                List<StatusRoom> validStatuses = Arrays.asList(StatusRoom.values());
                 if (validStatuses.contains(statusEnum)) {
                     room.setStatus(statusEnum);
                     roomRepository.save(room);
@@ -101,5 +101,4 @@ public class RoomServiceimpl implements RoomService{
         }
         return null;
     }
-
 }

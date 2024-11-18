@@ -25,17 +25,17 @@ public class RoomController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("/find/{page}")
+    @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    public ResponseEntity<?> findRooms(@PathVariable int page) {
+    public ResponseEntity<?> findRooms() {
         try{
-            List<Room> rooms = (List<Room>) roomService.findRooms(page);
+            List<Room> rooms =  roomService.findRooms();
             List<RoomDTO> roomDTOS = rooms.stream()
-                    .map(room -> modelMapper.map(room, RoomDTO.class))
+                    .map(RoomDTO::new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(roomDTOS);
         }catch (Exception e){
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 
@@ -44,21 +44,24 @@ public class RoomController {
     public ResponseEntity<?> updateRoom(@PathVariable int id, @RequestBody RoomRequest request) {
         try{
             Room room = roomService.updateRoom(id, request);
-            RoomDTO roomDTO = modelMapper.map(room, RoomDTO.class);
-            return new ResponseEntity<>(roomService.updateRoom(id, request), HttpStatus.CREATED);
+            RoomDTO roomDTO = new RoomDTO(room);
+            return new ResponseEntity<>(roomDTO, HttpStatus.CREATED);
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createRoom(@RequestBody RoomRequest request) throws Exception {
-        Room room = roomService.createRoom(request);
-        RoomDTO roomDTO = modelMapper.map(room, RoomDTO.class);
-        return new ResponseEntity<>(roomService.createRoom(request), HttpStatus.CREATED);
+        try {
 
+            Room room = roomService.createRoom(request);
+            RoomDTO roomDTO = new RoomDTO(room);
+            return new ResponseEntity<>(roomDTO, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
+        }
     }
 
     @PostMapping("/changeStatus/{id}")
@@ -66,11 +69,10 @@ public class RoomController {
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try {
             Room room = roomService.changeStatus(id, status);
-            RoomDTO roomDTO = modelMapper.map(room, RoomDTO.class);
-            return new ResponseEntity<>(roomService.changeStatus(id, status), HttpStatus.OK);
+            RoomDTO roomDTO = new RoomDTO(room);
+            return new ResponseEntity<>(roomDTO, HttpStatus.OK);
         }catch (Exception e){
-
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 }

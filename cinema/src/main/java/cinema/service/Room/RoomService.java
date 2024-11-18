@@ -5,9 +5,11 @@ import cinema.modal.entity.Room;
 import cinema.modal.request.RoomRequest;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 
 public interface RoomService {
-    Page<Room> findRooms(int page);
+    List<Room> findRooms();
     Room findById(int id);
     Room createRoom(RoomRequest request) throws Exception;
     Room updateRoom(int id, RoomRequest request) throws Exception;

@@ -8,9 +8,9 @@ import cinema.repository.SeatRoomRepository;
 import cinema.repository.ShowTimeRepository;
 import cinema.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -21,8 +21,8 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private ShowTimeRepository showTimeRepository;
     @Override
-    public Page<Ticket> findTickets(int page) {
-        return ticketRepository.findAll(PageRequest.of(page, 10));
+    public List<Ticket> findTickets() {
+        return ticketRepository.findAll();
     }
 
     @Override
@@ -37,7 +37,6 @@ public class TicketServiceImpl implements TicketService {
         SeatRoom seatRoom = seatRoomRepository.findById(request.getSeatRoom()).get();
         ticket.setSeat(seatRoom);
         ticket.setShowTime(showTime);
-        //ticket.setTotalPrice(seatRoom.getPrice());
         ticketRepository.save(ticket);
         return ticket;
     }
@@ -49,8 +48,8 @@ public class TicketServiceImpl implements TicketService {
         SeatRoom seatRoom = seatRoomRepository.findById(request.getSeatRoom()).get();
         ticket.setSeat(seatRoom);
         ticket.setShowTime(showTime);
-        //ticket.setTotalPrice(seatRoom.get);
         ticketRepository.save(ticket);
         return ticket;
     }
+
 }

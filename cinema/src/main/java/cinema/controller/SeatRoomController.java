@@ -2,7 +2,6 @@ package cinema.controller;
 
 import cinema.modal.entity.SeatRoom;
 import cinema.modal.request.SeatRoomRequest;
-import cinema.modal.response.DTO.SeatDTO;
 import cinema.modal.response.DTO.SeatRoomDTO;
 import cinema.service.SeatRoom.SeatRoomService;
 import org.modelmapper.ModelMapper;
@@ -28,13 +27,12 @@ public class SeatRoomController {
     public ResponseEntity<?> findSeatRooms() {
         try{
             List<SeatRoom> seatRooms = seatRoomService.findSeatRooms();
-            List<SeatDTO> seatDTOS = seatRooms.stream()
-                    .map(seatRoom -> modelMapper.map(seatRoom, SeatDTO.class))
+            List<SeatRoomDTO> seatDTOS = seatRooms.stream()
+                    .map(SeatRoomDTO::new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(seatDTOS);
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().body("Error: "  + e.getMessage());
         }
     }
 
@@ -43,11 +41,10 @@ public class SeatRoomController {
     public ResponseEntity<?> updateSeatRoom(@PathVariable int id, @RequestBody SeatRoomRequest request) {
         try{
             SeatRoom seatRoom = seatRoomService.updateSeatRoom(id, request);
-            SeatRoomDTO seatRoomDTO = modelMapper.map(seatRoom, SeatRoomDTO.class);
+            SeatRoomDTO seatRoomDTO = new SeatRoomDTO(seatRoom);
             return new ResponseEntity<>(seatRoomDTO, HttpStatus.CREATED);
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 // up lên git đi tui fix lại request
@@ -55,29 +52,18 @@ public class SeatRoomController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createMovie(@RequestBody SeatRoomRequest request) {
         SeatRoom seatRoom = seatRoomService.createSeatRoom(request);
-        SeatRoomDTO seatRoomDTO = modelMapper.map(seatRoom, SeatRoomDTO.class);
+        SeatRoomDTO seatRoomDTO = new SeatRoomDTO(seatRoom);
         return new ResponseEntity<>(seatRoomDTO, HttpStatus.CREATED);
     }
-
-//    @PostMapping("/changeStatus/{id}")
-//    @PreAuthorize("hasAuthority('ADMIN')")
-//    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
-//        try {
-//            return new ResponseEntity<>(seatRoomService.changeStatus(id, status), HttpStatus.OK);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return ResponseEntity.noContent().build();
-//        }
-//    }
 
     @GetMapping("findId/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
             SeatRoom seatRoom = seatRoomService.findById(id);
-            SeatRoomDTO seatRoomDTO = modelMapper.map(seatRoom, SeatRoomDTO.class);
+            SeatRoomDTO seatRoomDTO = new SeatRoomDTO(seatRoom);
             return ResponseEntity.ok(seatRoomDTO);
         }catch (Exception e){
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.badRequest().body("Error: "  + e.getMessage());
         }
     }
 }

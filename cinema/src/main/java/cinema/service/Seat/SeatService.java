@@ -12,5 +12,4 @@ public interface SeatService {
     Seat findById(int id);
     Seat createSeat(SeatRequest request);
     Seat updateSeat(int id, SeatRequest request);
-    Seat changeType(int id, String type);
 }

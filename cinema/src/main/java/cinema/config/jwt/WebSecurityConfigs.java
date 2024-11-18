@@ -55,11 +55,10 @@ public class WebSecurityConfigs {
                 .sessionManagement(i->i.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(a->a
                         .requestMatchers(
-                                //
-                                "/account/login",
-                                "/account/create",
-                                "/account/register",
+                                // account ok
                                 "/login/email",
+                                "/account/create",
+                                "/register",
                                 // cinema ok
                                 "/cinema/find",
                                 "/cinema/findId/{id}",
@@ -71,12 +70,12 @@ public class WebSecurityConfigs {
                                 "/movie/findComingSoon",
                                 "/movie/findShowing",
                                 "/movie/findSpecial",
-                                //
+                                // payment
                                 "/payment/find",
                                 "/payment/findId/{id}",
-                                //
+                                //seat ok
                                 "/seat/find",
-                                //
+                                //seat room ok
                                 "/seatRoom/find",
                                 "/seatRoom/findId/{id}",
                                 // showtime ok
@@ -85,6 +84,10 @@ public class WebSecurityConfigs {
                                 // voucher ok
                                 "voucher/findId/{id}",
                                 "voucher/findEffective"
+                                // room ok
+                                // booking ok
+                                // ticket
+                                // receipt
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

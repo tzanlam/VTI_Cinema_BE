@@ -31,14 +31,7 @@ public class Booking extends Base{
     @Column(name = "total_price", nullable = false)
     private double totalPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = false)
-    private Payment payment;
-
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusBooking status;
-
-    @JoinColumn(name = "confirmed", nullable = false)
-    private boolean confirmed;
 }

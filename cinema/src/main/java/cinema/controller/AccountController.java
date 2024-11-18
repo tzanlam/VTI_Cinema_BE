@@ -2,11 +2,8 @@ package cinema.controller;
 
 import cinema.modal.entity.Account;
 import cinema.modal.request.AccountRequest;
-import cinema.modal.request.LoginRequest;
 import cinema.modal.response.DTO.AccountDTO;
 import cinema.service.Account.AccountService;
-import cinema.service.Global.GlobalService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,40 +23,12 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private GlobalService globalService;
-
-
-
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request){
-        try{
-            return new ResponseEntity<>(globalService.login(request), HttpStatus.OK);
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody AccountRequest request){
-        try{
-            return new ResponseEntity<>(new AccountDTO(globalService.register(request)), HttpStatus.OK);
-
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-
     @PostMapping("/create")
     public ResponseEntity<?> createAccount(@RequestBody AccountRequest request){
         try{
             return new ResponseEntity<>(accountService.createAccount(request),HttpStatus.CREATED);
         }catch (Exception e){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 
@@ -69,11 +38,11 @@ public class AccountController {
         try {
             List<Account> accounts = accountService.findAccounts();
             List<AccountDTO> accountDTOS = accounts.stream()
-                    .map(account -> new AccountDTO(account))
+                    .map(AccountDTO::new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(accountDTOS);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 
@@ -83,7 +52,7 @@ public class AccountController {
                 try {
                     return new ResponseEntity<>(new AccountDTO(accountService.updateAccount(id, request)), HttpStatus.OK);
                 } catch (Exception e) {
-                    return ResponseEntity.badRequest().build();
+                    return ResponseEntity.badRequest().body("Error: "+e.getMessage());
                 }
             }
 
@@ -93,17 +62,17 @@ public class AccountController {
                 try {
                     return new ResponseEntity<>(new AccountDTO(accountService.changeStatus(id, status)), HttpStatus.OK);
                 } catch (Exception e) {
-                    return ResponseEntity.badRequest().build();
+                    return ResponseEntity.badRequest().body("Error: "+e.getMessage());
                 }
             }
 
-            @GetMapping("/findId/{id}")
-            @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER','USER')")
-            public ResponseEntity<?> findById ( @PathVariable int id){
-                try {
-                    return new ResponseEntity<>(new AccountDTO(accountService.findById(id)), HttpStatus.OK);
-                } catch (Exception e) {
-                    return ResponseEntity.badRequest().build();
-                }
-            }
+        @GetMapping("/findId/{id}")
+        @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER','USER')")
+        public ResponseEntity<?> findById ( @PathVariable int id){
+            try {
+                return new ResponseEntity<>(new AccountDTO(accountService.findById(id)), HttpStatus.OK);
+            } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
+    }
+}

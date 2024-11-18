@@ -29,13 +29,12 @@ public class SeatController {
         try{
             List<Seat> seats = seatService.findSeats();
             List<SeatDTO> seatDTOS = seats.stream()
-                    .map(seat -> modelMapper.map(seat, SeatDTO.class))
+                    .map(SeatDTO::new)
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(seatDTOS);
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 
@@ -44,11 +43,10 @@ public class SeatController {
     public ResponseEntity<?> updateSeat(@PathVariable int id, @RequestBody SeatRequest request) {
         try{
             Seat seat = seatService.updateSeat(id, request);
-            SeatDTO seatDTO = modelMapper.map(seat,SeatDTO.class);
+            SeatDTO seatDTO = new SeatDTO(seat);
             return new ResponseEntity<>(seatDTO, HttpStatus.CREATED);
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 
@@ -57,21 +55,10 @@ public class SeatController {
     public ResponseEntity<?> createRoom(@RequestBody SeatRequest request) {
         try {
             Seat seat = seatService.createSeat(request);
-            SeatDTO seatDTO = modelMapper.map(seat,SeatDTO.class);
+            SeatDTO seatDTO = new SeatDTO(seat);
             return new ResponseEntity<>(seatDTO, HttpStatus.CREATED);
         }catch (Exception e){
-            return ResponseEntity.noContent().build();
-        }
-    }
-
-    @PostMapping("/changeType/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String type) {
-        try {
-            return new ResponseEntity<>(seatService.changeType(id, type), HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 }
