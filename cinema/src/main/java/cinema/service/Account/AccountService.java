@@ -8,6 +8,7 @@ import java.util.List;
 public interface AccountService {
     List<Account> findAccounts();
     Account findById(int id);
+    Account findByEmail(String email);
     Account createAccount(AccountRequest request);
     Account updateAccount(int id, AccountRequest request);
     Account changeStatus(int id, String status);

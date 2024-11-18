@@ -46,6 +46,16 @@ public class AccountController {
         }
     }
 
+    @GetMapping("findEmail/{email}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER', 'USER')")
+    public ResponseEntity<?> findAccountsByEmail(@PathVariable String email) {
+        try{
+            return ResponseEntity.ok(new AccountDTO(accountService.findByEmail(email)));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
+        }
+    }
+
             @PutMapping("/update/{id}")
             @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
             public ResponseEntity<?> updateAccount ( @PathVariable int id, @RequestBody AccountRequest request){
