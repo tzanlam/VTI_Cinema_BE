@@ -8,14 +8,20 @@ import cinema.modal.request.LoginRequest;
 import cinema.modal.response.AuthResponse;
 import cinema.repository.AccountRepository;
 import cinema.service.MailSender.MailSenderService;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Bucket;
+import com.google.firebase.cloud.StorageClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.UUID;
 
 @Service
 public class GlobalServiceImpl implements GlobalService{
@@ -58,6 +64,16 @@ public class GlobalServiceImpl implements GlobalService{
         request.ResgisterAccount(account);
         accountRepository.save(account);
         return account;
+    }
+
+    @Override
+    public String firebaseStorage(MultipartFile file) throws IOException {
+        Bucket bucket = StorageClient.getInstance().bucket();
+        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+        Blob blob = bucket.create(fileName, file.getBytes(), file.getContentType());
+        return String.format("https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media",
+                bucket.getName(),
+                blob.getName());
     }
 
 //    @Override

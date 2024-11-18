@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -33,6 +35,15 @@ public class GlobalController {
 
         }catch (Exception e){
             return ResponseEntity.badRequest().body(Map.of("message", "Error when register"));
+        }
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file){
+        try{
+            return ResponseEntity.ok(globalService.firebaseStorage(file));
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Error when upload"));
         }
     }
 

@@ -38,11 +38,11 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-        <!--        cấu hình firebase lưu img-->
+        <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
         <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
-            <version>8.1.0</version>
+            <version>9.4.1</version>
         </dependency>
 
         <!-- Spring Boot Starter Web đã bao gồm hỗ trợ multipart -->
