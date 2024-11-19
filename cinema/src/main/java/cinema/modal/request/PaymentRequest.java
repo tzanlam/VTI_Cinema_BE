@@ -1,7 +1,7 @@
 package cinema.modal.request;
 
 import cinema.modal.entity.Payment;
-import cinema.modal.entity.constant.MethodPayment;
+import cinema.modal.entity.constant.TypePayment;
 import cinema.modal.entity.constant.StatusPayment;
 import lombok.Data;
 
@@ -16,37 +16,27 @@ public class PaymentRequest {
 
     public Payment asPayment() {
         Payment payment = new Payment();
-
-        List<MethodPayment> methodPayments = List.of(MethodPayment.values());
-        MethodPayment methodPayment = MethodPayment.valueOf(this.method);
-        if (methodPayments.contains(methodPayment)) {
-            payment.setMethod(MethodPayment.valueOf(this.method));
-        }
-
-        payment.setAddressTransfer(addressTransfer);
-        payment.setQrCode(qrCode);
-
-        List<StatusPayment> statusPayments = List.of(StatusPayment.values());
-        StatusPayment statusPayment = StatusPayment.valueOf(this.status);
-        if (statusPayments.contains(statusPayment)) {
-            payment.setStatus(StatusPayment.valueOf(String.valueOf(status)));
-        }
+        populatePayment(payment);
         return payment;
     }
 
     public Payment updatePayment(Payment payment) {
-        List<MethodPayment> methodPayments = List.of(MethodPayment.values());
-        if (methodPayments.contains(method)) {
-            payment.setMethod(MethodPayment.valueOf(String.valueOf(method)));
-        }
+        populatePayment(payment);
+        return payment;
+    }
 
+    private void populatePayment(Payment payment) {
+        List<TypePayment> methodPayments = List.of(TypePayment.values());
+        TypePayment methodPayment = TypePayment.valueOf(this.method);
+        if (methodPayments.contains(methodPayment)) {
+            payment.setMethod(methodPayment);
+        }
         payment.setAddressTransfer(addressTransfer);
         payment.setQrCode(qrCode);
-
         List<StatusPayment> statusPayments = List.of(StatusPayment.values());
-        if (statusPayments.contains(status)){
-            payment.setStatus(StatusPayment.valueOf(String.valueOf(status)));
+        StatusPayment statusPayment = StatusPayment.valueOf(this.status);
+        if (statusPayments.contains(statusPayment)){
+            payment.setStatus(statusPayment);
         }
-        return payment;
     }
 }

@@ -10,5 +10,4 @@ public interface PaymentService {
     Payment findPaymentById(int id);
     Payment createPayment(PaymentRequest request);
     Payment updatePayment(int id, PaymentRequest request);
-
 }

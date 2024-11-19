@@ -14,11 +14,11 @@ public class ReceiptController {
     @Autowired
     private ReceiptService receiptService;
 
-    @GetMapping("/find/{page}")
+    @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    public ResponseEntity<?> findAll(@PathVariable int page){
+    public ResponseEntity<?> findAll(){
         try{
-            return ResponseEntity.ok(receiptService.findReceipts(page));
+            return ResponseEntity.ok(receiptService.findReceipts());
         }catch(Exception e){
             return ResponseEntity.notFound().build();
         }
@@ -34,21 +34,21 @@ public class ReceiptController {
         }
     }
 
-    @GetMapping("/findIncome/{page}")
+    @GetMapping("/findIncome")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    public ResponseEntity<?> findIncome(@PathVariable int page){
+    public ResponseEntity<?> findIncome(){
         try{
-            return ResponseEntity.ok(receiptService.findIncome(page));
+            return ResponseEntity.ok(receiptService.findIncome());
         }catch(Exception e){
             return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping("/findSpending/{page}")
+    @GetMapping("/findSpending")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    public ResponseEntity<?> findSpending(@PathVariable int page){
+    public ResponseEntity<?> findSpending(){
         try{
-            return ResponseEntity.ok(receiptService.findSpending(page));
+            return ResponseEntity.ok(receiptService.findSpending());
         }catch(Exception e){
             return ResponseEntity.notFound().build();
         }

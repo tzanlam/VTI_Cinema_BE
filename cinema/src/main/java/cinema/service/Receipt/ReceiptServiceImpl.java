@@ -2,20 +2,25 @@ package cinema.service.Receipt;
 
 import cinema.modal.entity.Account;
 import cinema.modal.entity.Booking;
+import cinema.modal.entity.Payment;
 import cinema.modal.entity.Receipt;
+import cinema.modal.entity.constant.StatusBooking;
 import cinema.modal.entity.constant.StatusReceipt;
 import cinema.modal.entity.constant.TypeReceipt;
 import cinema.modal.request.ReceiptRequest;
+import cinema.modal.request.UserPaymentRequest;
 import cinema.repository.AccountRepository;
 import cinema.repository.BookingRepository;
 import cinema.repository.ReceiptRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+
+import static cinema.util.CheckEqualsEnum.checkEqualsEnum;
 
 @Service
 public class ReceiptServiceImpl implements ReceiptService{
@@ -26,8 +31,8 @@ public class ReceiptServiceImpl implements ReceiptService{
     @Autowired
     private BookingRepository bookingRepository;
     @Override
-    public Page<Receipt> findReceipts(int page) {
-        return receiptRepository.findAll(PageRequest.of(page, 10));
+    public List<Receipt> findReceipts() {
+        return receiptRepository.findAll();
     }
 
     @Override
@@ -38,15 +43,8 @@ public class ReceiptServiceImpl implements ReceiptService{
     @Override
     public Receipt ceateReceipt(ReceiptRequest request) {
         Receipt receipt = new Receipt();
-        Account account = accountRepository.findById(request.getAccount()).get();
-        receipt.setAccount(account);
-        List<TypeReceipt> typeReceipts = List.of(TypeReceipt.values());
-        if (typeReceipts.contains(request.getTypeReceipt())) {
-            receipt.setType(TypeReceipt.valueOf(request.getTypeReceipt()));
-        }
-        receipt.setReason(request.getReason());
-        receipt.setAmount(Double.parseDouble(request.getAmount()));
-        receipt.setStatus(StatusReceipt.UNPROCESSED);
+        populateReceipt(request, receipt);
+        receiptRepository.save(receipt);
         return receipt;
     }
 
@@ -54,15 +52,7 @@ public class ReceiptServiceImpl implements ReceiptService{
     public Receipt updateReceipt(int id, ReceiptRequest request) {
         Receipt receipt = receiptRepository.findById(id).orElse(null);
         if (receipt != null) {
-            List<TypeReceipt> typeReceipts = List.of(TypeReceipt.values());
-            if (typeReceipts.contains(request.getTypeReceipt())) {
-                receipt.setType(TypeReceipt.valueOf(request.getTypeReceipt()));
-            }
-            Account account = accountRepository.findById(request.getAccount()).get();
-            receipt.setAccount(account);
-            receipt.setReason(request.getReason());
-            receipt.setAmount(Double.parseDouble(request.getAmount()));
-            receipt.setStatus(StatusReceipt.UNPROCESSED);
+            populateReceipt(request, receipt);
             receiptRepository.save(receipt);
             return receipt;
         }
@@ -74,7 +64,8 @@ public class ReceiptServiceImpl implements ReceiptService{
         Receipt receipt = receiptRepository.findById(id).orElse(null);
         if (receipt != null) {
             List<StatusReceipt> statusReceipts = List.of(StatusReceipt.valueOf(status));
-            if (statusReceipts.contains(status)) {
+            StatusReceipt statusReceipt = StatusReceipt.valueOf(status);
+            if (statusReceipts.contains(statusReceipt)) {
                 receipt.setStatus(StatusReceipt.valueOf(status));
             }
             receiptRepository.save(receipt);
@@ -84,25 +75,51 @@ public class ReceiptServiceImpl implements ReceiptService{
     }
 
     @Override
-    public Page<Receipt> findIncome(int page) {
-        return receiptRepository.findByType(TypeReceipt.INCOME, PageRequest.of(page, 10));
+    public List<Receipt> findIncome() {
+        return receiptRepository.findByType(TypeReceipt.INCOME);
     }
 
     @Override
-    public Page<Receipt> findSpending(int page) {
-        return receiptRepository.findByType(TypeReceipt.SPENDING, PageRequest.of(page, 10));
+    public List<Receipt> findSpending() {
+        return receiptRepository.findByType(TypeReceipt.SPENDING);
     }
 
+    @Scheduled(fixedRate = 5000) // Chạy mỗi 5 giây
+    @Transactional
     @Override
-    public Receipt isBooking(Booking booking) {
+    public String isBooking(Booking booking) {
         Receipt receipt = new Receipt();
-        receipt.setType(TypeReceipt.INCOME);
-        receipt.setAccount(booking.getAccount());
-        receipt.setBooking(booking);
-        receipt.setReason("THU NHAP DAT VE");
-        receipt.setAmount(booking.getTotalPrice());
+        if (booking.getStatus().equals(StatusBooking.SUCCESS)) {
+            receipt.setType(TypeReceipt.INCOME);
+            receipt.setAccount(booking.getAccount());
+            receipt.setReason("THU NHAP DAT VE");
+            receipt.setAmount(booking.getTotalPrice());
+            receipt.setStatus(StatusReceipt.PROCESSED);
+            receiptRepository.save(receipt);
+            return "You have new income receipt";
+        }
+        else
+            return "You have no new income receipt";
+    }
+
+    private void populateReceipt(ReceiptRequest request, Receipt receipt){;
+        boolean checkType = checkEqualsEnum(TypeReceipt.class, request.getTypeReceipt());
+        if (checkType) {
+            receipt.setType(TypeReceipt.valueOf(request.getTypeReceipt()));
+        }
+        Account account = accountRepository.findById(request.getAccount()).orElse(null);
+        receipt.setAccount(account);
+        receipt.setReason(request.getReason());
+        receipt.setAmount(Objects.requireNonNull(bookingRepository.findById(request.getBooking()).orElse(null)).getTotalPrice());
         receipt.setStatus(StatusReceipt.PROCESSED);
-        receiptRepository.save(receipt);
-        return receipt;
+    }
+
+
+    @Scheduled(fixedRate = 1000*60*10)
+    public void confirmPayment(int bookingId, UserPaymentRequest request){
+        Booking booking = bookingRepository.findByAccountIdAndStatus(bookingId, StatusBooking.WAITING);
+        if(Objects.nonNull(booking)){
+
+        }
     }
 }

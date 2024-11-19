@@ -1,6 +1,6 @@
 package cinema.modal.entity;
 
-import cinema.modal.entity.constant.MethodPayment;
+import cinema.modal.entity.constant.TypePayment;
 import cinema.modal.entity.constant.StatusPayment;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -15,7 +15,7 @@ public class Payment extends Base{
 
     @Column(name = "method", nullable = false)
     @Enumerated(EnumType.STRING)
-    private MethodPayment method;
+    private TypePayment method;
 
     @Column(name = "address_tranfer", nullable = false)
     private String addressTransfer;

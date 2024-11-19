@@ -1,11 +1,16 @@
 package cinema.controller;
 
+import cinema.modal.entity.Ticket;
 import cinema.modal.request.TicketRequest;
+import cinema.modal.response.DTO.TicketDTO;
 import cinema.service.Ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
@@ -18,7 +23,9 @@ public class TicketController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findTicket() {
         try{
-            return ResponseEntity.ok(ticketService.findTickets());
+            List<Ticket> tickets = ticketService.findTickets();
+            List<TicketDTO> ticketDTOs = tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
+            return ResponseEntity.ok(ticketDTOs);
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Error"+e.getMessage());
         }
@@ -28,7 +35,7 @@ public class TicketController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try {
-            return ResponseEntity.ok(ticketService.findById(id));
+            return ResponseEntity.ok(new TicketDTO(ticketService.findById(id)));
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Error"+e.getMessage());
         }
@@ -38,7 +45,7 @@ public class TicketController {
     @PreAuthorize("hasAnyAuthority('ADMIN','USER','MANAGER')")
     public ResponseEntity<?> create(@RequestBody TicketRequest request) {
         try{
-            return ResponseEntity.ok(ticketService.createTicket(request));
+            return ResponseEntity.ok(new TicketDTO(ticketService.createTicket(request)));
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Error"+e.getMessage());
         }
@@ -48,7 +55,7 @@ public class TicketController {
     @PreAuthorize("hasAnyAuthority('ADMIN','USER','MANAGER')")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody TicketRequest request) {
         try{
-            return ResponseEntity.ok(ticketService.updateTicket(id, request));
+            return ResponseEntity.ok(new TicketDTO(ticketService.updateTicket(id, request)));
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Error"+e.getMessage());
         }

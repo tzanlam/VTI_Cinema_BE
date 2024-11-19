@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -18,9 +19,6 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingRepository bookingRepository;
-
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     private TicketRepository ticketRepository;
@@ -81,19 +79,19 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private Booking populate(Booking booking, BookingRequest request) {
-        Optional<Account> account = accountRepository.findById(request.getAccount());
-        Optional<Ticket> ticket = ticketRepository.findById(request.getTicket());
+        Ticket ticket = ticketRepository.findById(request.getTicket()).orElse(null);
+        Account account = Objects.requireNonNull(ticket).getAccount();
         Optional<MoreService> moreService = moreServiceRepository.findById(request.getMoreService());
         Optional<Voucher> voucher = voucherRepository.findById(request.getVoucher());
 
-        if (account.isEmpty() || ticket.isEmpty() || moreService.isEmpty() || voucher.isEmpty()) {
+        if (Objects.isNull(account) || moreService.isEmpty() || voucher.isEmpty()) {
             throw new IllegalArgumentException("Invalid account, ticket, more service, or voucher details");
         }
-        booking.setAccount(account.get());
-        booking.setTicket(ticket.get());
+        booking.setAccount(account);
+        booking.setTicket(ticket);
         booking.setMoreService(moreService.get());
         booking.setVoucher(voucher.get());
-        booking.setTotalPrice(ticket.get().getTotalPrice() + moreService.get().getPrice() - voucher.get().getDiscount());
+        booking.setTotalPrice(ticket.getTotalPrice() + moreService.get().getPrice() - voucher.get().getDiscount());
         return booking;
     }
 }

@@ -6,12 +6,14 @@ import lombok.Data;
 @Data
 public class TicketDTO {
     private String ticket_id;
+    private String account_name;
     private String seat_id;
     private String show_time_id;
     private String total_price;
 
     public TicketDTO(Ticket ticket) {
         this.ticket_id = String.valueOf(ticket.getId());
+        this.account_name = ticket.getAccount().getFullname();
         this.seat_id = String.valueOf(ticket.getSeat());
         this.show_time_id = String.valueOf(ticket.getShowTime());
         this.total_price = String.valueOf(ticket.getTotalPrice());

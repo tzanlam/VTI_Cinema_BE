@@ -4,6 +4,8 @@ import cinema.modal.entity.constant.StatusBooking;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "booking")
@@ -16,9 +18,9 @@ public class Booking extends Base{
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "ticket_id", referencedColumnName = "id", nullable = false)
-    private Ticket ticket;
+    private List<Ticket> ticket;
 
     @ManyToOne
     @JoinColumn(name = "more_service_id", referencedColumnName = "id")

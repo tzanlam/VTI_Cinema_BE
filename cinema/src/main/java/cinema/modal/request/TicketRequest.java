@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class TicketRequest {
+    private int account;
     private int seatRoom;
     private int showTime;
 

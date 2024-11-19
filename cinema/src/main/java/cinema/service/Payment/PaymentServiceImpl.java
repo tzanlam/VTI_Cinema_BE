@@ -2,6 +2,7 @@ package cinema.service.Payment;
 
 import cinema.modal.entity.Payment;
 import cinema.modal.request.PaymentRequest;
+import cinema.repository.BookingRepository;
 import cinema.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,16 +13,17 @@ import java.util.List;
 public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Override
     public List<Payment> findPayments() {
-        List<Payment> payments = paymentRepository.findAll();
-        return payments;
+        return paymentRepository.findAll();
     }
 
     @Override
     public Payment findPaymentById(int id) {
-        return paymentRepository.findById(id).get();
+        return paymentRepository.findById(id).orElse(null);
     }
 
     @Override

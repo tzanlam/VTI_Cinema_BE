@@ -1,5 +1,6 @@
 package cinema.modal.entity;
 
+import cinema.modal.entity.constant.StatusTicket;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,6 +13,10 @@ public class Ticket extends Base{
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "account_id",referencedColumnName = "id", nullable = false)
+    private Account account;
+
+    @ManyToOne
     @JoinColumn(name = "seat_room_id", referencedColumnName = "id", nullable = false)
     private SeatRoom seat;
 
@@ -21,4 +26,8 @@ public class Ticket extends Base{
 
     @Column(name = "total_price")
     private double totalPrice;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private StatusTicket status;
 }
