@@ -2,13 +2,11 @@ package cinema.service.Receipt;
 
 import cinema.modal.entity.Account;
 import cinema.modal.entity.Booking;
-import cinema.modal.entity.Payment;
 import cinema.modal.entity.Receipt;
 import cinema.modal.entity.constant.StatusBooking;
 import cinema.modal.entity.constant.StatusReceipt;
 import cinema.modal.entity.constant.TypeReceipt;
 import cinema.modal.request.ReceiptRequest;
-import cinema.modal.request.UserPaymentRequest;
 import cinema.repository.AccountRepository;
 import cinema.repository.BookingRepository;
 import cinema.repository.ReceiptRepository;
@@ -86,20 +84,19 @@ public class ReceiptServiceImpl implements ReceiptService{
 
     @Scheduled(fixedRate = 5000) // Chạy mỗi 5 giây
     @Transactional
-    @Override
-    public String isBooking(Booking booking) {
-        Receipt receipt = new Receipt();
-        if (booking.getStatus().equals(StatusBooking.SUCCESS)) {
-            receipt.setType(TypeReceipt.INCOME);
-            receipt.setAccount(booking.getAccount());
-            receipt.setReason("THU NHAP DAT VE");
-            receipt.setAmount(booking.getTotalPrice());
-            receipt.setStatus(StatusReceipt.PROCESSED);
-            receiptRepository.save(receipt);
-            return "You have new income receipt";
+    public void processIncomeReceipts() {
+        List<Booking> successfulBookings = bookingRepository.findByStatus(StatusBooking.SUCCESS);
+        for (Booking booking : successfulBookings) {
+            if (!receiptRepository.existsByBookingId(booking.getId())) {
+                Receipt receipt = new Receipt();
+                receipt.setType(TypeReceipt.INCOME);
+                receipt.setAccount(booking.getAccount());
+                receipt.setReason("THU NHẬP ĐẶT VÉ");
+                receipt.setAmount(booking.getTotalPrice());
+                receipt.setStatus(StatusReceipt.PROCESSED);
+                receiptRepository.save(receipt);
+            }
         }
-        else
-            return "You have no new income receipt";
     }
 
     private void populateReceipt(ReceiptRequest request, Receipt receipt){;
@@ -112,14 +109,5 @@ public class ReceiptServiceImpl implements ReceiptService{
         receipt.setReason(request.getReason());
         receipt.setAmount(Objects.requireNonNull(bookingRepository.findById(request.getBooking()).orElse(null)).getTotalPrice());
         receipt.setStatus(StatusReceipt.PROCESSED);
-    }
-
-
-    @Scheduled(fixedRate = 1000*60*10)
-    public void confirmPayment(int bookingId, UserPaymentRequest request){
-        Booking booking = bookingRepository.findByAccountIdAndStatus(bookingId, StatusBooking.WAITING);
-        if(Objects.nonNull(booking)){
-
-        }
     }
 }

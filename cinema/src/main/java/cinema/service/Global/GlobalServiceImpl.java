@@ -44,6 +44,7 @@ public class GlobalServiceImpl implements GlobalService{
 
     @Autowired
     private AccountRepository accountRepository;
+
     @Override
     public AuthResponse login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
@@ -69,7 +70,7 @@ public class GlobalServiceImpl implements GlobalService{
     @Override
     public Account register(AccountRequest request) {
         Account account = new Account();
-        request.ResgisterAccount(account);
+        request.RegisterAccount(account);
         accountRepository.save(account);
         return account;
     }
@@ -83,26 +84,4 @@ public class GlobalServiceImpl implements GlobalService{
                 bucket.getName(),
                 blob.getName());
     }
-
-//    @Override
-//    @Scheduled(fixedRate = 5000)
-//    // sau register
-//    public Account confirmAccount(String username, String checkCode) {
-//        Account account = accountRepository.findByUsername(username);
-//        String email = account.getEmail();
-//        String code  = mailSenderService.createCode(email);
-//        int i;
-//        for (i = 0 ; i < 3; i++) {
-//            if (checkCode.equals(code)) {
-//                account.setStatus(StatusAccount.ACTIVE);
-//                accountRepository.save(account);
-//            }
-//            else {
-//                System.out.println("error");
-//            }
-//        }
-//        return account;
-//    }
-
-
 }

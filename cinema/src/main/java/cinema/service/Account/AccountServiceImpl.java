@@ -4,21 +4,19 @@ import cinema.modal.entity.Account;
 import cinema.modal.entity.constant.StatusAccount;
 import cinema.modal.request.AccountRequest;
 import cinema.repository.AccountRepository;
-import org.springframework.beans.BeanUtils;
+import cinema.service.MailSender.IMailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private IMailSenderService mailSenderService;
     @Override
     public List<Account> findAccounts() {
         return accountRepository.findAll();
@@ -35,9 +33,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account createAccount(AccountRequest request) {
+    public Account createAccount(AccountRequest request) throws Exception {
         Account account = request.asAccount();
         accountRepository.save(account);
+        mailSenderService.generateVerificationCode(request.getEmail(),generateToken(request.getEmail()));
         return account;
     }
 
@@ -69,6 +68,33 @@ public class AccountServiceImpl implements AccountService {
             } catch (IllegalArgumentException e) {
                 System.out.println("Giá trị newStatus không hợp lệ: " + newStatus);
             }
+        }
+        return null;
+    }
+    public Account confirmAccount(String email, String checkCode) throws Exception {
+        Account account = accountRepository.findByEmail(email);
+        if (account == null) {
+            throw new Exception("Account not found for email: " + email);
+        }
+
+        if (checkCode.equals(account.getVerificationCode())) {
+            account.setStatus(StatusAccount.ACTIVE);
+            account.setVerificationCode(null);
+            accountRepository.save(account);
+            return account;
+        }
+
+        throw new Exception("Invalid verification code.");
+    }
+
+    private String generateToken(String email) throws Exception {
+        String token = UUID.randomUUID().toString();
+        Account account = accountRepository.findByEmail(email);
+        if (account != null) {
+            account.setVerificationCode(token);
+            accountRepository.save(account); // Lưu mã xác thực vào DB
+            mailSenderService.generateVerificationCode(email, token); // Gửi mã qua email
+            return token;
         }
         return null;
     }

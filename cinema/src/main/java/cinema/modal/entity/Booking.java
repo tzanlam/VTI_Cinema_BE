@@ -18,9 +18,9 @@ public class Booking extends Base{
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "ticket_id", referencedColumnName = "id", nullable = false)
-    private List<Ticket> ticket;
+    private Ticket ticket;
 
     @ManyToOne
     @JoinColumn(name = "more_service_id", referencedColumnName = "id")

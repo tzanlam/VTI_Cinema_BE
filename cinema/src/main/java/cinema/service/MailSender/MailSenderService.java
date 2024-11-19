@@ -3,44 +3,48 @@ package cinema.service.MailSender;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-
-import java.io.File;
-import java.util.Random;
-
 @Service
 public class MailSenderService implements IMailSenderService {
     @Autowired
-    private JavaMailSender emailSender;
+    private JavaMailSender mailSender;
 
     @Override
     public void sendMessageWithAttachment(String to, String subject, String text) throws Exception {
         try{
-            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom("noreply@baeldung.com");
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(text, true); // text có thể để dạng html = true
-//            FileSystemResource file
-//                    = new FileSystemResource(new File(pathToAttachment));
-//            helper.addAttachment("Invoice", file);// File có thể là hình ảnh hoặc pdf,...
-            emailSender.send(message);
+            mailSender.send(message);
 
         }catch (MessagingException e){
             throw new Exception(e.getMessage());
         }
     }
 
-    public String createCode(String email){
-        String code;
-        Random rand = new Random();
-        int randomNum = rand.nextInt(2000);
-        code = String.valueOf(randomNum);
-        return code;
+    @Override
+    public void generateVerificationCode(String email, String token) throws Exception {
+        try{
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setFrom("vtiCinema@baeldung.com");
+            helper.setSubject("Confirm email");
+            helper.setText(
+                    "<h3>Xin chào,</h3>"
+                            + "<p>Cảm ơn bạn đã đăng ký.</p>"
+                            + "<p>Mã xác minh của bạn là: </p>"+token,
+                    true
+            );
+            mailSender.send(message);
+        }catch (MessagingException e){
+            throw new Exception(e.getMessage());
+        }
     }
 }

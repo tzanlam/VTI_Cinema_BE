@@ -27,7 +27,7 @@ public class AccountRequest {
         account.setEmail(email);
         account.setPassword(passwordEncoder.encode(password));
         account.setPhoneNumber(phoneNumber);
-        account.setStatus(StatusAccount.ACTIVE);
+        account.setStatus(StatusAccount.INACTIVE);
         account.setRole(Role.USER);
         return account;
     }
@@ -41,13 +41,12 @@ public class AccountRequest {
         return account;
     }
 
-    public Account ResgisterAccount(Account account) {
+    public void RegisterAccount(Account account) {
         account.setUsername(username);
         account.setPassword(passwordEncoder.encode(password));
         account.setEmail(email);
         account.setStatus(StatusAccount.PENDING);
         account.setPhoneNumber(phoneNumber);
         account.setRole(Role.USER);
-        return account;
     }
 }

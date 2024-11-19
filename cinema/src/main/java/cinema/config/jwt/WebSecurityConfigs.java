@@ -59,6 +59,7 @@ public class WebSecurityConfigs {
                                 "/login/email",
                                 "/account/create",
                                 "/register",
+                                "/account/checkCode",
                                 // cinema ok
                                 "/cinema/find",
                                 "/cinema/findId/{id}",

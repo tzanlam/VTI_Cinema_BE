@@ -24,7 +24,7 @@ public class Account extends Base{
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
@@ -40,4 +40,7 @@ public class Account extends Base{
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusAccount status;
+
+    @Column(name = "verification_code")
+    private String verificationCode;
 }

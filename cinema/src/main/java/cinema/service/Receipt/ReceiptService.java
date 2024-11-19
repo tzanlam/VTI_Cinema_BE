@@ -12,7 +12,7 @@ public interface ReceiptService {
     Receipt ceateReceipt(ReceiptRequest request);
     Receipt updateReceipt(int id, ReceiptRequest request);
     Receipt changeStatus(int id, String status);
-    String isBooking(Booking booking);
+    void processIncomeReceipts();
     List<Receipt> findIncome();
     List<Receipt> findSpending();
 

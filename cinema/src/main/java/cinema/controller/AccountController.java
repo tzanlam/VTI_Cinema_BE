@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -83,6 +84,18 @@ public class AccountController {
                 return new ResponseEntity<>(new AccountDTO(accountService.findById(id)), HttpStatus.OK);
             } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: "+e.getMessage());
+        }
+    }
+
+    @PostMapping("/checkCode")
+    public ResponseEntity<?> checkCoded(@RequestParam String email, @RequestParam String code) {
+        try {
+            Account account = accountService.confirmAccount(email, code);
+            return ResponseEntity.ok(new AccountDTO(account));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "error", e.getMessage()
+            ));
         }
     }
 }

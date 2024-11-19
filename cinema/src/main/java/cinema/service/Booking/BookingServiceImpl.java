@@ -2,14 +2,12 @@ package cinema.service.Booking;
 
 import cinema.modal.entity.*;
 import cinema.modal.entity.constant.StatusBooking;
+import cinema.modal.entity.constant.StatusTicket;
 import cinema.modal.request.BookingRequest;
 import cinema.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -78,8 +76,8 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    private Booking populate(Booking booking, BookingRequest request) {
-        Ticket ticket = ticketRepository.findById(request.getTicket()).orElse(null);
+    private void populate(Booking booking, BookingRequest request) {
+        Ticket ticket = ticketRepository.findByIdAndStatus(request.getTicket(), StatusTicket.UNCONFIRMED);
         Account account = Objects.requireNonNull(ticket).getAccount();
         Optional<MoreService> moreService = moreServiceRepository.findById(request.getMoreService());
         Optional<Voucher> voucher = voucherRepository.findById(request.getVoucher());
@@ -92,6 +90,5 @@ public class BookingServiceImpl implements BookingService {
         booking.setMoreService(moreService.get());
         booking.setVoucher(voucher.get());
         booking.setTotalPrice(ticket.getTotalPrice() + moreService.get().getPrice() - voucher.get().getDiscount());
-        return booking;
     }
 }

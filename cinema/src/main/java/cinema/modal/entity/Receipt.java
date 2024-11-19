@@ -18,6 +18,10 @@ public class Receipt {
     private TypeReceipt type;
 
     @ManyToOne
+    @JoinColumn(name = "booking_id", referencedColumnName = "id")
+    private Booking booking;
+
+    @ManyToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;
 
