@@ -14,9 +14,9 @@ public class FireBaseConfig {
         public FireBaseConfig() {
             try {
                 // Lâm
-//                var serviceAccount = Path.of("src/main/resources/firebase-service.json");
+                var serviceAccount = Path.of("src/main/resources/firebase-service.json");
                 //Hoàng
-                var serviceAccount = Path.of("D:\\VTI_Cinema_BE\\cinema\\src\\main\\resources\\firebase-service.json");
+//                var serviceAccount = Path.of("D:\\VTI_Cinema_BE\\cinema\\src\\main\\resources\\firebase-service.json");
                 if (!Files.exists(serviceAccount)) {
                     throw new RuntimeException("Firebase service account file not found at: " + serviceAccount);
                 }
