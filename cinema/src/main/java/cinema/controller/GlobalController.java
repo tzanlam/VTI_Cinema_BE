@@ -38,15 +38,4 @@ public class GlobalController {
             return ResponseEntity.badRequest().body(Map.of("message", "Error when register"));
         }
     }
-
-    @PostMapping("/upload")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
-    public ResponseEntity<?> upload( MultipartFile file){
-        try{
-            return ResponseEntity.ok(globalService.firebaseStorage(file));
-        } catch (IOException e) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Error when upload"));
-        }
-    }
-
 }

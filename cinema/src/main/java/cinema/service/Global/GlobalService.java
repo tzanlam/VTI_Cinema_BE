@@ -12,5 +12,4 @@ public interface GlobalService {
     AuthResponse login(LoginRequest request);
     AuthResponse loginByEmail(LoginRequest request);
     Account register(AccountRequest request);
-    String firebaseStorage(MultipartFile file) throws IOException;
 }

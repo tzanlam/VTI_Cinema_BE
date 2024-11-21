@@ -74,14 +74,4 @@ public class GlobalServiceImpl implements GlobalService{
         accountRepository.save(account);
         return account;
     }
-
-    @Override
-    public String firebaseStorage(MultipartFile file) throws IOException {
-        Bucket bucket = StorageClient.getInstance().bucket();
-        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
-        Blob blob = bucket.create(fileName, file.getBytes(), file.getContentType());
-        return String.format("https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media",
-                bucket.getName(),
-                blob.getName());
-    }
 }
