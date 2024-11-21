@@ -2,16 +2,17 @@ use vti_cinema;
 -- //Account
 INSERT INTO account (username, fullname, birth_date, email, password, phone_number, role, status, verification_code)
 VALUES
-('user1', 'Full Name 1', '1990-01-01', 'user1@example.com', 'password1', '1234567890', 'USER', 'ACTIVE', '123456'),
-('user2', 'Full Name 2', '1985-02-14', 'user2@example.com', 'password2', '2345678901', 'ADMIN', 'ACTIVE', '234567'),
-('user3', 'Full Name 3', '1992-03-21', 'user3@example.com', 'password3', '3456789012', 'USER', 'INACTIVE', '345678'),
-('user4', 'Full Name 4', '1988-04-18', 'user4@example.com', 'password4', '4567890123', 'ADMIN', 'ACTIVE', '456789'),
-('user5', 'Full Name 5', '1995-05-25', 'user5@example.com', 'password5', '5678901234', 'USER', 'ACTIVE', '567890'),
-('user6', 'Full Name 6', '1980-06-30', 'user6@example.com', 'password6', '6789012345', 'USER', 'INACTIVE', '678901'),
-('user7', 'Full Name 7', '1998-07-12', 'user7@example.com', 'password7', '7890123456', 'ADMIN', 'ACTIVE', '789012'),
-('user8', 'Full Name 8', '1991-08-20', 'user8@example.com', 'password8', '8901234567', 'USER', 'ACTIVE', '890123'),
-('user9', 'Full Name 9', '1993-09-09', 'user9@example.com', 'password9', '9012345678', 'ADMIN', 'INACTIVE', '901234'),
-('user10', 'Full Name 10', '1996-10-05', 'user10@example.com', 'password10', '0123456789', 'USER', 'ACTIVE', '012345');
+-- password là 123 
+('user1', 'Full Name 1', '1990-01-01', 'user1@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '1234567890', 'USER', 'ACTIVE', '123456'),
+('user2', 'Full Name 2', '1985-02-14', 'user2@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '2345678901', 'ADMIN', 'ACTIVE', '234567'),
+('user3', 'Full Name 3', '1992-03-21', 'user3@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '3456789012', 'USER', 'INACTIVE', '345678'),
+('user4', 'Full Name 4', '1988-04-18', 'user4@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '4567890123', 'ADMIN', 'ACTIVE', '456789'),
+('user5', 'Full Name 5', '1995-05-25', 'user5@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '5678901234', 'USER', 'ACTIVE', '567890'),
+('user6', 'Full Name 6', '1980-06-30', 'user6@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '6789012345', 'USER', 'INACTIVE', '678901'),
+('user7', 'Full Name 7', '1998-07-12', 'user7@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '7890123456', 'ADMIN', 'ACTIVE', '789012'),
+('user8', 'Full Name 8', '1991-08-20', 'user8@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '8901234567', 'USER', 'ACTIVE', '890123'),
+('user9', 'Full Name 9', '1993-09-09', 'user9@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '9012345678', 'ADMIN', 'INACTIVE', '901234'),
+('user10', 'Full Name 10', '1996-10-05', 'user10@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '0123456789', 'USER', 'ACTIVE', '012345');
 
 -- //Movie 
 INSERT INTO movie (image_movie, name, actor, director, genre, duration, description, language, trailer, start_date, viewing_age, rating, `status`)
