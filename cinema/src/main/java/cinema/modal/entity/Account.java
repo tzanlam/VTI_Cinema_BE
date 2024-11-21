@@ -3,15 +3,12 @@ package cinema.modal.entity;
 import cinema.modal.entity.constant.Role;
 import cinema.modal.entity.constant.StatusAccount;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "account")
 public class Account extends Base{
     @Id
@@ -46,15 +43,4 @@ public class Account extends Base{
 
     @Column(name = "verification_code")
     private String verificationCode;
-
-    public Account(String username, String fullname, LocalDate birthDate, String email, String password, String phoneNumber,Role role, StatusAccount status) {
-        this.username = username;
-        this.fullname = fullname;
-        this.birthDate = birthDate;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.phoneNumber = phoneNumber;
-        this.status = status;
-    }
 }

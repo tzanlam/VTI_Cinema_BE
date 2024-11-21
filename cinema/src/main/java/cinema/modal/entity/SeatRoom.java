@@ -25,6 +25,7 @@ public class SeatRoom {
     private List<String> rowNames;
 
     @Column(name = "type_seat")
+    @Enumerated(EnumType.STRING)
     private TypeSeat typeSeat;
 
     @Column(name = "status")

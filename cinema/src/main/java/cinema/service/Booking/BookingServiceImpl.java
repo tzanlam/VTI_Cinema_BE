@@ -41,7 +41,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking createBooking(BookingRequest request) {
         Booking booking = new Booking();
         populate(booking, request);
-        booking.setStatus(StatusBooking.WAITING);
+        booking.setStatus(StatusBooking.PENDING);
         bookingRepository.save(booking);
         return booking;
     }
@@ -52,7 +52,7 @@ public class BookingServiceImpl implements BookingService {
         if (booking != null) {
             populate(booking, request);
             booking.setId(id);
-            booking.setStatus(StatusBooking.WAITING);
+            booking.setStatus(StatusBooking.PENDING);
             bookingRepository.save(booking);
             return booking;
         }
@@ -77,7 +77,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private void populate(Booking booking, BookingRequest request) {
-        Ticket ticket = ticketRepository.findByIdAndStatus(request.getTicket(), StatusTicket.UNCONFIRMED);
+        Ticket ticket = ticketRepository.findByIdAndStatus(request.getTicket(), StatusTicket.UNPAID);
         Account account = Objects.requireNonNull(ticket).getAccount();
         Optional<MoreService> moreService = moreServiceRepository.findById(request.getMoreService());
         Optional<Voucher> voucher = voucherRepository.findById(request.getVoucher());

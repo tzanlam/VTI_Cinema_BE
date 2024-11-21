@@ -59,8 +59,8 @@ public class TicketServiceImpl implements TicketService {
         ticket.setAccount(account);
         ticket.setSeat(seatRoom);
         ticket.setShowTime(showTime);
-        ticket.setStatus(StatusTicket.UNCONFIRMED);
-        seatRoom.setStatus(StatusSeatRoom.SELECTED);
+        ticket.setStatus(StatusTicket.UNPAID);
+        seatRoom.setStatus(StatusSeatRoom.BOOKED);
         return ticket;
     }
 }
