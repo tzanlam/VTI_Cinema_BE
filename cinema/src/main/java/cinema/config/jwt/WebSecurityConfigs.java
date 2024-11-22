@@ -71,6 +71,7 @@ public class WebSecurityConfigs {
                                 "/movie/findComingSoon",
                                 "/movie/findShowing",
                                 "/movie/findSpecial",
+                                "movie/findMovie/{id}",
                                 // payment
                                 "/payment/find",
                                 "/payment/findId/{id}",

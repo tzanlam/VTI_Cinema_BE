@@ -2,6 +2,7 @@ package cinema.service.ShowTime;
 
 import cinema.modal.entity.Movie;
 import cinema.modal.entity.Room;
+import cinema.modal.entity.SeatRoom;
 import cinema.modal.entity.ShowTime;
 import cinema.modal.request.ShowTimeRequest;
 import cinema.repository.MovieRepository;
@@ -10,6 +11,7 @@ import cinema.repository.ShowTimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +61,28 @@ public class ShowTimeServiceImpl implements ShowTimeService {
 
     @Override
     public List<LocalTime> findByMovie(int id) {
-        ShowTime showTime = showTimeRepository.findByMovieId(id);
-        return showTime != null ? showTime.getStartTime() : new ArrayList<>();
+        Movie movie = movieRepository.findById(id).orElse(null);
+        if (movie != null) {
+            List<ShowTime> showTimes = movie.getShowTimes();
+            LocalDate today = LocalDate.now();
+            List<LocalTime> availableStartTimes = new ArrayList<>();
+            for (ShowTime showTime : showTimes) {
+                if (!showTime.getShowDate().equals(today)) {
+                    availableStartTimes.addAll(showTime.getStartTime());
+                }
+            }
+            return availableStartTimes;
+        }
+        return null;
+    }
+
+    @Override
+    public List<SeatRoom> findSeatRoomByMovieAndStartTime(int movieId, String startTime) {
+        Room room = showTimeRepository.findRoomsByMovieAndStartTime(movieId, convertToLocalTime(startTime));
+        if (room != null) {
+            return room.getSeatRoom();
+        }
+        return null;
     }
 
     private ShowTime populate(ShowTimeRequest request, ShowTime showTime) {

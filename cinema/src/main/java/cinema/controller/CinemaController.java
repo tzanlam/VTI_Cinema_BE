@@ -3,6 +3,7 @@ package cinema.controller;
 import cinema.modal.entity.Cinema;
 import cinema.modal.request.CinemaRequest;
 import cinema.modal.response.DTO.CinemaDTO;
+import cinema.modal.response.DTO.MovieDTO;
 import cinema.service.Cinema.CinemaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,17 @@ public class CinemaController {
             return ResponseEntity.ok(cinemaDTO);
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/findMovies/{id}")
+    public ResponseEntity<?> findMovie(@PathVariable int id) {
+        try{
+            return ResponseEntity.ok(cinemaService.findMoviesByCinema(id).stream()
+                    .map(MovieDTO::new)
+                    .collect(Collectors.toList()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: "+ e.getMessage());
         }
     }
 }

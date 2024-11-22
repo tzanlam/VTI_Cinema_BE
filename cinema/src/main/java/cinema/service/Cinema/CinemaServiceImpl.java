@@ -1,6 +1,7 @@
 package cinema.service.Cinema;
 
 import cinema.modal.entity.Cinema;
+import cinema.modal.entity.Movie;
 import cinema.modal.entity.constant.StatusCinema;
 import cinema.modal.request.CinemaRequest;
 import cinema.repository.CinemaRepository;
@@ -59,5 +60,12 @@ public class CinemaServiceImpl implements CinemaService {
             return cinema;
         }
         return null;
+    }
+
+    @Override
+    public List<Movie> findMoviesByCinema(int cinemaId) {
+        Cinema cinema = cinemaRepository.findById(cinemaId).orElse(null);
+        assert cinema != null;
+        return cinema.getMovies();
     }
 }

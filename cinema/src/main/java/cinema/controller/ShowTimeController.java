@@ -2,6 +2,7 @@ package cinema.controller;
 
 import cinema.modal.entity.ShowTime;
 import cinema.modal.request.ShowTimeRequest;
+import cinema.modal.response.DTO.SeatRoomDTO;
 import cinema.modal.response.DTO.ShowTimeDTO;
 import cinema.service.ShowTime.ShowTimeService;
 import org.modelmapper.ModelMapper;
@@ -67,6 +68,17 @@ public class ShowTimeController {
             return ResponseEntity.ok(timeDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("findSeatRoomByMovieAndStartTime/{movieId}/{startTime}")
+    public ResponseEntity<?> findSeatRoomByMovieAndStartTime(@PathVariable int movieId, @PathVariable String startTime){
+        try{
+            return ResponseEntity.ok(showTimeService.findSeatRoomByMovieAndStartTime(movieId, startTime).stream()
+                    .map(SeatRoomDTO::new)
+                    .collect(Collectors.toList()));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
 }

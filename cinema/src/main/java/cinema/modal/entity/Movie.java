@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -60,4 +61,8 @@ public class Movie extends Base{
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusMovie status;
+
+    // Lấy lịch chiếu cho Movie
+    @OneToMany(mappedBy = "movie")
+    private List<ShowTime> showTimes;
 }

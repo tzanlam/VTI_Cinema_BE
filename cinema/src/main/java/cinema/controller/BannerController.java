@@ -19,7 +19,7 @@ public class BannerController {
     @Autowired
     private BannerService bannerService;
 
-    @GetMapping("find")
+    @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
     public ResponseEntity<?> findBanner() {
         try{
@@ -57,7 +57,7 @@ public class BannerController {
         }
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> createBanner(@RequestBody BannerRequest request) {
         try {

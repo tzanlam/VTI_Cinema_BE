@@ -38,7 +38,7 @@ public class BookingController {
         }
     }
 
-    @GetMapping("findId/{id}")
+    @GetMapping("/findId/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try {
@@ -48,7 +48,7 @@ public class BookingController {
         }
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> createBooking(@RequestBody BookingRequest request) {
         try{
@@ -59,7 +59,7 @@ public class BookingController {
     }
 
 
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> updateBooking(@PathVariable int id, @RequestBody BookingRequest request) {
         try{
@@ -69,7 +69,7 @@ public class BookingController {
         }
     }
 
-    @PostMapping("changeStatus/{id}")
+    @PostMapping("/changeStatus/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> changeStatus(@PathVariable int id, @RequestParam String status) {
         try{

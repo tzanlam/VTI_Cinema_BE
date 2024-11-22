@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -28,4 +29,16 @@ public class Cinema extends Base {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusCinema status;
+
+    // Thêm quan hệ với Movie qua ShowTime
+    @OneToMany(mappedBy = "cinema")
+    private List<ShowTime> showTimes;
+
+    public List<Movie> getMovies() {
+        // Lấy danh sách phim từ các ShowTime
+        return showTimes.stream()
+                .map(ShowTime::getMovie)
+                .distinct()  // Đảm bảo mỗi phim chỉ xuất hiện 1 lần
+                .collect(Collectors.toList());
+    }
 }
