@@ -84,12 +84,14 @@ public class WebSecurityConfigs {
                                 "/showTime/findMovie/{movieId}",
                                 "/showTime/findId/{id}",
                                 // voucher ok
-                                "voucher/findId/{id}",
-                                "voucher/findEffective"
+                                "/voucher/findId/{id}",
+                                "/voucher/findEffective"
                                 // room ok
                                 // booking ok
                                 // ticket
                                 // receipt
+                                // banner
+                                , "/banner/*"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

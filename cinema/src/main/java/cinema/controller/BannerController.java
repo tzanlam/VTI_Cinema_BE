@@ -35,7 +35,7 @@ public class BannerController {
 // cu tét truoc di da ti em qa may em set quyen lai sau
 
     @GetMapping("/findActive")
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findActiveBanner() {
         try{
             List<Banner> banners = bannerService.findBanners();
@@ -48,7 +48,7 @@ public class BannerController {
         }
     }
     @GetMapping("/findId/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
     public ResponseEntity<?> findBannerId(@PathVariable int id) {
         try{
             return ResponseEntity.ok(new BannerDTO(bannerService.findBannerById(id)));
@@ -58,7 +58,7 @@ public class BannerController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> createBanner(@RequestBody BannerRequest request) {
         try {
             return ResponseEntity.ok(new BannerDTO(bannerService.createBanner(request)));
@@ -68,7 +68,7 @@ public class BannerController {
     }
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateBanner(@PathVariable int id, @RequestBody BannerRequest request) {
         try{
             return ResponseEntity.ok(new BannerDTO(bannerService.updateBanner(id, request)));
@@ -78,7 +78,7 @@ public class BannerController {
     }
 
     @GetMapping("/setActive/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> setActive(@PathVariable int id) {
         try {
             return ResponseEntity.ok(new BannerDTO(bannerService.setActive(id)));
