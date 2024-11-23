@@ -13,7 +13,15 @@ import java.util.List;
 @Repository
 public interface ShowTimeRepository extends JpaRepository<ShowTime, Integer> {
     ShowTime findByMovieId(int id);
-    @Query("SELECT s.room FROM ShowTime s WHERE s.movie.id = :movieId AND :startTime IN (s.startTime)")
+    @Query(value = """
+    SELECT r.* 
+    FROM showtime s
+    JOIN room r ON s.room_id = r.id
+    JOIN list_start_time lst ON lst.showtime_id = s.id
+    WHERE s.movie_id = :movieId
+      AND lst.start_time = :startTime
+""", nativeQuery = true)
     Room findRoomsByMovieAndStartTime(@Param("movieId") int movieId, @Param("startTime") LocalTime startTime);
+
 }
 
