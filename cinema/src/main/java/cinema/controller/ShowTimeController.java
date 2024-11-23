@@ -58,10 +58,10 @@ public class ShowTimeController {
         }
     }
 
-    @GetMapping("/findByMovie/{id}")
-    public ResponseEntity<?> findMovie(@PathVariable int id){
+    @GetMapping("/findMovie/{movieId}")
+    public ResponseEntity<?> findMovie(@PathVariable int movieId){
         try {
-            List<LocalTime> localTimes = showTimeService.findByMovie(id);
+            List<LocalTime> localTimes = showTimeService.findByMovie(movieId);
             List<String> timeDTO = localTimes.stream()
                     .map(time -> time.format(DateTimeFormatter.ofPattern("HH:mm")))
                     .collect(Collectors.toList());

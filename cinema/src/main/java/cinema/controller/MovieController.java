@@ -32,7 +32,7 @@ public class MovieController {
             List<Movie> movies = movieService.findMovies();
 
             List<MovieDTO> movieDTOS = movies.stream()
-                    .map(movie -> modelMapper.map(movie, MovieDTO.class))
+                    .map(MovieDTO::new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(movieDTOS);
         }catch (Exception e){
@@ -90,7 +90,7 @@ public class MovieController {
     public ResponseEntity<?> findComingSoon() {
         try {
             List<MovieDTO> movieDTOS = movieService.findMovieComingSoon().stream()
-                    .map(movie -> modelMapper.map(movie, MovieDTO.class))
+                    .map(MovieDTO::new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(movieDTOS);
         }catch (Exception e){
@@ -102,7 +102,7 @@ public class MovieController {
     public ResponseEntity<?> findSpecial() {
         try{
             List<MovieDTO> movieDTOS = movieService.findMovieSpecial().stream()
-                    .map(movie -> modelMapper.map(movie, MovieDTO.class))
+                    .map(MovieDTO::new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(movieDTOS);
         }catch (Exception e){
@@ -114,7 +114,7 @@ public class MovieController {
     public ResponseEntity<?> findShowing() {
         try{
             List<MovieDTO> movieDTOS = movieService.findMovieShowing().stream()
-                    .map(movie -> modelMapper.map(movie, MovieDTO.class))
+                    .map(MovieDTO::new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(movieDTOS);
         }catch (Exception e){

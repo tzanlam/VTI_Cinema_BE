@@ -29,7 +29,7 @@ public class CinemaController {
         try {
             List<Cinema> cinemas = cinemaService.findCinemas();
             List<CinemaDTO> cinemaDTOS = cinemas.stream()
-                    .map(cinema -> modelMapper.map(cinema, CinemaDTO.class))
+                    .map(CinemaDTO:: new)
                     .collect(Collectors.toList());
             return ResponseEntity.ok(cinemaDTOS);
         } catch (Exception e) {

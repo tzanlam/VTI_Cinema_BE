@@ -1,5 +1,6 @@
 package cinema.modal.entity;
 
+
 import cinema.modal.entity.constant.Genre;
 import cinema.modal.entity.constant.Language;
 import cinema.modal.entity.constant.StatusMovie;

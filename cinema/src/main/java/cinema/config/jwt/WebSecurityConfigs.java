@@ -81,7 +81,7 @@ public class WebSecurityConfigs {
                                 "/seatRoom/find",
                                 "/seatRoom/findId/{id}",
                                 // showtime ok
-                                "/showTime/findMovie/{id}",
+                                "/showTime/findMovie/{movieId}",
                                 "/showTime/findId/{id}",
                                 // voucher ok
                                 "voucher/findId/{id}",

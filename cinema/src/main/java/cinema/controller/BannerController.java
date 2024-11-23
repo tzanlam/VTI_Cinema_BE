@@ -20,7 +20,7 @@ public class BannerController {
     private BannerService bannerService;
 
     @GetMapping("/find")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
     public ResponseEntity<?> findBanner() {
         try{
             List<Banner> banners = bannerService.findBanners();
@@ -32,7 +32,7 @@ public class BannerController {
             return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
-
+// cu tét truoc di da ti em qa may em set quyen lai sau
 
     @GetMapping("/findActive")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")

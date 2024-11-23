@@ -12,6 +12,13 @@ import java.util.List;
 
 @Repository
 public interface ShowTimeRepository extends JpaRepository<ShowTime, Integer> {
+    @Query(value = """
+    SELECT start_time
+    FROM list_start_time r
+    JOIN showtime s ON s.id = r.show_time_id
+    WHERE s.id = :id
+      AND list.start_time.show_time_id = Time
+""", nativeQuery = true)
     ShowTime findByMovieId(int id);
     @Query(value = """
     SELECT r.* 
