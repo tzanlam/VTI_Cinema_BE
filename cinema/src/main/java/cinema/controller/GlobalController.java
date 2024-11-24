@@ -38,4 +38,13 @@ public class GlobalController {
             return ResponseEntity.badRequest().body(Map.of("message", "Error when register"));
         }
     }
+
+    @PostMapping("/uploadImg")
+    public ResponseEntity<?> uploadImg(@RequestBody MultipartFile file){
+        try{
+            return ResponseEntity.ok(globalService.upload(file));
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Error when upload image"));
+        }
+    }
 }

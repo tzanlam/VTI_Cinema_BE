@@ -12,6 +12,8 @@ import cinema.modal.response.AuthResponse;
 import cinema.repository.AccountRepository;
 import cinema.repository.BookingRepository;
 import cinema.service.MailSender.MailSenderService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 import com.google.firebase.cloud.StorageClient;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -44,6 +47,9 @@ public class GlobalServiceImpl implements GlobalService{
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Override
     public AuthResponse login(LoginRequest request) {
@@ -73,5 +79,11 @@ public class GlobalServiceImpl implements GlobalService{
         request.RegisterAccount(account);
         accountRepository.save(account);
         return account;
+    }
+
+    @Override
+    public String upload(MultipartFile file) throws IOException {
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("folder", "/vti_cinema"));
+        return uploadResult.get("URL").toString();
     }
 }

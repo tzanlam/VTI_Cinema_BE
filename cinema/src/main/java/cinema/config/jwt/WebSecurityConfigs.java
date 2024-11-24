@@ -91,7 +91,9 @@ public class WebSecurityConfigs {
                                 // ticket
                                 // receipt
                                 // banner
-                                , "/banner/*"
+                                , "/banner/*",
+                                // global
+                                "/uploadImg"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
