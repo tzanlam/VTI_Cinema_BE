@@ -7,19 +7,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 @Repository
 public interface ShowTimeRepository extends JpaRepository<ShowTime, Integer> {
     @Query(value = """
-    SELECT start_time
+    SELECT TIME(r.start_time)
     FROM list_start_time r
-    JOIN showtime s ON s.id = r.show_time_id
-    WHERE s.id = :id
-      AND list.start_time.show_time_id = Time
+    JOIN showtime s ON s.id = r.showtime_id
+    WHERE s.movie_id = :movieId
+      AND DATE(s.show_date) = :showDate
 """, nativeQuery = true)
-    ShowTime findByMovieId(int id);
+    List<java.sql.Time> findStartTimesByMovieIdAndShowDate(
+            @Param("movieId") int movieId,
+            @Param("showDate") LocalDate showDate);
+
     @Query(value = """
     SELECT r.* 
     FROM showtime s
@@ -29,6 +33,7 @@ public interface ShowTimeRepository extends JpaRepository<ShowTime, Integer> {
       AND lst.start_time = :startTime
 """, nativeQuery = true)
     Room findRoomsByMovieAndStartTime(@Param("movieId") int movieId, @Param("startTime") LocalTime startTime);
+
 
 }
 

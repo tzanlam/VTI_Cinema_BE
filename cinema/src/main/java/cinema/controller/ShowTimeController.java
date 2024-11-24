@@ -58,13 +58,16 @@ public class ShowTimeController {
         }
     }
 
-    @GetMapping("/findMovie/{movieId}")
-    public ResponseEntity<?> findMovie(@PathVariable int movieId){
+    @GetMapping("/findMovieAndShowDate/{movieId}")
+    public ResponseEntity<?> findMovie(@PathVariable int movieId, @RequestParam String date){
         try {
-            List<LocalTime> localTimes = showTimeService.findByMovie(movieId);
+            List<LocalTime> localTimes = showTimeService.findByMovie(movieId, date);
             List<String> timeDTO = localTimes.stream()
                     .map(time -> time.format(DateTimeFormatter.ofPattern("HH:mm")))
                     .collect(Collectors.toList());
+            if (timeDTO.isEmpty()){
+                return ResponseEntity.ok("ShowTime is null value");
+            }
             return ResponseEntity.ok(timeDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

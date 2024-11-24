@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static cinema.util.ConvertDateTime.convertToLocalDate;
 import static cinema.util.ConvertDateTime.convertToLocalTime;
@@ -60,20 +61,11 @@ public class ShowTimeServiceImpl implements ShowTimeService {
     }
 
     @Override
-    public List<LocalTime> findByMovie(int id) {
-        Movie movie = movieRepository.findById(id).orElse(null);
-        if (movie != null) {
-            List<ShowTime> showTimes = movie.getShowTimes();
-            LocalDate today = LocalDate.now();
-            List<LocalTime> availableStartTimes = new ArrayList<>();
-            for (ShowTime showTime : showTimes) {
-                if (!showTime.getShowDate().equals(today)) {
-                    availableStartTimes.addAll(showTime.getStartTime());
-                }
-            }
-            return availableStartTimes;
-        }
-        return null;
+    public List<LocalTime> findByMovie(int id, String date) {
+        List<java.sql.Time> times = showTimeRepository.findStartTimesByMovieIdAndShowDate(id, convertToLocalDate(date));
+        return times.stream()
+                .map(time -> time.toLocalTime())
+                .collect(Collectors.toList());
     }
 
     @Override
