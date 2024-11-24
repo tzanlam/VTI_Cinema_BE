@@ -5,10 +5,13 @@ import cinema.modal.entity.constant.StatusAccount;
 import cinema.modal.request.AccountRequest;
 import cinema.repository.AccountRepository;
 import cinema.service.MailSender.IMailSenderService;
+import cinema.service.MailSender.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -85,6 +88,31 @@ public class AccountServiceImpl implements AccountService {
         }
 
         throw new Exception("Invalid verification code.");
+    }
+
+    @Override
+    public Account changePassword(String email, String oldPassword, String newPassword) throws Exception {
+        Account account = accountRepository.findByEmail(email);
+
+        if (Objects.nonNull(account)) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if (passwordEncoder.matches(oldPassword, account.getPassword())) {
+                account.setPassword(passwordEncoder.encode(newPassword));
+                return accountRepository.save(account);
+            } else {
+                throw new Exception("Mật khẩu cũ không đúng!");
+            }
+        } else {
+            throw new Exception("Tài khoản không tồn tại!");
+        }
+    }
+
+    @Override
+    public Account fogotPassword(String email) throws Exception {
+        Account account = accountRepository.findByEmail(email);
+        if (account != null){
+        }
+        return null;
     }
 
     private String generateToken(String email) throws Exception {

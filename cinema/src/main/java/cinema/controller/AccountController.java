@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
-
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/account")
@@ -92,6 +90,17 @@ public class AccountController {
         try {
             Account account = accountService.confirmAccount(email, code);
             return ResponseEntity.ok(new AccountDTO(account));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "error", e.getMessage()
+            ));
+        }
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String oldPassword, @RequestParam String newPassword) {
+        try{
+            return ResponseEntity.ok(accountService.changePassword(email,oldPassword,newPassword));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of(
                     "error", e.getMessage()
