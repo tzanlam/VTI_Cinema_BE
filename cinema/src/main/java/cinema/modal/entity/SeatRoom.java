@@ -21,9 +21,12 @@ public class SeatRoom {
 
     @ElementCollection
     @CollectionTable(name = "row_seat", joinColumns = @JoinColumn(name = "seat_room_id"))
-    @Column(name = "row_name")
-    private List<String> rowNames;
+    @Column(name = "nameSeat")
+    private List<String> name;
 
+    // new table
+    // 1 A1
+    // 2 A2
     @Column(name = "type_seat")
     @Enumerated(EnumType.STRING)
     private TypeSeat typeSeat;

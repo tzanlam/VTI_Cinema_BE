@@ -4,6 +4,8 @@ import cinema.modal.entity.constant.StatusTicket;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "ticket")
@@ -20,6 +22,11 @@ public class Ticket extends Base{
     @JoinColumn(name = "seat_room_id", referencedColumnName = "id", nullable = false)
     private SeatRoom seat;
 
+    @ElementCollection
+    @CollectionTable(name = "seat_room_select", joinColumns = @JoinColumn(name = "ticket_id"))
+    @Column(name = "seat_select", nullable = false)
+    private List<String> seatSelect;
+    // fe chon ghe tra ve List<String> ten ghe (A1, A2).length => tao ticket
     @ManyToOne
     @JoinColumn(name = "show_time_id", referencedColumnName = "id", nullable = false)
     private ShowTime showTime;

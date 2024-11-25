@@ -52,15 +52,17 @@ public class TicketServiceImpl implements TicketService {
         return ticket;
     }
 
-    private Ticket populateTicket(Ticket ticket, TicketRequest request) {
+    private void populateTicket(Ticket ticket, TicketRequest request) {
         ShowTime showTime = showTimeRepository.findById(request.getShowTime()).get();
-        SeatRoom seatRoom = seatRoomRepository.findById(request.getSeatRoom()).get();
         Account account = accountRepository.findById(request.getAccount()).get();
+        SeatRoom seatRoom = seatRoomRepository.findById(request.getSeatRoom()).get();
+        if (!request.getSeat_select().isEmpty()){
+            ticket.setSeatSelect(request.getSeat_select());
+        }
         ticket.setAccount(account);
-        ticket.setSeat(seatRoom);
         ticket.setShowTime(showTime);
         ticket.setStatus(StatusTicket.UNPAID);
-        seatRoom.setStatus(StatusSeatRoom.BOOKED);
-        return ticket;
+        seatRoom.setStatus(StatusSeatRoom.OCCUPIED);
+        // a b vip a1 a2 =>
     }
 }
