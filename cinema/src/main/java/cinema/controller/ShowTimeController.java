@@ -44,7 +44,7 @@ public class ShowTimeController {
         try{
             return new ResponseEntity<>(new ShowTimeDTO(showTimeService.createShowTime(showTimeRequest)), HttpStatus.CREATED);
         }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body("Error "+e.getMessage());
         }
     }
 

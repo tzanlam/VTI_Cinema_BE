@@ -2,6 +2,7 @@ package cinema.modal.entity;
 
 import cinema.modal.entity.constant.ScreenType;
 import cinema.modal.entity.constant.StatusRoom;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,6 +24,7 @@ public class Room extends Base{
     private Cinema cinema;
 
     @OneToMany(mappedBy = "room")
+    @JsonIgnore
     private List<SeatRoom> seatRoom;
 
     @Column(name = "status")

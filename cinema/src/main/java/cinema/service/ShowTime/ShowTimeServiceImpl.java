@@ -11,6 +11,7 @@ import cinema.repository.ShowTimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class ShowTimeServiceImpl implements ShowTimeService {
     public List<LocalTime> findByMovie(int id, String date) {
         List<java.sql.Time> times = showTimeRepository.findStartTimesByMovieIdAndShowDate(id, convertToLocalDate(date));
         return times.stream()
-                .map(time -> time.toLocalTime())
+                .map(Time::toLocalTime)
                 .collect(Collectors.toList());
     }
 
