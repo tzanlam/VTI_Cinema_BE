@@ -59,9 +59,15 @@ public class WebSecurityConfigs {
                                 // global
                                 "/login/email",
                                 "/register",
+                                "/uploadImg",
                                 // account ok
                                 "/account/create",
                                 "/account/checkCode",
+                                // banner ok
+                                "/banner/*",
+
+                                // booking ok
+
                                 // cinema ok
                                 "/cinema/find",
                                 "/cinema/findId/{id}",
@@ -73,29 +79,27 @@ public class WebSecurityConfigs {
                                 "/movie/findComingSoon",
                                 "/movie/findShowing",
                                 "/movie/findSpecial",
-                                "movie/findMovie/{id}",
-                                // payment
+                                // payment ok
                                 "/payment/find",
                                 "/payment/findId/{id}",
+
+                                // receipt ok
+
+                                //room ok
+
                                 //seat ok
                                 "/seat/find",
+                                "/seat/findId/{id}",
                                 //seat room ok
                                 "/seatRoom/find",
                                 "/seatRoom/findId/{id}",
                                 // showtime ok
                                 "/showTime/findMovieAndShowDate/{movieId}",
                                 "/showTime/findId/{id}",
+                                "/showTime/findSeatRoomByMovieAndStartTime/{movieId}/{startTime}",
                                 // voucher ok
                                 "/voucher/findId/{id}",
                                 "/voucher/findEffective"
-                                // room ok
-                                // booking ok
-                                // ticket
-                                // receipt
-                                // banner
-                                , "/banner/*",
-                                // global
-                                "/uploadImg"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

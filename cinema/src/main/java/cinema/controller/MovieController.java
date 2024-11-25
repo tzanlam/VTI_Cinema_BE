@@ -22,9 +22,6 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> findMovies() {

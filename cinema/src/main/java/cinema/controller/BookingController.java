@@ -4,7 +4,6 @@ import cinema.modal.entity.Booking;
 import cinema.modal.request.BookingRequest;
 import cinema.modal.response.DTO.BookingDTO;
 import cinema.service.Booking.BookingService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +19,6 @@ import java.util.stream.Collectors;
 public class BookingController {
     @Autowired
     private BookingService bookingService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")

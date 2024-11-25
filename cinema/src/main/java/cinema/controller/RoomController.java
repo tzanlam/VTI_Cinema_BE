@@ -1,6 +1,5 @@
 package cinema.controller;
 
-import cinema.modal.entity.Movie;
 import cinema.modal.entity.Room;
 import cinema.modal.request.RoomRequest;
 import cinema.modal.response.DTO.RoomDTO;

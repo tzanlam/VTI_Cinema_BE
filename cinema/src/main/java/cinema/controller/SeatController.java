@@ -61,4 +61,13 @@ public class SeatController {
             return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
+
+    @GetMapping("/findId/{id}")
+    public ResponseEntity<?> findSeatById(@PathVariable int id) {
+        try{
+            return ResponseEntity.ok(new SeatDTO(seatService.findById(id)));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
+        }
+    }
 }
