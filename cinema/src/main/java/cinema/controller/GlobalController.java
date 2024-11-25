@@ -40,7 +40,7 @@ public class GlobalController {
     }
 
     @PostMapping("/uploadImg")
-    public ResponseEntity<?> uploadImg(@RequestBody MultipartFile file){
+    public ResponseEntity<?> uploadImg(MultipartFile file){
         try{
             return ResponseEntity.ok(globalService.upload(file));
         } catch (IOException e) {
