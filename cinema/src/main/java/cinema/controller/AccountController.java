@@ -98,6 +98,7 @@ public class AccountController {
     }
 
     @PostMapping("/changePassword")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String oldPassword, @RequestParam String newPassword) {
         try{
             return ResponseEntity.ok(accountService.changePassword(email,oldPassword,newPassword));
