@@ -21,8 +21,6 @@ public class MoreServiceController {
     @Autowired
     private MoreServiceService moreServiceService;
 
-    @Autowired
-    private ModelMapper modelMapper;
     @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseEntity<?> findServices() {

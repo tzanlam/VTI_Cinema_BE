@@ -37,7 +37,7 @@ public class RoomServiceimpl implements RoomService{
                 .orElseThrow(() -> new Exception("Cinema not found"));
         room.setCinema(cinema);
         try {
-            room.setStatus(StatusRoom.valueOf(request.getStatus().toUpperCase()));
+            room.setStatus(StatusRoom.AVAILABLE);
         } catch (IllegalArgumentException e) {
             throw new Exception("error with status");
         }
@@ -61,7 +61,7 @@ public class RoomServiceimpl implements RoomService{
         room.setCinema(cinema);
 
         try {
-            room.setStatus(StatusRoom.valueOf(request.getStatus()));
+            room.setStatus(StatusRoom.AVAILABLE);
         } catch (IllegalArgumentException e) {
             throw new Exception("Error with Status Room");
         }

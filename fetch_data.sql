@@ -70,18 +70,34 @@ VALUES
     ('Room 3', 5, 'AVAILABLE', 'NORMAL');
 
 -- // Seat
-INSERT INTO seat (name, seat_type, price)
-VALUES
-    ('Seat 1', 'DOUBLE', 200000.0),
-    ('Seat 2', 'SINGLE', 150000.0),
-    ('Seat 3', 'VIP', 300000.0),
-    ('Seat 4', 'DOUBLE', 200000.0),
-    ('Seat 5', 'SINGLE', 150000.0),
-    ('Seat 6', 'VIP', 300000.0),
-    ('Seat 7', 'SINGLE', 150000.0),
-    ('Seat 8', 'DOUBLE', 200000.0),
-    ('Seat 9', 'VIP', 300000.0),
-    ('Seat 10', 'SINGLE', 150000.0);
+INSERT INTO seat (name, seat_type, price) VALUES
+-- SINGLE seats
+('1', 'SINGLE', 100), ('2', 'SINGLE', 100), ('3', 'SINGLE', 100),
+('4', 'SINGLE', 100), ('5', 'SINGLE', 100), ('6', 'SINGLE', 100),
+('7', 'SINGLE', 100), ('8', 'SINGLE', 100), ('9', 'SINGLE', 100),
+('10', 'SINGLE', 100), ('11', 'SINGLE', 100), ('12', 'SINGLE', 100),
+('13', 'SINGLE', 100), ('14', 'SINGLE', 100), ('15', 'SINGLE', 100),
+('16', 'SINGLE', 100), ('17', 'SINGLE', 100), ('18', 'SINGLE', 100),
+('19', 'SINGLE', 100), ('20', 'SINGLE', 100),
+
+-- VIP seats
+('1', 'VIP', 150), ('2', 'VIP', 150), ('3', 'VIP', 150),
+('4', 'VIP', 150), ('5', 'VIP', 150), ('6', 'VIP', 150),
+('7', 'VIP', 150), ('8', 'VIP', 150), ('9', 'VIP', 150),
+('10', 'VIP', 150), ('11', 'VIP', 150), ('12', 'VIP', 150),
+('13', 'VIP', 150), ('14', 'VIP', 150), ('15', 'VIP', 150),
+('16', 'VIP', 150), ('17', 'VIP', 150), ('18', 'VIP', 150),
+('19', 'VIP', 150), ('20', 'VIP', 150),
+
+-- DOUBLE seats
+('1', 'DOUBLE', 200), ('2', 'DOUBLE', 200), ('3', 'DOUBLE', 200),
+('4', 'DOUBLE', 200), ('5', 'DOUBLE', 200), ('6', 'DOUBLE', 200),
+('7', 'DOUBLE', 200), ('8', 'DOUBLE', 200), ('9', 'DOUBLE', 200),
+('10', 'DOUBLE', 200), ('11', 'DOUBLE', 200), ('12', 'DOUBLE', 200),
+('13', 'DOUBLE', 200), ('14', 'DOUBLE', 200), ('15', 'DOUBLE', 200),
+('16', 'DOUBLE', 200), ('17', 'DOUBLE', 200), ('18', 'DOUBLE', 200),
+('19', 'DOUBLE', 200), ('20', 'DOUBLE', 200);
+
 
 -- // SeatRoom
 INSERT INTO seat_room (room_id, type_seat, status)
@@ -96,21 +112,6 @@ VALUES
     (8, 'DOUBLE', 'OCCUPIED'),
     (9, 'VIP', 'AVAILABLE'),
     (10, 'SINGLE', 'OCCUPIED');
-
-
--- //Row Seat
--- INSERT INTO row_seat (seat_room_id, row_name)
--- VALUES
--- (1, 'A'),
--- (1, 'B'),
--- (2, 'C'),
--- (3, 'D'),
--- (4, 'E'),
--- (5, 'F'),
--- (6, 'G'),
--- (7, 'H'),
--- (8, 'I'),
--- (9, 'J');
 
 -- // ShowTime
 INSERT INTO showtime (movie_id, room_id, cinema_id, show_date)
@@ -159,16 +160,16 @@ VALUES
 -- //More  Service
 INSERT INTO more_service (name, image, decription, price, status)
 VALUES
-    ('Popcorn', 'https://example.com/popcorn.jpg', 'Crispy and delicious popcorn', 5.0, 'AVAILABLE'),
-    ('Drink', 'https://example.com/drink.jpg', 'Soft drinks of various types', 3.0, 'AVAILABLE'),
-    ('3D Glasses', 'https://example.com/3d_glasses.jpg', 'High-quality 3D glasses for a better movie experience', 2.0, 'AVAILABLE'),
-    ('Snack Combo', 'https://example.com/snack_combo.jpg', 'Combo of chips and soda', 6.5, 'OUT_OF_STOCK'),
-    ('VIP Seat', 'https://example.com/vip_seat.jpg', 'Premium comfortable seating in the front row', 10.0, 'AVAILABLE'),
-    ('Movie Poster', 'https://example.com/movie_poster.jpg', 'Exclusive posters of the movie', 4.5, 'AVAILABLE'),
-    ('Private Screening', 'https://example.com/private_screening.jpg', 'Private screening for VIP guests', 100.0, 'AVAILABLE'),
-    ('Gift Voucher', 'https://example.com/gift_voucher.jpg', 'Gift vouchers for cinema tickets', 20.0, 'AVAILABLE'),
-    ('Seat Reservation', 'https://example.com/seat_reservation.jpg', 'Reserve your favorite seat in advance', 2.5, 'AVAILABLE'),
-    ('Food Combo', 'https://example.com/food_combo.jpg', 'Delicious combo meal with a sandwich and a drink', 8.0, 'OUT_OF_STOCK');
+    ('Popcorn', 'https://example.com/popcorn.jpg', 'Crispy and delicious popcorn', 5.0, 'ACTIVE'),
+    ('Drink', 'https://example.com/drink.jpg', 'Soft drinks of various types', 3.0, 'ACTIVE'),
+    ('3D Glasses', 'https://example.com/3d_glasses.jpg', 'High-quality 3D glasses for a better movie experience', 2.0, 'ACTIVE'),
+    ('Snack Combo', 'https://example.com/snack_combo.jpg', 'Combo of chips and soda', 6.5, 'ACTIVE'),
+    ('VIP Seat', 'https://example.com/vip_seat.jpg', 'Premium comfortable seating in the front row', 10.0, 'ACTIVE'),
+    ('Movie Poster', 'https://example.com/movie_poster.jpg', 'Exclusive posters of the movie', 4.5, 'ACTIVE'),
+    ('Private Screening', 'https://example.com/private_screening.jpg', 'Private screening for VIP guests', 100.0, 'ACTIVE'),
+    ('Gift Voucher', 'https://example.com/gift_voucher.jpg', 'Gift vouchers for cinema tickets', 20.0, 'ACTIVE'),
+    ('Seat Reservation', 'https://example.com/seat_reservation.jpg', 'Reserve your favorite seat in advance', 2.5, 'INACTIVE'),
+    ('Food Combo', 'https://example.com/food_combo.jpg', 'Delicious combo meal with a sandwich and a drink', 8.0, 'INACTIVE');
 
 -- // Payment
 INSERT INTO Payment (method, address_tranfer, qr_code, status)

@@ -12,7 +12,6 @@ public class PaymentRequest {
     private String method;
     private String addressTransfer;
     private String qrCode;
-    private String status;
 
     public Payment asPayment() {
         Payment payment = new Payment();
@@ -34,7 +33,7 @@ public class PaymentRequest {
         payment.setAddressTransfer(addressTransfer);
         payment.setQrCode(qrCode);
         List<StatusPayment> statusPayments = List.of(StatusPayment.values());
-        StatusPayment statusPayment = StatusPayment.valueOf(this.status);
+        StatusPayment statusPayment = StatusPayment.ACTIVE;
         if (statusPayments.contains(statusPayment)){
             payment.setStatus(statusPayment);
         }

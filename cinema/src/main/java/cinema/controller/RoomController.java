@@ -4,7 +4,6 @@ import cinema.modal.entity.Room;
 import cinema.modal.request.RoomRequest;
 import cinema.modal.response.DTO.RoomDTO;
 import cinema.service.Room.RoomService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +19,6 @@ import java.util.stream.Collectors;
 public class RoomController {
     @Autowired
     private RoomService roomService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")

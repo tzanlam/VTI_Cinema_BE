@@ -6,6 +6,5 @@ import lombok.Data;
 public class RoomRequest {
     private String name;
     private int cinema;
-    private String status;
     private String screenType;
 }

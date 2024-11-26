@@ -8,7 +8,6 @@ import lombok.Data;
 public class SeatRequest {
     private String name;
     private String seatType;
-    private double price;
 
     public Seat asSeat() {
         Seat seat = new Seat();
@@ -22,17 +21,18 @@ public class SeatRequest {
     }
 
     private Seat populateSeat(Seat seat) {
-        seat.setName(name);
-        if (seatType == null) {
-            throw new IllegalArgumentException("seatType không được để trống.");
+        if (seatType == null || seatType.trim().isEmpty()) {
+            throw new IllegalArgumentException("Giá trị seatType không được để trống.");
         }
+
         try {
-            TypeSeat type = TypeSeat.valueOf(seatType.toUpperCase());
+            TypeSeat type = TypeSeat.valueOf(seatType.trim().toUpperCase());
             seat.setSeatType(type);
+            seat.setPrice(type.getPrice());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Giá trị seatType không hợp lệ: " + seatType);
+            throw new IllegalArgumentException("Giá trị seatType không hợp lệ: " + seatType, e);
         }
-        seat.setPrice(price);
+
         return seat;
     }
 }

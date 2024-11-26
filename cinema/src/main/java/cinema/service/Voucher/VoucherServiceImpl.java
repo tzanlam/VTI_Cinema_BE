@@ -52,15 +52,7 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Scheduled(cron = "0 0 0 * * ?")
-    public void updateVoucherStatus() {
-        LocalDate today = LocalDate.now();
-        List<Voucher> vouchers = voucherRepository.findAll();
-
-        vouchers.stream()
-                .filter(voucher -> voucher.getExpiry().isBefore(today) && voucher.getStatus() != StatusVoucher.EXPIRED)
-                .forEach(voucher -> {
-                    voucher.setStatus(StatusVoucher.EXPIRED);
-                    voucherRepository.save(voucher);
-                });
+    public void updateExpiredVouchers() {
+        voucherRepository.markExpiredVouchers(LocalDate.now());
     }
 }

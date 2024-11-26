@@ -4,7 +4,6 @@ import cinema.modal.entity.SeatRoom;
 import cinema.modal.request.SeatRoomRequest;
 import cinema.modal.response.DTO.SeatRoomDTO;
 import cinema.service.SeatRoom.SeatRoomService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,6 @@ public class SeatRoomController {
     @Autowired
     private SeatRoomService seatRoomService;
 
-    @Autowired
-    private ModelMapper modelMapper;
     @GetMapping("/find")
     public ResponseEntity<?> findSeatRooms() {
         try{
@@ -47,7 +44,6 @@ public class SeatRoomController {
             return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
-// up lên git đi tui fix lại request
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createMovie(@RequestBody SeatRoomRequest request) {

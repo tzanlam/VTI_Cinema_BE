@@ -97,8 +97,13 @@ public class AccountServiceImpl implements AccountService {
         if (Objects.nonNull(account)) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (passwordEncoder.matches(oldPassword, account.getPassword())) {
-                account.setPassword(passwordEncoder.encode(newPassword));
-                return accountRepository.save(account);
+                if (!oldPassword.equals(newPassword)) {
+                    account.setPassword(passwordEncoder.encode(newPassword));
+                    return accountRepository.save(account);
+                }
+                else {
+                    throw new Exception("Old password and new password do not match.");
+                }
             } else {
                 throw new Exception("Mật khẩu cũ không đúng!");
             }
@@ -108,7 +113,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account fogotPassword(String email) throws Exception {
+    public Account forgotPassword(String email) throws Exception {
         Account account = accountRepository.findByEmail(email);
         if (account != null){
         }

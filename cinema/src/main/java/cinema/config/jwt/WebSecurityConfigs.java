@@ -64,7 +64,7 @@ public class WebSecurityConfigs {
                                 "/account/create",
                                 "/account/checkCode",
                                 // banner ok
-                                "/banner/*",
+                                "/banner/**",
 
                                 // booking ok
 

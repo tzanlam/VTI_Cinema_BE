@@ -14,5 +14,5 @@ public interface AccountService {
     Account changeStatus(int id, String status);
     Account confirmAccount(String email, String checkCode) throws Exception;
     Account changePassword(String email, String oldPassword, String newPassword) throws Exception;
-    Account fogotPassword(String email) throws Exception;
+    Account forgotPassword(String email) throws Exception;
 }
