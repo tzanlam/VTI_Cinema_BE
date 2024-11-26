@@ -1,6 +1,6 @@
 package cinema.modal.entity;
 
-import cinema.modal.entity.constant.ScreenType;
+import cinema.modal.entity.constant.TypeScreen;
 import cinema.modal.entity.constant.StatusRoom;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -33,5 +33,5 @@ public class Room extends Base{
 
     @Column(name = "screen_type")
     @Enumerated(EnumType.STRING)
-    private ScreenType screenType;
+    private TypeScreen screenType;
 }

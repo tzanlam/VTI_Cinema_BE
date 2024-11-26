@@ -2,14 +2,12 @@ package cinema.service.Room;
 
 import cinema.modal.entity.Cinema;
 import cinema.modal.entity.Room;
-import cinema.modal.entity.constant.ScreenType;
+import cinema.modal.entity.constant.TypeScreen;
 import cinema.modal.entity.constant.StatusRoom;
 import cinema.modal.request.RoomRequest;
 import cinema.repository.CinemaRepository;
 import cinema.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -44,7 +42,7 @@ public class RoomServiceimpl implements RoomService{
             throw new Exception("error with status");
         }
         try {
-            room.setScreenType(ScreenType.valueOf(request.getScreenType().toUpperCase()));
+            room.setScreenType(TypeScreen.valueOf(request.getScreenType().toUpperCase()));
         } catch (IllegalArgumentException e) {
             throw new Exception("error with type_screen");
         }
@@ -69,7 +67,7 @@ public class RoomServiceimpl implements RoomService{
         }
 
         try {
-            room.setScreenType(ScreenType.valueOf(request.getScreenType()));
+            room.setScreenType(TypeScreen.valueOf(request.getScreenType()));
         } catch (IllegalArgumentException e) {
             throw new Exception("Error with Screen Type");
         }

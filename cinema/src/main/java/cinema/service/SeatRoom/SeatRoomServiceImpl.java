@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class SeatRoomServiceimpl implements SeatRoomService {
+public class SeatRoomServiceImpl implements SeatRoomService {
     @Autowired
     private SeatRoomRepository seatRoomRepository;
     @Autowired
@@ -60,18 +60,20 @@ public class SeatRoomServiceimpl implements SeatRoomService {
         List<Seat> seats = seatRepository.findBySeatType(TypeSeat.valueOf(request.getTypeSeat()));
         List<String> rowName = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
         List<String> seatNames = new ArrayList<>();
-        int i , j;
-        for (Seat seat : seats) {
-            for (i = 0; i < request.getRowQuantity(); i++) {
-                for (j = 0; j < request.getSeatQuantity(); j++) {
-                    seatNames.add(rowName.get(i) + seat.getName());
-                }
+        if (request.getRowQuantity() > rowName.size()) {
+            throw new IllegalArgumentException("Row quantity exceeds available rows");
+        }
+        for (int i = 0; i < request.getRowQuantity(); i++) {
+            String row = rowName.get(i);
+            for (int j = 1; j <= request.getSeatQuantity(); j++) {
+                seatNames.add(row + j);
             }
         }
         seatRoom.setRoom(room);
-        seatRoom.setRowNames(seatNames);
+        seatRoom.setName(seatNames);
         seatRoom.setTypeSeat(TypeSeat.valueOf(request.getTypeSeat()));
         seatRoom.setStatus(StatusSeatRoom.AVAILABLE);
         return seatRoom;
     }
+
 }
