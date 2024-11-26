@@ -3,58 +3,57 @@ use vti_cinema;
 INSERT INTO account (username, fullname, birth_date, email, password, phone_number, role, status, verification_code)
 VALUES
 -- password là 123 
-('user1', 'Full Name 1', '1990-01-01', 'user1@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '1234567890', 'USER', 'ACTIVE', '123456'),
-('user2', 'Full Name 2', '1985-02-14', 'user2@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '2345678901', 'ADMIN', 'ACTIVE', '234567'),
-('user3', 'Full Name 3', '1992-03-21', 'user3@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '3456789012', 'USER', 'INACTIVE', '345678'),
-('user4', 'Full Name 4', '1988-04-18', 'user4@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '4567890123', 'ADMIN', 'ACTIVE', '456789'),
-('user5', 'Full Name 5', '1995-05-25', 'user5@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '5678901234', 'USER', 'ACTIVE', '567890'),
-('user6', 'Full Name 6', '1980-06-30', 'user6@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '6789012345', 'USER', 'INACTIVE', '678901'),
-('user7', 'Full Name 7', '1998-07-12', 'user7@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '7890123456', 'ADMIN', 'ACTIVE', '789012'),
-('user8', 'Full Name 8', '1991-08-20', 'user8@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '8901234567', 'USER', 'ACTIVE', '890123'),
-('user9', 'Full Name 9', '1993-09-09', 'user9@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '9012345678', 'ADMIN', 'INACTIVE', '901234'),
-('user10', 'Full Name 10', '1996-10-05', 'user10@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '0123456789', 'USER', 'ACTIVE', '012345');
+('user1', 'Nguyễn Văn A', '1990-01-01', 'user1@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '1234567890', 'USER', 'ACTIVE', '123456'),
+('user2', 'Nguyễn Văn C', '1985-02-14', 'user2@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '2345678901', 'ADMIN', 'ACTIVE', '234567'),
+('user3', 'Nguyễn văn B', '1992-03-21', 'user3@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '3456789012', 'MANAGER', 'INACTIVE', '345678'),
+('user4', 'Nguyễn Văn D', '1988-04-18', 'user4@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '4567890123', 'ADMIN', 'ACTIVE', '456789'),
+('user5', 'Nguyễn Văn E', '1995-05-25', 'user5@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '5678901234', 'USER', 'ACTIVE', '567890'),
+('user6', 'Nguyễn Văn R', '1980-06-30', 'user6@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '6789012345', 'USER', 'INACTIVE', '678901'),
+('user7', 'Nguyễn Văn T', '1998-07-12', 'user7@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '7890123456', 'ADMIN', 'ACTIVE', '789012'),
+('user8', 'Nguyễn Văn F', '1991-08-20', 'user8@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '8901234567', 'USER', 'ACTIVE', '890123'),
+('user9', 'Nguyễn Văn Y', '1993-09-09', 'user9@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '9012345678', 'ADMIN', 'INACTIVE', '901234'),
+('user10', 'Nguyễn Văn O', '1996-10-05', 'user10@example.com', '$2a$12$5RmYj0QwcIt0JC3XDUvOGeSNhA/XaG6ditueUjbUgAFYzGhwVMe1i', '0123456789', 'USER', 'ACTIVE', '012345');
 
 -- //Movie 
 INSERT INTO movie (image_movie, name, actor, director, genre, duration, description, language, trailer, start_date, viewing_age, rating, `status`)
 VALUES
 ('https://example.com/movie1.jpg', 'Movie One', 'Actor One', 'Director One', 'ACTION', '02:30:00', 'Action packed movie with thrilling scenes', 'ENGLISH', 'https://example.com/trailer1', '2024-01-01', 'CHILD', 7.5, 'SHOWING'),
-('https://example.com/movie2.jpg', 'Movie Two', 'Actor Two', 'Director Two', 'ACTION', '01:45:00', 'A heartwarming drama that touches emotions', 'ENGLISH', 'https://example.com/trailer2', '2024-02-01', 'T15', 8.2, 'COMING_SOON'),
+('https://example.com/movie2.jpg', 'Movie Two', 'Actor Two', 'Director Two', 'ACTION', '01:45:00', 'A heartwarming drama that touches emotions', 'ENGLISH', 'https://example.com/trailer2', '2024-02-01', 'T15', 8.2, 'SHOWING'),
 ('https://example.com/movie3.jpg', 'Movie Three', 'Actor Three', 'Director Three', 'ACTION', '01:50:00', 'Comedy movie with hilarious moments', 'VIETNAMESE', 'https://example.com/trailer3', '2024-03-01', 'T15', 6.8, 'SHOWING'),
 ('https://example.com/movie4.jpg', 'Movie Four', 'Actor Four', 'Director Four', 'ACTION', '02:00:00', 'Romantic movie that will make you cry', 'ENGLISH', 'https://example.com/trailer4', '2024-04-01', 'T18', 7.0, 'COMING_SOON'),
-('https://example.com/movie5.jpg', 'Movie Five', 'Actor Five', 'Director Five', 'ACTION', '01:30:00', 'Horror movie with shocking scares', 'ENGLISH', 'https://example.com/trailer5', '2024-05-01', 'T15', 8.0, 'SHOWING'),
+('https://example.com/movie5.jpg', 'Movie Five', 'Actor Five', 'Director Five', 'ACTION', '01:30:00', 'Horror movie with shocking scares', 'ENGLISH', 'https://example.com/trailer5', '2024-05-01', 'T15', 8.0, 'COMING_SOON'),
 ('https://example.com/movie6.jpg', 'Movie Six', 'Actor Six', 'Director Six', 'ACTION', '02:15:00', 'Sci-fi adventure into the unknown', 'ENGLISH', 'https://example.com/trailer6', '2024-06-01', 'CHILD', 7.3, 'COMING_SOON'),
-('https://example.com/movie7.jpg', 'Movie Seven', 'Actor Seven', 'Director Seven', 'ACTION', '02:10:00', 'Action-packed journey through time', 'ENGLISH', 'https://example.com/trailer7', '2024-07-01', 'T18', 8.5, 'SHOWING'),
-('https://example.com/movie8.jpg', 'Movie Eight', 'Actor Eight', 'Director Eight', 'ACTION', '01:40:00', 'Suspense thriller with unexpected twists', 'ENGLISH', 'https://example.com/trailer8', '2024-08-01', 'T15', 7.6, 'COMING_SOON'),
-('https://example.com/movie9.jpg', 'Movie Nine', 'Actor Nine', 'Director Nine', 'ACTION', '01:55:00', 'A touching story of love and loss', 'ENGLISH', 'https://example.com/trailer9', '2024-09-01', 'T15', 8.1, 'SHOWING'),
-('https://example.com/movie10.jpg', 'Movie Ten', 'Actor Ten', 'Director Ten', 'ACTION', '02:05:00', 'A romantic comedy with a surprising ending', 'VIETNAMESE', 'https://example.com/trailer10', '2024-10-01', 'T18', 7.2, 'COMING_SOON');
+('https://example.com/movie7.jpg', 'Movie Seven', 'Actor Seven', 'Director Seven', 'ACTION', '02:10:00', 'Action-packed journey through time', 'ENGLISH', 'https://example.com/trailer7', '2024-07-01', 'T18', 8.5, 'SPECIAL'),
+('https://example.com/movie8.jpg', 'Movie Eight', 'Actor Eight', 'Director Eight', 'ACTION', '01:40:00', 'Suspense thriller with unexpected twists', 'ENGLISH', 'https://example.com/trailer8', '2024-08-01', 'T15', 7.6, 'SPECIAL'),
+('https://example.com/movie9.jpg', 'Movie Nine', 'Actor Nine', 'Director Nine', 'ACTION', '01:55:00', 'A touching story of love and loss', 'ENGLISH', 'https://example.com/trailer9', '2024-09-01', 'T15', 8.1, 'SPECIAL'),
 
 -- //Banner
 INSERT INTO banner (image_url, title, description, movie_id, is_Active)
 VALUES
 ('https://example.com/banner1.jpg', 'Banner 1', 'Description of Banner 1', 1, true),
 ('https://example.com/banner2.jpg', 'Banner 2', 'Description of Banner 2', 2, true),
-('https://example.com/banner3.jpg', 'Banner 3', 'Description of Banner 3', 3, false),
+('https://example.com/banner3.jpg', 'Banner 3', 'Description of Banner 3', 3, true),
 ('https://example.com/banner4.jpg', 'Banner 4', 'Description of Banner 4', 4, true),
 ('https://example.com/banner5.jpg', 'Banner 5', 'Description of Banner 5', 5, true),
-('https://example.com/banner6.jpg', 'Banner 6', 'Description of Banner 6', 6, false),
-('https://example.com/banner7.jpg', 'Banner 7', 'Description of Banner 7', 7, true),
-('https://example.com/banner8.jpg', 'Banner 8', 'Description of Banner 8', 8, true),
+('https://example.com/banner6.jpg', 'Banner 6', 'Description of Banner 6', 6, true),
+('https://example.com/banner7.jpg', 'Banner 7', 'Description of Banner 7', 7, false),
+('https://example.com/banner8.jpg', 'Banner 8', 'Description of Banner 8', 8, false),
 ('https://example.com/banner9.jpg', 'Banner 9', 'Description of Banner 9', 9, false),
-('https://example.com/banner10.jpg', 'Banner 10', 'Description of Banner 10', 10, true);
+('https://example.com/banner10.jpg', 'Banner 10', 'Description of Banner 10', 10, false);
 
 -- //Cinema
 INSERT INTO cinema (name, location, status)
 VALUES
-('Cinema A', 'Hanoi', 'OPEN'),
-('Cinema B', 'Ho Chi Minh City', 'OPEN'),
-('Cinema C', 'Da Nang', 'CLOSED'),
-('Cinema D', 'Hanoi', 'OPEN'),
-('Cinema E', 'Ho Chi Minh City', 'CLOSED'),
-('Cinema F', 'Hue', 'OPEN'),
-('Cinema G', 'Can Tho', 'OPEN'),
-('Cinema H', 'Ha Long', 'CLOSED'),
-('Cinema I', 'Hanoi', 'OPEN'),
-('Cinema J', 'Ho Chi Minh City', 'CLOSED');
+    ('Cinema Nguyễn Du', 'Hanoi', 'OPEN'),
+    ('Cinema Đông Anh', 'Ho Chi Minh City', 'OPEN'),
+    ('Cinema Trần Đại Nghĩa', 'Da Nang', 'CLOSED'),
+    ('Cinema Hà Đông', 'Hanoi', 'OPEN'),
+    ('Cinema Vũng Tàu', 'Ho Chi Minh City', 'CLOSED'),
+    ('Cinema Hà Nội', 'Hue', 'OPEN'),
+    ('Cinema Hà Tĩnh', 'Can Tho', 'OPEN'),
+    ('Cinema Hưng Yên', 'Ha Long', 'CLOSED'),
+    ('Cinema Bình Định', 'Hanoi', 'OPEN'),
+    ('Cinema Yên Bái', 'Ho Chi Minh City', 'CLOSED');
 
 -- //Room
 INSERT INTO room (name, cinema_id, status, screen_type)
@@ -66,9 +65,9 @@ VALUES
 ('Room 5', 3, 'BOOKED', 'IMAX'),
 ('Room 6', 3, 'AVAILABLE', 'IMAX'),
 ('Room 7', 4, 'AVAILABLE', 'NORMAL'),
-('Room 8', 4, 'BOOKED', 'NORMAL'),
-('Room 9', 5, 'AVAILABLE', 'IMAX'),
-('Room 10', 5, 'AVAILABLE', 'NORMAL');
+('Room 1', 4, 'BOOKED', 'NORMAL'),
+('Room 2', 5, 'AVAILABLE', 'IMAX'),
+('Room 3', 5, 'AVAILABLE', 'NORMAL');
 
 -- // Seat
 INSERT INTO seat (name, seat_type, price)
