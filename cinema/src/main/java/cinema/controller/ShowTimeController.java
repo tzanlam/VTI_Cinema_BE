@@ -5,7 +5,6 @@ import cinema.modal.request.ShowTimeRequest;
 import cinema.modal.response.DTO.SeatRoomDTO;
 import cinema.modal.response.DTO.ShowTimeDTO;
 import cinema.service.ShowTime.ShowTimeService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +22,6 @@ import java.util.stream.Collectors;
 public class ShowTimeController {
     @Autowired
     private ShowTimeService showTimeService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @GetMapping("/findId/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
@@ -84,4 +80,10 @@ public class ShowTimeController {
             return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
+//    @GetMapping("findStartTimeByMovieId/{movieId}")
+//    public ResponseEntity<?> findStartTimeByMovieId(@PathVariable int movieId){
+//        try{
+//            return showTimeService.fin
+//        }
+//    }
 }
