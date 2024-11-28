@@ -18,6 +18,7 @@ public class MovieDTO {
     private String viewing_age;
     private String rating;
     private String movie_status;
+    private String trailer;
 
     public MovieDTO(Movie movie) {
         this.movie_id = String.valueOf(movie.getId());
@@ -32,6 +33,6 @@ public class MovieDTO {
         this.release_date = String.valueOf(movie.getStartDate());
         this.viewing_age = String.valueOf(movie.getViewingAge());
         this.rating = String.valueOf(movie.getRating());
-        this.movie_status = String.valueOf(movie.getStatus());
+        this.trailer = String.valueOf(movie.getTrailer());
     }
 }

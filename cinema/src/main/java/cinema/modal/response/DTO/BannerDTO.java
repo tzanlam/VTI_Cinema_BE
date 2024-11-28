@@ -1,11 +1,13 @@
 package cinema.modal.response.DTO;
 
 import cinema.modal.entity.Banner;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class BannerDTO {
     private String banner_id;
+    @JsonProperty("image_url")
     private String banner_image_url;
     private String banner_title;
     private String banner_description;

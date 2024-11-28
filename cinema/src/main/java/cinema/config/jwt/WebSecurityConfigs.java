@@ -61,16 +61,17 @@ public class WebSecurityConfigs {
                                 "/register",
                                 "/account/checkCode",
                                 // cinema ok
-                                "/cinema/find",
+                                "/cinema/find",                  //OK luôn
                                 "/cinema/findId/{id}",
                                 // service ok
                                 "/moreService/findActive",
                                 "/moreService/findId/{id}",
                                 // movie ok
-                                "/movie/findId/{id}",
-                                "/movie/findComingSoon",
-                                "/movie/findShowing",
-                                "/movie/findSpecial",
+                                "/movie/find",                  //OK rồi
+                                "/movie/findId/{id}",           //OK luôn
+                                "/movie/findComingSoon",         //OK luôn
+                                "/movie/findShowing",           //OK luôn
+                                "/movie/findSpecial",            //OK luôn
                                 "movie/findMovie/{id}",
                                 // payment
                                 "/payment/find",

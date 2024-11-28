@@ -26,7 +26,7 @@ public class MovieController {
     private ModelMapper modelMapper;
 
     @GetMapping("/find")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<?> findMovies() {
         try{
             List<Movie> movies = movieService.findMovies();
