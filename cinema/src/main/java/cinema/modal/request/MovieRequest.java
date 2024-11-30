@@ -7,6 +7,7 @@ import cinema.modal.entity.constant.StatusMovie;
 import cinema.modal.entity.constant.ViewingAge;
 import lombok.Data;
 
+import static cinema.util.CheckEqualsEnum.checkEqualsEnum;
 import static cinema.util.ConvertDateTime.convertToLocalDate;
 import static cinema.util.ConvertDateTime.convertToLocalTime;
 
@@ -47,16 +48,21 @@ public class MovieRequest {
         movie.setTrailer(trailer);
         movie.setRating(Float.parseFloat(rating));
         movie.setStartDate(convertToLocalDate(startDate));
-        movie.setGenre(convertEnum(Genre.class, genre));
-        movie.setLanguage(convertEnum(Language.class, language));
-        movie.setViewingAge(convertEnum(ViewingAge.class, viewingAge));
-        movie.setStatus(StatusMovie.CLOSE);
-    }
-    private <E extends Enum<E>> E convertEnum(Class<E> enumClass, String value) {
-        try {
-            return Enum.valueOf(enumClass, value.toUpperCase());
-        } catch (IllegalArgumentException | NullPointerException e) {
-            return null;
+        if (checkEqualsEnum(Genre.class, genre)) {
+            movie.setGenre(Genre.valueOf(genre));
+        }else {
+            throw new IllegalArgumentException("Invalid genre");
         }
+        if (checkEqualsEnum(Language.class, language)) {
+            movie.setLanguage(Language.valueOf(language));
+        }else {
+            throw new IllegalArgumentException("Invalid language");
+        }
+        if (checkEqualsEnum(ViewingAge.class, viewingAge)) {
+            movie.setViewingAge(ViewingAge.valueOf(viewingAge));
+        }else {
+            throw new IllegalArgumentException("Invalid viewing age");
+        }
+        movie.setStatus(StatusMovie.CLOSE);
     }
 }

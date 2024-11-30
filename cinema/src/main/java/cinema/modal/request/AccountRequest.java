@@ -1,11 +1,13 @@
 package cinema.modal.request;
 
 import cinema.modal.entity.Account;
+import cinema.modal.entity.constant.Gender;
 import cinema.modal.entity.constant.Role;
 import cinema.modal.entity.constant.StatusAccount;
 import lombok.Data;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import static cinema.util.CheckEqualsEnum.checkEqualsEnum;
 import static cinema.util.ConvertDateTime.convertToLocalDate;
 
 @Data
@@ -16,6 +18,11 @@ public class AccountRequest {
     private String email;
     private String password;
     private String phoneNumber;
+    private String passport;
+    private String gender;
+    private String city;
+    private String district;
+    private String address;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public Account asAccountByAdmin() {
@@ -42,5 +49,12 @@ public class AccountRequest {
         account.setEmail(email);
         account.setPassword(passwordEncoder.encode(password));
         account.setPhoneNumber(phoneNumber);
+        account.setPassport(passport);
+        if (checkEqualsEnum(Gender.class, gender)){
+            account.setGender(Gender.valueOf(gender));
+        };
+        account.setCity(city);
+        account.setDistrict(district);
+        account.setAddress(address);
     }
 }

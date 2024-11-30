@@ -12,6 +12,11 @@ public class AccountDTO {
     private String email;
     private String phone_number;
     private String account_role;
+    private String passport;
+    private String gender;
+    private String city;
+    private String district;
+    private String address;
     private String account_status;
 
     public AccountDTO(Account account) {
@@ -22,6 +27,11 @@ public class AccountDTO {
         this.email = account.getEmail();
         this.phone_number = account.getPhoneNumber();
         this.account_role = String.valueOf(account.getRole());
+        this.passport = account.getPassport();
+        this.gender = String.valueOf(account.getGender());
+        this.city = String.valueOf(account.getCity());
+        this.district = String.valueOf(account.getDistrict());
+        this.address = String.valueOf(account.getAddress());
         this.account_status = String.valueOf(account.getStatus());
     }
 }

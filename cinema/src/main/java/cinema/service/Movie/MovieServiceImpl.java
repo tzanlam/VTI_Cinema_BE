@@ -11,18 +11,17 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class MovieServiceimpl implements MovieService{
+public class MovieServiceImpl implements MovieService{
     @Autowired
     private MovieRepository movieRepository;
     @Override
     public List<Movie> findMovies() {
-        List<Movie> movies = movieRepository.findAll();
-        return movies;
+        return movieRepository.findAll();
     }
 
     @Override
     public Movie findById(int id) {
-        return movieRepository.findById(id).get();
+        return movieRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -54,10 +53,10 @@ public class MovieServiceimpl implements MovieService{
                 movieRepository.save(movie);
                 return movie;
             } else {
-                throw new IllegalArgumentException("Trạng thái không hợp lệ");
+                throw new IllegalArgumentException("status not support");
             }
         } else {
-            System.out.println("Không tìm thấy bộ phim đang chiếu với ID: " + id);
+            System.out.println("Movie not found with id: " + id);
         }
         return null;
     }
@@ -76,5 +75,4 @@ public class MovieServiceimpl implements MovieService{
     public List<Movie> findMovieSpecial() {
         return movieRepository.findByStatus(StatusMovie.SPECIAL);
     }
-
 }
