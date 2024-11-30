@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BookingRequest {
-    private int ticket;
-    private int moreService;
-    private int voucher;
+    private int ticketId;
+    private int moreServiceId;
+    private int voucherId;
 }

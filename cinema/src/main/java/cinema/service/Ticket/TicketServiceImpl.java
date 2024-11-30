@@ -1,14 +1,14 @@
 package cinema.service.Ticket;
 
 import cinema.modal.entity.Account;
-import cinema.modal.entity.SeatRoom;
+import cinema.modal.entity.Seat;
 import cinema.modal.entity.ShowTime;
 import cinema.modal.entity.Ticket;
-import cinema.modal.entity.constant.StatusSeatRoom;
+import cinema.modal.entity.constant.StatusSeat;
 import cinema.modal.entity.constant.StatusTicket;
 import cinema.modal.request.TicketRequest;
 import cinema.repository.AccountRepository;
-import cinema.repository.SeatRoomRepository;
+import cinema.repository.SeatRepository;
 import cinema.repository.ShowTimeRepository;
 import cinema.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private TicketRepository ticketRepository;
     @Autowired
-    private SeatRoomRepository seatRoomRepository;
+    private SeatRepository seatRepository;
     @Autowired
     private ShowTimeRepository showTimeRepository;
     @Autowired
@@ -53,16 +53,12 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private void populateTicket(Ticket ticket, TicketRequest request) {
-        ShowTime showTime = showTimeRepository.findById(request.getShowTime()).get();
-        Account account = accountRepository.findById(request.getAccount()).get();
-        SeatRoom seatRoom = seatRoomRepository.findById(request.getSeatRoom()).get();
-        if (!request.getSeat_select().isEmpty()){
-            ticket.setSeatSelect(request.getSeat_select());
-        }
+        ShowTime showTime = showTimeRepository.findById(request.getShowTimeId()).get();
+        Account account = accountRepository.findById(request.getAccountId()).get();
+        Seat seat = seatRepository.findById(request.getSeatId()).get();
         ticket.setAccount(account);
         ticket.setShowTime(showTime);
         ticket.setStatus(StatusTicket.UNPAID);
-        seatRoom.setStatus(StatusSeatRoom.OCCUPIED);
-        // a b vip a1 a2 =>
+        seat.setStatus(StatusSeat.OCCUPIED);
     }
 }

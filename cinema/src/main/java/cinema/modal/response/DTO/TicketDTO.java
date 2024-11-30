@@ -15,11 +15,11 @@ public class TicketDTO {
 
     public TicketDTO(Ticket ticket) {
         this.ticket_id = String.valueOf(ticket.getId());
-        this.account_name = ticket.getAccount().getFullname();
+        this.account_name = ticket.getAccount().getFullName();
         this.seat_room_name = ticket.getSeat().getRoom().getName();
         this.start_time = String.valueOf(ticket.getShowTime().getStartTime());
         this.show_date = String.valueOf(ticket.getShowTime().getShowDate());
         this.room = ticket.getSeat().getRoom().getName();
-        this.total_price = String.valueOf(ticket.getTotalPrice());
+        this.total_price = String.valueOf(ticket.getPrice());
     }
 }

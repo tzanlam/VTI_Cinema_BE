@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account createAccount(AccountRequest request) throws Exception {
-        Account account = request.asAccount();
+        Account account = request.asAccountByAdmin();
         accountRepository.save(account);
         mailSenderService.generateVerificationCode(request.getEmail(),generateToken(request.getEmail()));
         return account;

@@ -11,5 +11,4 @@ public interface BannerService {
     Banner findBannerById(int id);
     Banner createBanner(BannerRequest request);
     Banner updateBanner(int id, BannerRequest request);
-    Banner setActive(int id);
 }

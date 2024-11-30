@@ -1,7 +1,6 @@
 package cinema.modal.entity;
 
 import cinema.modal.entity.constant.StatusCinema;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -31,16 +30,16 @@ public class Cinema extends Base {
     @Enumerated(EnumType.STRING)
     private StatusCinema status;
 
-    // Thêm quan hệ với Movie qua ShowTime
     @OneToMany(mappedBy = "cinema")
-    @JsonIgnore
     private List<ShowTime> showTimes;
 
+    @OneToMany(mappedBy = "cinema")
+    private List<Room> rooms;
+
     public List<Movie> getMovies() {
-        // Lấy danh sách phim từ các ShowTime
         return showTimes.stream()
                 .map(ShowTime::getMovie)
-                .distinct()  // Đảm bảo mỗi phim chỉ xuất hiện 1 lần
+                .distinct()
                 .collect(Collectors.toList());
     }
 }

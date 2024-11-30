@@ -63,7 +63,9 @@ public class Movie extends Base{
     @Enumerated(EnumType.STRING)
     private StatusMovie status;
 
-    // Lấy lịch chiếu cho Movie
     @OneToMany(mappedBy = "movie")
     private List<ShowTime> showTimes;
+
+    @OneToMany(mappedBy = "movie")
+    private List<Room> rooms;
 }

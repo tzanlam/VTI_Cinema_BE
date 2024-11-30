@@ -92,7 +92,7 @@ public class ReceiptServiceImpl implements ReceiptService{
                 receipt.setType(TypeReceipt.INCOME);
                 receipt.setAccount(booking.getAccount());
                 receipt.setReason("THU NHẬP ĐẶT VÉ");
-                receipt.setAmount(booking.getTotalPrice());
+                receipt.setAmount(booking.getPrice());
                 receipt.setStatus(StatusReceipt.PROCESSED);
                 receiptRepository.save(receipt);
             }
@@ -100,14 +100,14 @@ public class ReceiptServiceImpl implements ReceiptService{
     }
 
     private void populateReceipt(ReceiptRequest request, Receipt receipt){;
-        boolean checkType = checkEqualsEnum(TypeReceipt.class, request.getTypeReceipt());
+        boolean checkType = checkEqualsEnum(TypeReceipt.class, request.getType());
         if (checkType) {
-            receipt.setType(TypeReceipt.valueOf(request.getTypeReceipt()));
+            receipt.setType(TypeReceipt.valueOf(request.getType()));
         }
         Account account = accountRepository.findById(request.getAccount()).orElse(null);
         receipt.setAccount(account);
         receipt.setReason(request.getReason());
-        receipt.setAmount(Objects.requireNonNull(bookingRepository.findById(request.getBooking()).orElse(null)).getTotalPrice());
+        receipt.setAmount(Objects.requireNonNull(bookingRepository.findById(request.getBooking()).orElse(null)).getPrice());
         receipt.setStatus(StatusReceipt.PROCESSED);
     }
 }

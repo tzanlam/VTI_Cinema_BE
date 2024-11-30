@@ -2,7 +2,6 @@ package cinema.modal.entity;
 
 import cinema.modal.entity.constant.TypeScreen;
 import cinema.modal.entity.constant.StatusRoom;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,7 +15,7 @@ public class Room extends Base{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     @ManyToOne
@@ -24,14 +23,20 @@ public class Room extends Base{
     private Cinema cinema;
 
     @OneToMany(mappedBy = "room")
-    @JsonIgnore
-    private List<SeatRoom> seatRoom;
+    private List<Seat> seats;
+
+    @OneToMany(mappedBy = "room")
+    private List<ShowTime> showTimes;
+
+    @Column(name = "screen_type")
+    @Enumerated(EnumType.STRING)
+    private TypeScreen screenType;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusRoom status;
 
-    @Column(name = "screen_type")
-    @Enumerated(EnumType.STRING)
-    private TypeScreen screenType;
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 }

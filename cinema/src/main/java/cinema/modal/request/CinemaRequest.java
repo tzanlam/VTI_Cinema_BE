@@ -17,17 +17,18 @@ public class CinemaRequest {
 
     public Cinema asCinema() {
         Cinema cinema = new Cinema();
-        cinema.setName(name);
-        cinema.setImage(image);
-        cinema.setLocation(location);
+        populateCinema(cinema);
         cinema.setStatus(StatusCinema.OPEN);
         return cinema;
     }
 
-    public Cinema updateCinema(Cinema cinema) {
+    public void updateCinema(Cinema cinema) {
+        populateCinema(cinema);
+    }
+
+    private void populateCinema(Cinema cinema) {
         cinema.setName(name);
         cinema.setImage(image);
         cinema.setLocation(location);
-        return cinema;
     }
 }

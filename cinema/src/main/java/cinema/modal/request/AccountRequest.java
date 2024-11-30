@@ -11,42 +11,36 @@ import static cinema.util.ConvertDateTime.convertToLocalDate;
 @Data
 public class AccountRequest {
     private String username;
-    private String fullname;
+    private String fullName;
     private String birthDate;
     private String email;
     private String password;
     private String phoneNumber;
-
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public Account asAccount() {
+    public Account asAccountByAdmin() {
         Account account = new Account();
-        account.setUsername(username);
-        account.setFullname(fullname);
-        account.setBirthDate(convertToLocalDate(birthDate));
-        account.setEmail(email);
-        account.setPassword(passwordEncoder.encode(password));
-        account.setPhoneNumber(phoneNumber);
-        account.setStatus(StatusAccount.INACTIVE);
-        account.setRole(Role.USER);
+        populateAccount(account);
         return account;
     }
 
     public Account updateAccount(Account account) {
-        account.setFullname(fullname);
-        account.setBirthDate(convertToLocalDate(birthDate));
-        account.setEmail(email);
-        account.setPassword(passwordEncoder.encode(password));
-        account.setPhoneNumber(phoneNumber);
-        return account;
+       populateAccount(account);
+       return account;
     }
-
     public void RegisterAccount(Account account) {
         account.setUsername(username);
         account.setPassword(passwordEncoder.encode(password));
         account.setEmail(email);
         account.setStatus(StatusAccount.PENDING);
-        account.setPhoneNumber(phoneNumber);
         account.setRole(Role.USER);
+    }
+    private void populateAccount(Account account) {
+        account.setUsername(username);
+        account.setFullName(fullName);
+        account.setBirthDate(convertToLocalDate(birthDate));
+        account.setEmail(email);
+        account.setPassword(passwordEncoder.encode(password));
+        account.setPhoneNumber(phoneNumber);
     }
 }

@@ -33,7 +33,7 @@ public class RoomServiceimpl implements RoomService{
     public Room createRoom(RoomRequest request) throws Exception {
         Room room = new Room();
         room.setName(request.getName());
-        Cinema cinema = cinemaRepository.findById(request.getCinema())
+        Cinema cinema = cinemaRepository.findById(request.getCinemaId())
                 .orElseThrow(() -> new Exception("Cinema not found"));
         room.setCinema(cinema);
         try {
@@ -56,7 +56,7 @@ public class RoomServiceimpl implements RoomService{
 
         room.setName(request.getName());
 
-        Cinema cinema = cinemaRepository.findById(request.getCinema())
+        Cinema cinema = cinemaRepository.findById(request.getCinemaId())
                 .orElseThrow(() -> new Exception("Error with Cinema Id"));
         room.setCinema(cinema);
 

@@ -1,5 +1,6 @@
 package cinema.modal.entity;
 
+import cinema.modal.entity.constant.StatusBanner;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class Banner extends Base{
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
 
-    @Column(name = "is_Active")
-    private boolean isActive;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private StatusBanner status;
 }

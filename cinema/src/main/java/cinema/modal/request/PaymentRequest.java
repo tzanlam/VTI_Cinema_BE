@@ -9,9 +9,8 @@ import java.util.List;
 
 @Data
 public class PaymentRequest {
-    private String method;
-    private String addressTransfer;
-    private String qrCode;
+    private String type;
+    private String address;
 
     public Payment asPayment() {
         Payment payment = new Payment();
@@ -26,12 +25,11 @@ public class PaymentRequest {
 
     private void populatePayment(Payment payment) {
         List<TypePayment> methodPayments = List.of(TypePayment.values());
-        TypePayment methodPayment = TypePayment.valueOf(this.method);
+        TypePayment methodPayment = TypePayment.valueOf(this.type);
         if (methodPayments.contains(methodPayment)) {
-            payment.setMethod(methodPayment);
+            payment.setType(methodPayment);
         }
-        payment.setAddressTransfer(addressTransfer);
-        payment.setQrCode(qrCode);
+        payment.setAddress(address);
         List<StatusPayment> statusPayments = List.of(StatusPayment.values());
         StatusPayment statusPayment = StatusPayment.ACTIVE;
         if (statusPayments.contains(statusPayment)){

@@ -5,6 +5,8 @@ import cinema.modal.entity.constant.StatusPayment;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "Payment")
@@ -15,15 +17,15 @@ public class Payment extends Base{
 
     @Column(name = "method", nullable = false)
     @Enumerated(EnumType.STRING)
-    private TypePayment method;
+    private TypePayment type;
 
     @Column(name = "address_tranfer", nullable = false)
-    private String addressTransfer;
+    private String address;
 
-    @Column(name = "qr_code", nullable = false)
-    private String qrCode;
+    @OneToMany(mappedBy = "payment")
+    private List<Booking> bookings;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusPayment status;
 }

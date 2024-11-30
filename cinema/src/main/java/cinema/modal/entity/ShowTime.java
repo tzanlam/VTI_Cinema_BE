@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "showtime")
+@Table(name = "show_time")
 public class ShowTime extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +34,4 @@ public class ShowTime extends Base{
     @CollectionTable(name = "list_start_time", joinColumns = @JoinColumn(name = "showtime_id"))
     @Column(name = "start_time", nullable = false)
     private List<LocalTime> startTime;
-
-//    @Column(name = "available_seats")
-//    private int availableSeats;
 }
-
-//dau ra
-// id: 1, movie [id: 1,....], room[], cinema[], showDate: showdate, startTime: List

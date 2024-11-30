@@ -19,7 +19,7 @@ public class Account extends Base{
     private String username;
 
     @Column(name = "fullname")
-    private String fullname;
+    private String fullName;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;

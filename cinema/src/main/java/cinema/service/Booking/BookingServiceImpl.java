@@ -77,18 +77,18 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private void populate(Booking booking, BookingRequest request) {
-        Ticket ticket = ticketRepository.findByIdAndStatus(request.getTicket(), StatusTicket.UNPAID);
+        Ticket ticket = ticketRepository.findByIdAndStatus(request.getTicketId(), StatusTicket.UNPAID);
         Account account = Objects.requireNonNull(ticket).getAccount();
-        Optional<MoreService> moreService = moreServiceRepository.findById(request.getMoreService());
-        Optional<Voucher> voucher = voucherRepository.findById(request.getVoucher());
+        Optional<MoreService> moreService = moreServiceRepository.findById(request.getMoreServiceId());
+        Optional<Voucher> voucher = voucherRepository.findById(request.getVoucherId());
 
         if (Objects.isNull(account) || moreService.isEmpty() || voucher.isEmpty()) {
             throw new IllegalArgumentException("Invalid account, ticket, more service, or voucher details");
         }
         booking.setAccount(account);
-        booking.setTicket(ticket);
-        booking.setMoreService(moreService.get());
-        booking.setVoucher(voucher.get());
-        booking.setTotalPrice(ticket.getTotalPrice() + moreService.get().getPrice() - voucher.get().getDiscount());
+        booking.setTickets((List<Ticket>) ticket);
+        booking.setMoreServices(moreService.get());
+        booking.setVouchers(voucher.get());
+        booking.setPrice(ticket.getPrice() + moreService.get().getPrice() - voucher.get().getDiscount());
     }
 }

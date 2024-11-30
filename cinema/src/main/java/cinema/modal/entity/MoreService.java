@@ -19,7 +19,7 @@ public class MoreService extends Base{
     private String image;
 
     @Column(name = "decription")
-    private String decription;
+    private String description;
 
     @Column(name = "price", nullable = false)
     private double price;

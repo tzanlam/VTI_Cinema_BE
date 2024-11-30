@@ -16,7 +16,7 @@ public class MoreServiceDTO {
         this.service_id = String.valueOf(moreService.getId());
         this.service_name = String.valueOf(moreService.getId());
         this.service_image = moreService.getImage();
-        this.description = moreService.getDecription();
+        this.description = moreService.getDescription();
         this.price = String.valueOf(moreService.getPrice());
         this.service_status = String.valueOf(moreService.getStatus());
     }

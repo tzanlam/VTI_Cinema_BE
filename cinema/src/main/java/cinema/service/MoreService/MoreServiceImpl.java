@@ -33,8 +33,8 @@ public class MoreServiceImpl implements MoreServiceService{
         MoreService moreService = new MoreService();
         moreService.setName(request.getName());
         moreService.setImage(request.getImage());
-        moreService.setDecription(request.getDecription());
-        moreService.setPrice(request.getPrice());
+        moreService.setDescription(request.getDescription());
+        moreService.setPrice(Double.parseDouble(request.getPrice()));
         moreService.setStatus(StatusService.ACTIVE);
         moreServiceRepository.save(moreService);
         return moreService;
@@ -46,14 +46,9 @@ public class MoreServiceImpl implements MoreServiceService{
         if (moreService != null) {
             moreService.setName(request.getName());
             moreService.setImage(request.getImage());
-            moreService.setDecription(request.getDecription());
-            moreService.setPrice(request.getPrice());
+            moreService.setDescription(request.getDescription());
+            moreService.setPrice(Double.parseDouble(request.getPrice()));
             moreServiceRepository.save(moreService);
-            List<StatusService> statusServices = Arrays.asList(StatusService.values());
-            StatusService service = StatusService.valueOf(request.getStatus());
-            if (statusServices.contains(service)) {
-                moreService.setStatus(StatusService.valueOf(request.getStatus()));
-            }
             return moreService;
         }
         return null;

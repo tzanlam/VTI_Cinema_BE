@@ -4,8 +4,6 @@ import cinema.modal.entity.Voucher;
 import cinema.modal.entity.constant.StatusVoucher;
 import lombok.Data;
 
-import java.util.List;
-
 import static cinema.util.ConvertDateTime.convertToLocalDate;
 
 @Data
@@ -14,7 +12,7 @@ public class VoucherRequest {
     private String description;
     private String discount;
     private String expiry;
-    private String status;
+    private String quantity;
 
     public Voucher asVoucher() {
         Voucher voucher = new Voucher();
@@ -24,21 +22,15 @@ public class VoucherRequest {
     }
 
     public Voucher updateVoucher(Voucher voucher) {
-        Voucher v = populate(voucher);
-        v.setId(voucher.getId());
-        List<StatusVoucher> statusVouchers = List.of(StatusVoucher.values());
-        StatusVoucher statusVoucher = StatusVoucher.valueOf(status);
-        if (statusVouchers.contains(statusVoucher)) {
-            voucher.setStatus(StatusVoucher.valueOf(status));
-        }
-        return v;
+        populate(voucher);
+        return voucher;
     }
 
-    private Voucher populate(Voucher voucher) {
+    private void populate(Voucher voucher) {
         voucher.setName(name);
         voucher.setDescription(description);
         voucher.setDiscount(Double.parseDouble(discount));
+        voucher.setQuantity(Integer.parseInt(quantity));
         voucher.setExpiry(convertToLocalDate(expiry));
-        return voucher;
     }
 }

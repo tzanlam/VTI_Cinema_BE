@@ -1,7 +1,9 @@
 package cinema.modal.response.DTO;
 
 import cinema.modal.entity.Payment;
+import lombok.Data;
 
+@Data
 public class PaymentDTO {
     private String payment_id;
     private String payment_method;
@@ -11,9 +13,8 @@ public class PaymentDTO {
 
     public PaymentDTO(Payment payment) {
         this.payment_id = String.valueOf(payment.getId());
-        this.payment_method = String.valueOf(payment.getMethod());
-        this.address_transfer = payment.getAddressTransfer();
-        this.qr_code = payment.getQrCode();
+        this.payment_method = String.valueOf(payment.getType());
+        this.address_transfer = payment.getAddress();
         this.payment_status = String.valueOf(payment.getStatus());
     }
 }

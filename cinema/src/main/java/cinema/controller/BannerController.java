@@ -76,14 +76,4 @@ public class BannerController {
             return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
-
-    @GetMapping("/setActive/{id}")
-//    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> setActive(@PathVariable int id) {
-        try {
-            return ResponseEntity.ok(new BannerDTO(bannerService.setActive(id)));
-        }catch(Exception e){
-            return ResponseEntity.badRequest().body("Error: "+e.getMessage());
-        }
-    }
 }

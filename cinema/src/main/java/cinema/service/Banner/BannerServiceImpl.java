@@ -1,6 +1,7 @@
 package cinema.service.Banner;
 
 import cinema.modal.entity.Banner;
+import cinema.modal.entity.constant.StatusBanner;
 import cinema.modal.request.BannerRequest;
 import cinema.repository.BannerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class BannerServiceImpl implements BannerService {
         List <Banner> banners = findBanners();
         List<Banner> activeBanners = new ArrayList<Banner>();
         for (Banner banner : banners) {
-            if (banner.isActive()) {
+            if (banner.getStatus().equals(StatusBanner.ACTIVE)) {
                 activeBanners.add(banner);
             }
         }
@@ -49,16 +50,5 @@ public class BannerServiceImpl implements BannerService {
             return bannerRepository.save(request.updateBanner(banner));
         }
         return null;
-    }
-
-    @Override
-    public Banner setActive(int id) {
-        Banner banner = findBannerById(id);
-        if (banner == null) {
-            return null;
-        }
-        banner.setActive(!banner.isActive());
-        bannerRepository.save(banner);
-        return banner;
     }
 }

@@ -1,5 +1,5 @@
 package cinema.modal.entity.constant;
 
-public enum StatusSeatRoom {
+public enum StatusSeat {
     AVAILABLE, OCCUPIED, BOOKED;
 }

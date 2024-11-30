@@ -10,6 +10,5 @@ import java.util.List;
 public interface SeatService {
     List<Seat> findSeats();
     Seat findById(int id);
-    Seat createSeat(SeatRequest request);
-    Seat updateSeat(int id, SeatRequest request);
+    List<Seat> createSeat(SeatRequest request) throws Exception;
 }

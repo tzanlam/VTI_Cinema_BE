@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class RoomRequest {
     private String name;
-    private int cinema;
+    private int cinemaId;
+    private int showTimeId;
     private String screenType;
 }

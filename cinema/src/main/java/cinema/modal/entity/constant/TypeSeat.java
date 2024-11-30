@@ -8,7 +8,8 @@ public enum TypeSeat {
     VIP(150),
     DOUBLE(200);
     private final double price;
-    TypeSeat(double price) {
+
+    TypeSeat (double price) {
         this.price = price;
     }
 }

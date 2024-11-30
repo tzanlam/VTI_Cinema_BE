@@ -6,8 +6,8 @@ import java.util.List;
 
 @Data
 public class ShowTimeRequest {
-    private int movie;
-    private int room;
+    private int movieId;
+    private int roomId;
     private String showDate;
     private List<String> startTime;
 }
