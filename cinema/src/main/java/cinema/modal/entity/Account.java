@@ -1,5 +1,6 @@
 package cinema.modal.entity;
 
+import cinema.modal.entity.constant.Gender;
 import cinema.modal.entity.constant.Role;
 import cinema.modal.entity.constant.StatusAccount;
 import jakarta.persistence.*;
@@ -27,11 +28,27 @@ public class Account extends Base{
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "passport")
+    private String passport;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)

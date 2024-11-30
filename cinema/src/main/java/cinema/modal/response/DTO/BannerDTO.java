@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class BannerDTO {
     private String banner_id;
-    private String banner_image_url;
+    private String image_url;
     private String banner_title;
     private String banner_description;
     private String banner_movie_name;
@@ -17,6 +17,6 @@ public class BannerDTO {
         this.banner_title = banner.getTitle();
         this.banner_description = banner.getDescription();
         this.banner_movie_name = banner.getMovie().getName();
-        this.banner_image_url = banner.getImageUrl();
+        this.image_url = banner.getImageUrl();
     }
 }
