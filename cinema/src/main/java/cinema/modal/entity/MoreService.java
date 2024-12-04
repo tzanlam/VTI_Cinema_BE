@@ -3,7 +3,9 @@ package cinema.modal.entity;
 import cinema.modal.entity.constant.StatusService;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "more_service")

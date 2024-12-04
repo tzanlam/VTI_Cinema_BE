@@ -4,11 +4,13 @@ import cinema.modal.entity.constant.StatusSeat;
 import cinema.modal.entity.constant.TypeSeat;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "seat")
-public class Seat {
+@EqualsAndHashCode(callSuper = true)
+public class Seat extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -22,7 +24,7 @@ public class Seat {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "seat_type", nullable = false)
-    private TypeSeat seatType;
+    private TypeSeat type;
 
     @Column(name = "price", nullable = false)
     private double price;

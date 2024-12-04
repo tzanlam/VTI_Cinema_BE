@@ -4,11 +4,13 @@ import cinema.modal.entity.constant.TypePayment;
 import cinema.modal.entity.constant.StatusPayment;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper=true)
 @Table(name = "Payment")
 public class Payment extends Base{
     @Id

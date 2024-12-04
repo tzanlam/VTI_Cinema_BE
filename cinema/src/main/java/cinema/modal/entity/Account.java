@@ -5,9 +5,11 @@ import cinema.modal.entity.constant.Role;
 import cinema.modal.entity.constant.StatusAccount;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "account")

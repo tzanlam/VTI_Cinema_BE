@@ -3,11 +3,13 @@ package cinema.modal.entity;
 import cinema.modal.entity.constant.StatusBooking;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper=true)
 @Table(name = "booking")
 public class Booking extends Base {
     @Id

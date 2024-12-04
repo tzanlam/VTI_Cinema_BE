@@ -51,7 +51,7 @@ public class SeatServiceImpl implements SeatService {
                 Seat seat = new Seat();
                 seat.setName(rowName + j);
                 seat.setRoom(room);
-                seat.setSeatType(type);
+                seat.setType(type);
                 seat.setPrice(type.getPrice());
                 seat.setStatus(StatusSeat.AVAILABLE);
                 seatRepository.save(seat);

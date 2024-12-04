@@ -23,11 +23,15 @@ public class AccountRequest {
     private String city;
     private String district;
     private String address;
+    private String role;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public Account asAccountByAdmin() {
         Account account = new Account();
         populateAccount(account);
+        if (checkEqualsEnum(Role.class, role)) {
+            account.setRole(Role.valueOf(role));
+        }
         return account;
     }
 

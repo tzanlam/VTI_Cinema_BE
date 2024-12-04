@@ -7,12 +7,14 @@ import cinema.modal.entity.constant.StatusMovie;
 import cinema.modal.entity.constant.ViewingAge;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "movie")
 public class Movie extends Base{
@@ -63,9 +65,6 @@ public class Movie extends Base{
     @Enumerated(EnumType.STRING)
     private StatusMovie status;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShowTime> showTimes;
-
-    @OneToMany(mappedBy = "movie")
-    private List<Room> rooms;
 }

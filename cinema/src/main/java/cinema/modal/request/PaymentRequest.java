@@ -11,6 +11,7 @@ import java.util.List;
 public class PaymentRequest {
     private String type;
     private String address;
+    private int bookingId;
 
     public Payment asPayment() {
         Payment payment = new Payment();

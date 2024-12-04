@@ -3,10 +3,12 @@ package cinema.modal.entity;
 import cinema.modal.entity.constant.StatusVoucher;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "voucher")
 public class Voucher extends Base{

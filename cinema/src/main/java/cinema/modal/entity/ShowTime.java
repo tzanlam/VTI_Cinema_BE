@@ -2,12 +2,14 @@ package cinema.modal.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "show_time")
 public class ShowTime extends Base{
@@ -20,12 +22,12 @@ public class ShowTime extends Base{
     private Movie movie;
 
     @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
-    private Room room;
-
-    @ManyToOne
     @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false)
     private Cinema cinema;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
+    private Room room;
 
     @Column(name = "show_date", nullable = false)
     private LocalDate showDate;

@@ -3,8 +3,10 @@ package cinema.modal.entity;
 import cinema.modal.entity.constant.StatusBanner;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@EqualsAndHashCode(callSuper=false)
 @Data
 @Table(name = "banner")
 public class Banner extends Base{

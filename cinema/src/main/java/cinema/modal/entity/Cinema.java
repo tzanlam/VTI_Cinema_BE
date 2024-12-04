@@ -3,12 +3,14 @@ package cinema.modal.entity;
 import cinema.modal.entity.constant.StatusCinema;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "cinema")
 public class Cinema extends Base {
     @Id

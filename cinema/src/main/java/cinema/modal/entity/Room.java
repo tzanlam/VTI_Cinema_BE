@@ -4,11 +4,13 @@ import cinema.modal.entity.constant.TypeScreen;
 import cinema.modal.entity.constant.StatusRoom;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "room")
 public class Room extends Base{
     @Id
@@ -22,12 +24,6 @@ public class Room extends Base{
     @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false)
     private Cinema cinema;
 
-    @OneToMany(mappedBy = "room")
-    private List<Seat> seats;
-
-    @OneToMany(mappedBy = "room")
-    private List<ShowTime> showTimes;
-
     @Column(name = "screen_type")
     @Enumerated(EnumType.STRING)
     private TypeScreen screenType;
@@ -36,7 +32,9 @@ public class Room extends Base{
     @Enumerated(EnumType.STRING)
     private StatusRoom status;
 
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
+    @OneToMany(mappedBy = "room")
+    private List<Seat> seats;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShowTime> showTimes;
 }

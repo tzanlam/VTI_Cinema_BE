@@ -18,7 +18,7 @@ public class SeatDTO {
         this.seat_name = seat.getName();
         this.cinema = String.valueOf(seat.getRoom().getCinema());
         this.room = String.valueOf(seat.getRoom());
-        this.seat_type = String.valueOf(seat.getSeatType());
+        this.seat_type = String.valueOf(seat.getType());
         this.seat_price = String.valueOf(seat.getPrice());
         this.seat_status = String.valueOf(seat.getStatus());
     }

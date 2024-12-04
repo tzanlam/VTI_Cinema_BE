@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface SeatRepository extends JpaRepository<Seat, Integer> {
-    List<Seat> findBySeatType(TypeSeat seatType);
+    List<Seat> findByType(TypeSeat seatType);
 }
