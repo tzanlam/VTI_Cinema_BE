@@ -10,20 +10,20 @@ import java.util.List;
 @Data
 public class BookingDTO {
     private String booking_id;
-    private String account_name;
+    private String account;
     private List<String> ticket;
-    private String more_service_name;
-    private String voucher_name;
-    private String total_price;
+    private String more_service;
+    private String voucher;
+    private String booking_price;
     private String booking_status;
 
     public BookingDTO(Booking booking) {
         this.booking_id = String.valueOf(booking.getId());
-        this.account_name = booking.getAccount().getFullName();
+        this.account= String.valueOf(new AccountDTO(booking.getAccount()));
         this.ticket = Collections.singletonList(String.valueOf(booking.getTickets()));
-        this.more_service_name = booking.getMoreServices().getName();
-        this.voucher_name = booking.getVouchers().getName();
-        this.total_price = String.valueOf(booking.getPrice());
+        this.more_service = String.valueOf(new MoreServiceDTO(booking.getMoreServices()));
+        this.voucher = String.valueOf(new VoucherDTO(booking.getVouchers()));
+        this.booking_price = String.valueOf(booking.getPrice());
         this.booking_status = String.valueOf(booking.getStatus());
     }
 }

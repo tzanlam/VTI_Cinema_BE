@@ -6,16 +6,18 @@ import lombok.Data;
 @Data
 public class ShowTimeDTO {
     private String show_time_id;
-    private String movie_name;
-    private String cinema_name;
-    private String show_date;
-    private String start_time;
+    private String movie;
+    private String room;
+    private String cinema;
+    private String show_time_show_date;
+    private String show_time_start_time;
 
     public ShowTimeDTO(ShowTime showTime) {
         this.show_time_id = String.valueOf(showTime.getId());
-        this.movie_name = String.valueOf(showTime.getMovie().getName());
-        this.cinema_name = String.valueOf(showTime.getCinema().getName());
-        this.show_date = String.valueOf(showTime.getShowDate());
-        this.start_time = String.valueOf(showTime.getStartTime());
+        this.movie = String.valueOf(showTime.getMovie().getName());
+        this.room = String.valueOf(showTime.getRoom());
+        this.cinema = String.valueOf(showTime.getRoom().getCinema());
+        this.show_time_show_date = String.valueOf(showTime.getShowDate());
+        this.show_time_start_time = String.valueOf(showTime.getStartTime());
     }
 }

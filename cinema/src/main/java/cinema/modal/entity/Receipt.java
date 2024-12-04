@@ -4,11 +4,13 @@ import cinema.modal.entity.constant.StatusReceipt;
 import cinema.modal.entity.constant.TypeReceipt;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "receipt")
-public class Receipt {
+public class Receipt extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
