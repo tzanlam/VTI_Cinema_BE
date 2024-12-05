@@ -29,19 +29,14 @@ public class MailSenderService implements IMailSenderService {
     }
 
     @Override
-    public void generateVerificationCode(String email, String token) throws Exception {
+    public void generateVerificationCode(String email, String token, String text) throws Exception {
         try{
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(email);
             helper.setFrom("vtiCinema@baeldung.com");
             helper.setSubject("Confirm email");
-            helper.setText(
-                    "<h3>Xin chào,</h3>"
-                            + "<p>Cảm ơn bạn đã đăng ký.</p>"
-                            + "<p>Mã xác minh của bạn là: </p>"+token,
-                    true
-            );
+            helper.setText(text,true);
             mailSender.send(message);
         }catch (MessagingException e){
             throw new Exception(e.getMessage());

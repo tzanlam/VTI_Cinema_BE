@@ -8,18 +8,27 @@ import cinema.service.MailSender.IMailSenderService;
 import cinema.service.MailSender.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.UUID;
+
+import static io.netty.util.CharsetUtil.encoder;
 
 @Service
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
+
     @Autowired
     private IMailSenderService mailSenderService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public List<Account> findAccounts() {
         return accountRepository.findAll();
@@ -39,7 +48,10 @@ public class AccountServiceImpl implements AccountService {
     public Account createAccount(AccountRequest request) throws Exception {
         Account account = request.asAccountByAdmin();
         accountRepository.save(account);
-        mailSenderService.generateVerificationCode(request.getEmail(),generateToken(request.getEmail()));
+        String token = generateToken(request.getEmail());
+        String text = "<h2>Thank you for register.</h2>" +
+                "<p>Your identification code is: </p>"+ token;
+        mailSenderService.generateVerificationCode(request.getEmail(),generateToken(request.getEmail()), text);
         return account;
     }
 
@@ -115,9 +127,25 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account forgotPassword(String email) throws Exception {
         Account account = accountRepository.findByEmail(email);
-        if (account != null){
+
+        if (account == null) {
+            throw new Exception("Account not found for email: " + email);
         }
-        return null;
+
+        // Tạo mật khẩu mới
+        String newPassword = generateToken(email);
+
+        // Mã hóa mật khẩu
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        // Lưu mật khẩu mới vào tài khoản
+        account.setPassword(encodedPassword);
+        accountRepository.save(account);
+
+        // Gửi email thông báo mật khẩu mới (giả định có phương thức sendEmail)
+        mailSenderService.sendMessageWithAttachment(email, "Your new password", "Your new password is: " + newPassword);
+
+        return account;
     }
 
     private String generateToken(String email) throws Exception {
@@ -126,7 +154,6 @@ public class AccountServiceImpl implements AccountService {
         if (account != null) {
             account.setVerificationCode(token);
             accountRepository.save(account); // Lưu mã xác thực vào DB
-            mailSenderService.generateVerificationCode(email, token); // Gửi mã qua email
             return token;
         }
         return null;

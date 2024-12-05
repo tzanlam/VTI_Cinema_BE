@@ -108,4 +108,13 @@ public class AccountController {
             ));
         }
     }
+
+    @GetMapping("/forgotPassword")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+        try{
+            return ResponseEntity.ok(new AccountDTO(accountService.forgotPassword(email)));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
 }

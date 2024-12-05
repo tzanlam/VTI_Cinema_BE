@@ -63,6 +63,7 @@ public class WebSecurityConfigs {
                                 // account ok
                                 "/account/create",
                                 "/account/checkCode",
+                                "/account/forgotPassword",
                                 // banner ok
                                 "/banner/**",
 

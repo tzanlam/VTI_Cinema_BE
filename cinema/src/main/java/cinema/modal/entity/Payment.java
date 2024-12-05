@@ -27,6 +27,12 @@ public class Payment extends Base{
     @OneToMany(mappedBy = "payment")
     private List<Booking> bookings;
 
+    @Column(name = "transaction_id")
+    private String transactionId;
+
+    @Column(name = "provider")
+    private String provider;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusPayment status;
