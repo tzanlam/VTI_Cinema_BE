@@ -3,10 +3,12 @@ package cinema.modal.entity;
 import cinema.modal.entity.constant.StatusTicket;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "ticket")
+@EqualsAndHashCode(callSuper = true)
 public class Ticket extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
