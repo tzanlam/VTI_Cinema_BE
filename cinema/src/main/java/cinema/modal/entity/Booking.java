@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -26,6 +27,9 @@ public class Booking extends Base {
     @ManyToOne
     @JoinColumn(name = "more_service_id", referencedColumnName = "id")
     private MoreService moreServices;
+
+    @Column(name = "expiry_time")
+    private LocalDateTime expiryTime;
 
     @ManyToOne
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")

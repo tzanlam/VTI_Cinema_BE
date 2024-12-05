@@ -4,7 +4,6 @@ import cinema.modal.entity.Voucher;
 import cinema.modal.request.VoucherRequest;
 import cinema.modal.response.DTO.VoucherDTO;
 import cinema.service.Voucher.VoucherService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,9 +18,6 @@ import java.util.stream.Collectors;
 public class VoucherController {
     @Autowired
     private VoucherService voucherService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")

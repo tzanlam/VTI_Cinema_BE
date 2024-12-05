@@ -1,6 +1,7 @@
 package cinema.service.Global;
 
 import cinema.config.jwt.JwtTokenUtil;
+import cinema.config.more.VNPayConfig;
 import cinema.modal.entity.Account;
 import cinema.modal.request.AccountRequest;
 import cinema.modal.request.LoginRequest;
@@ -18,10 +19,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Service
 public class GlobalServiceImpl implements GlobalService{
+    @Autowired
+    private VNPayConfig vnPayConfig;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -68,5 +78,43 @@ public class GlobalServiceImpl implements GlobalService{
     public String upload(MultipartFile file) throws IOException {
         Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("folder", "/vti_cinema"));
         return uploadResult.get("url").toString();
+    }
+
+    @Override
+    public String createPaymentUrl(Map<String, String> params) throws Exception {
+        params.put("vnp_Version", "2.1.0");
+        params.put("vnp_Command", "pay");
+        params.put("vnp_TmnCode", vnPayConfig.getTnmCode());
+        params.put("vnp_Locale", "vn");
+        params.put("vnp_CurrCode", "VND");
+        params.put("vnp_ReturnUrl", vnPayConfig.getReturnUrl());
+        params.put("vnp_CreateDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
+
+        // Sort parameters alphabetically
+        Map<String, String> sortedParams = new TreeMap<>(params);
+
+        // Create data string for hashing
+        String query = sortedParams.entrySet()
+                .stream()
+                .map(e -> e.getKey() + "=" + e.getValue())
+                .collect(Collectors.joining("&"));
+
+        // Generate hash
+        String hashData = hashWithHmacSHA512(query, vnPayConfig.getHashSecret());
+        query += "&vnp_SecureHash=" + hashData;
+
+        return vnPayConfig.getUrl() + "?" + query;
+    }
+
+    @Override
+    public String hashWithHmacSHA512(String data, String secret) throws Exception {
+        MessageDigest digest = MessageDigest.getInstance("SHA-512");
+        digest.update(secret.getBytes(StandardCharsets.UTF_8));
+        byte[] hashedBytes = digest.digest(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hashedBytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 }

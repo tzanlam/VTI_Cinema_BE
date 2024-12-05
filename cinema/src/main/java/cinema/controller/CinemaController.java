@@ -5,7 +5,6 @@ import cinema.modal.request.CinemaRequest;
 import cinema.modal.response.DTO.CinemaDTO;
 import cinema.modal.response.DTO.MovieDTO;
 import cinema.service.Cinema.CinemaService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +21,6 @@ public class CinemaController {
     @Autowired
     private CinemaService cinemaService;
 
-    @Autowired
-    private ModelMapper modelMapper;
     @GetMapping("/find")
     public ResponseEntity<?> findCinemas() {
         try {

@@ -82,22 +82,22 @@ public class ReceiptServiceImpl implements ReceiptService{
         return receiptRepository.findByType(TypeReceipt.SPENDING);
     }
 
-    @Scheduled(fixedRate = 5000) // Chạy mỗi 5 giây
-    @Transactional
-    public void processIncomeReceipts() {
-        List<Booking> successfulBookings = bookingRepository.findByStatus(StatusBooking.SUCCESS);
-        for (Booking booking : successfulBookings) {
-            if (!receiptRepository.existsByBookingId(booking.getId())) {
-                Receipt receipt = new Receipt();
-                receipt.setType(TypeReceipt.INCOME);
-                receipt.setAccount(booking.getAccount());
-                receipt.setReason("THU NHẬP ĐẶT VÉ");
-                receipt.setAmount(booking.getPrice());
-                receipt.setStatus(StatusReceipt.PROCESSED);
-                receiptRepository.save(receipt);
-            }
-        }
-    }
+//    @Scheduled(fixedRate = 5000) // Chạy mỗi 5 giây
+//    @Transactional
+//    public void processIncomeReceipts() {
+//        List<Booking> successfulBookings = bookingRepository.findByStatus(StatusBooking.SUCCESS);
+//        for (Booking booking : successfulBookings) {
+//            if (!receiptRepository.existsByBookingId(booking.getId())) {
+//                Receipt receipt = new Receipt();
+//                receipt.setType(TypeReceipt.INCOME);
+//                receipt.setAccount(booking.getAccount());
+//                receipt.setReason("THU NHẬP ĐẶT VÉ");
+//                receipt.setAmount(booking.getPrice());
+//                receipt.setStatus(StatusReceipt.PROCESSED);
+//                receiptRepository.save(receipt);
+//            }
+//        }
+//    }
 
     private void populateReceipt(ReceiptRequest request, Receipt receipt){;
         boolean checkType = checkEqualsEnum(TypeReceipt.class, request.getType());

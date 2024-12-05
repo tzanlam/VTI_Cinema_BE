@@ -1,6 +1,5 @@
 package cinema.service.Receipt;
 
-import cinema.modal.entity.Booking;
 import cinema.modal.entity.Receipt;
 import cinema.modal.request.ReceiptRequest;
 
@@ -12,7 +11,7 @@ public interface ReceiptService {
     Receipt ceateReceipt(ReceiptRequest request);
     Receipt updateReceipt(int id, ReceiptRequest request);
     Receipt changeStatus(int id, String status);
-    void processIncomeReceipts();
+//    void processIncomeReceipts();
     List<Receipt> findIncome();
     List<Receipt> findSpending();
 
