@@ -91,9 +91,6 @@ public class WebSecurityConfigs {
                                 //seat ok
                                 "/seat/find",
                                 "/seat/findId/{id}",
-                                //seat room ok
-                                "/seatRoom/find",
-                                "/seatRoom/findId/{id}",
                                 // showtime ok
                                 "/showTime/findMovieAndShowDate/{movieId}",
                                 "/showTime/findId/{id}",
