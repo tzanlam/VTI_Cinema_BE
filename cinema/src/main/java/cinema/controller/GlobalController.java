@@ -26,7 +26,7 @@ public class GlobalController {
         try {
             return ResponseEntity.ok(globalService.loginByEmail(request));
         }catch (Exception e){
-            return ResponseEntity.status(401).body(Map.of("message", "Invalid email or password"));
+            return ResponseEntity.status(401).body(Map.of("message", "tài khoản hoặc mật khẩu không đúng"));
         }
     }
     @PostMapping("/register")
