@@ -32,7 +32,7 @@ public class BannerController {
             return ResponseEntity.badRequest().body("Error: "+e.getMessage());
         }
     }
-// cu tét truoc di da ti em qa may em set quyen lai sau
+
 
     @GetMapping("/findActive")
 //    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")

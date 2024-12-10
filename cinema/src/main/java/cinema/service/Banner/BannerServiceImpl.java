@@ -1,11 +1,15 @@
 package cinema.service.Banner;
 
 import cinema.modal.entity.Banner;
+import cinema.modal.entity.Contact;
+import cinema.modal.entity.Movie;
+import cinema.modal.entity.constant.StatusMovie;
 import cinema.modal.request.BannerRequest;
 import cinema.repository.BannerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -38,4 +42,6 @@ public class BannerServiceImpl implements BannerService {
         }
         return null;
     }
+
+
 }
