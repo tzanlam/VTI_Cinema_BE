@@ -50,6 +50,6 @@ public class ContactRequest {
         }else {
             throw new IllegalArgumentException("Invalid language");
         }
-        contact.setContactStatus(ContactStatus.IN_PROGRESS);
+        contact.setContactStatus(ContactStatus.PENDING);
     }
 }
