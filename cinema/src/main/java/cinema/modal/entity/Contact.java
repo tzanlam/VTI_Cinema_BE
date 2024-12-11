@@ -31,7 +31,7 @@ public class Contact {
     @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false)
     private Cinema cinema;
 
-    @Column(name = "region", unique = true, nullable = false)
+    @Column(name = "region", nullable = false)
     private String region;
 
     @Column(name = "service_contact")
@@ -42,7 +42,7 @@ public class Contact {
     @Enumerated(EnumType.STRING)
     private ContactStatus contactStatus;
 
-    @Column(name = "details", unique = true, nullable = false)
+    @Column(name = "details", nullable = false)
     private String details;
 
     @Column(name = "contact_date", unique = true, nullable = false)

@@ -11,5 +11,5 @@ import java.util.List;
 
 @Repository
 public interface ContactRepository extends JpaRepository< Contact, Integer> {
-    List<Movie> findByStatus(ContactStatus status);
+    List<Contact> findByContactStatus(ContactStatus contactStatus);
 }

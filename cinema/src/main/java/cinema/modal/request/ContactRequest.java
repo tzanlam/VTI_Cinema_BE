@@ -40,10 +40,10 @@ public class ContactRequest {
         contact.setRegion(region);
         contact.setDetails(details);
         contact.setDate(convertToLocalDate(date));
-        if (checkEqualsEnum(ServiceContact.class, serviceContact)) {
+        try {
             contact.setServiceContact(ServiceContact.valueOf(serviceContact));
-        }else {
-            throw new IllegalArgumentException("Invalid service");
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid service contact value: " + serviceContact);
         }
         if (checkEqualsEnum(ContactStatus.class, contactStatus)) {
             contact.setContactStatus(ContactStatus.valueOf(contactStatus));
