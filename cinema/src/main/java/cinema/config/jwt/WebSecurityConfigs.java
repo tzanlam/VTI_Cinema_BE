@@ -98,6 +98,8 @@ public class WebSecurityConfigs {
                                 // voucher ok
                                 "/voucher/findId/{id}",
                                 "/voucher/findEffective"
+
+                                // contact ok
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

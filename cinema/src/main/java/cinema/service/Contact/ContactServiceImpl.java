@@ -1,11 +1,7 @@
 package cinema.service.Contact;
 
-import cinema.modal.entity.Banner;
 import cinema.modal.entity.Contact;
-import cinema.modal.entity.Movie;
 import cinema.modal.entity.constant.ContactStatus;
-import cinema.modal.entity.constant.StatusMovie;
-import cinema.modal.request.BannerRequest;
 import cinema.modal.request.ContactRequest;
 import cinema.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;

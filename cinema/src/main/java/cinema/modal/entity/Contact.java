@@ -1,19 +1,17 @@
 package cinema.modal.entity;
 
+import cinema.modal.entity.constant.City;
 import cinema.modal.entity.constant.ContactStatus;
 import cinema.modal.entity.constant.ServiceContact;
-import cinema.modal.entity.constant.StatusRoom;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 @Entity
 @Data
 @Table(name = "contact")
-public class Contact {
+@EqualsAndHashCode(callSuper = true)
+public class Contact extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -31,8 +29,9 @@ public class Contact {
     @JoinColumn(name = "cinema_id", referencedColumnName = "id", nullable = false)
     private Cinema cinema;
 
-    @Column(name = "region", nullable = false)
-    private String region;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "city", nullable = false)
+    private City city;
 
     @Column(name = "service_contact")
     @Enumerated(EnumType.STRING)
@@ -44,7 +43,4 @@ public class Contact {
 
     @Column(name = "details", nullable = false)
     private String details;
-
-    @Column(name = "contact_date", unique = true, nullable = false)
-    private LocalDate date;
 }

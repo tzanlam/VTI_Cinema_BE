@@ -1,7 +1,6 @@
 package cinema.repository;
 
 import cinema.modal.entity.Contact;
-import cinema.modal.entity.Movie;
 import cinema.modal.entity.constant.ContactStatus;
 
 import org.springframework.data.jpa.repository.JpaRepository;
