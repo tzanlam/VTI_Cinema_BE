@@ -1,13 +1,8 @@
 package cinema.controller;
 
-import cinema.modal.entity.Banner;
 import cinema.modal.entity.Contact;
-import cinema.modal.entity.Room;
-import cinema.modal.request.BannerRequest;
 import cinema.modal.request.ContactRequest;
-import cinema.modal.response.DTO.BannerDTO;
 import cinema.modal.response.DTO.ContactDTO;
-import cinema.modal.response.DTO.RoomDTO;
 import cinema.service.Contact.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +21,7 @@ public class ContactController {
     private ContactService contactService;
 
     @GetMapping("/find")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<?> findContact() {
         try{
             List<Contact> contacts = contactService.findContact();
@@ -39,7 +35,7 @@ public class ContactController {
     }
 
     @GetMapping("/findId/{id}")
-//    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
     public ResponseEntity<?> findById(@PathVariable int id) {
         try{
             return ResponseEntity.ok(new ContactDTO(contactService.findById(id)));
@@ -48,7 +44,7 @@ public class ContactController {
         }
     }
     @PostMapping("/create")
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> createContact(@RequestBody ContactRequest request) {
         try {
             return ResponseEntity.ok(new ContactDTO(contactService.createContact(request)));
@@ -57,7 +53,7 @@ public class ContactController {
         }
     }
     @PutMapping("/update/{id}")
-//    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','USER')")
     public ResponseEntity<?> updateContact(@PathVariable int id, @RequestBody ContactRequest request) {
         try{
             return ResponseEntity.ok(new ContactDTO(contactService.updateContact(request, id)));
